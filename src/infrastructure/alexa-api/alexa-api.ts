@@ -1,4 +1,4 @@
-import { LambdaRestApi } from "@aws-cdk/aws-apigateway";
+import { Cors, LambdaRestApi } from "@aws-cdk/aws-apigateway";
 import { Construct } from "@aws-cdk/core";
 
 import { LambdaHandlers } from "../../handlers-list";
@@ -14,6 +14,10 @@ export class AlexaApi {
   public alexaRestApi = new LambdaRestApi(this.parent, "alexa-api-handler", {
     handler: this.alexaLambda,
     proxy: false,
+    defaultCorsPreflightOptions: {
+      allowOrigins: Cors.ALL_ORIGINS,
+      allowMethods: Cors.ALL_METHODS,
+    },
   });
 
   private validator = this.alexaRestApi.addRequestValidator("DefaultValidator", {
