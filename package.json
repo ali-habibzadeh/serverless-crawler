@@ -1,0 +1,38 @@
+{
+  "name": "alexa",
+  "version": "0.1.0",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "build": "tsc",
+    "postbuild": "cp package.json dist/package.json && cd dist && npm install --only=production && node-prune",
+    "watch": "tsc -w",
+    "test": "jest",
+    "packageup": "webpack"
+  },
+  "devDependencies": {
+    "@aws-cdk/assert": "1.32.2",
+    "@aws-cdk/aws-apigateway": "^1.32.2",
+    "@aws-cdk/aws-codebuild": "^1.32.2",
+    "@aws-cdk/aws-codecommit": "^1.32.2",
+    "@aws-cdk/aws-codepipeline": "^1.32.2",
+    "@aws-cdk/aws-codepipeline-actions": "^1.32.2",
+    "@aws-cdk/aws-lambda": "^1.32.2",
+    "@types/jest": "^24.0.22",
+    "@types/node": "10.17.5",
+    "aws-cdk": "1.32.2",
+    "aws-lambda": "^1.0.5",
+    "jest": "^24.9.0",
+    "node-prune": "^1.0.2",
+    "ts-jest": "^24.1.0",
+    "ts-node": "^8.1.0",
+    "typescript": "^3.8.3"
+  },
+  "dependencies": {
+    "@aws-cdk/core": "1.32.2",
+    "@deepcrawl/tslint-config": "^0.2.5",
+    "@types/aws-lambda": "^8.10.50",
+    "source-map-support": "^0.5.16",
+    "tslint": "^6.1.1"
+  }
+}
