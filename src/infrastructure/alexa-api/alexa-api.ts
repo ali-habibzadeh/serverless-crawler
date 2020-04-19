@@ -1,24 +1,26 @@
-import { Cors, LambdaRestApi } from "@aws-cdk/aws-apigateway";
+import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
 import { Construct } from "@aws-cdk/core";
 
 import { LambdaHandlers } from "../../handlers-list";
-import { createLambda } from "../utils/lambda.factory";
+import { LambdaApiFactory } from "../utils/lambda-api.factory";
+import { LambdaFactory } from "../utils/lambda.factory";
 
 export class AlexaApi {
   constructor(private parent: Construct) {
     this.defineApiMethods();
+    this.messageBucket.grantPut(this.alexaLambda);
   }
 
-  public alexaLambda = createLambda(this.parent, "alexa-lambda", "myAlexaFunction", LambdaHandlers.alexaHandler);
-
-  public alexaRestApi = new LambdaRestApi(this.parent, "alexa-api-handler", {
-    handler: this.alexaLambda,
-    proxy: false,
-    defaultCorsPreflightOptions: {
-      allowOrigins: Cors.ALL_ORIGINS,
-      allowMethods: Cors.ALL_METHODS,
-    },
+  private messageBucket = new Bucket(this.parent, "MessageBucket", {
+    blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
+    encryption: BucketEncryption.S3_MANAGED,
   });
+
+  private alexaLambda = new LambdaFactory(this.parent, LambdaHandlers.alexaHandler, {
+    messageBucketName: this.messageBucket.bucketName,
+  }).getLambda();
+
+  public alexaRestApi = new LambdaApiFactory(this.parent, this.alexaLambda).getApi();
 
   private validator = this.alexaRestApi.addRequestValidator("DefaultValidator", {
     validateRequestBody: false,

@@ -14,7 +14,7 @@ export class LambdaHandlerFactory {
   }
 
   private getHandler(body: PublicFn): AWSLambda.Handler {
-    return async (event, context): Promise<any> => {
+    return async (event: AWSLambda.APIGatewayEvent, context): Promise<any> => {
       return {
         statusCode: 200,
         headers: { "Content-Type": "application/json" },
