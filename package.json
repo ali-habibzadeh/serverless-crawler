@@ -8,7 +8,8 @@
     "postbuild": "cp package.json dist/package.json && cd dist && npm install --only=production && node-prune",
     "watch": "tsc -w",
     "test": "jest",
-    "deploy": "yarn build && cdk deploy"
+    "deploy": "yarn build && cdk deploy",
+    "destroy": "cdk destroy"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.33.1",
