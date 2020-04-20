@@ -1,14 +1,14 @@
 import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
 
-import { AlexaApi } from "./alexa-api/alexa-api";
+import { Text2SpeechApi } from "./text2S-api/text2S-api";
 
-export class AlexaStack extends Stack {
+export class Text2SStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
   }
-  public alexaApi = new AlexaApi(this);
+  public alexaApi = new Text2SpeechApi(this);
 }
 
 const app = new App();
-new AlexaStack(app, "my-alexa-app");
+new Text2SStack(app, "my-alexa-app");
 app.synth();

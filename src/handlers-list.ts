@@ -1,3 +1,3 @@
 export enum LambdaHandlers {
-  alexaHandler = "alexaHandler",
+  text2SHandler = "text2SHandler",
 }

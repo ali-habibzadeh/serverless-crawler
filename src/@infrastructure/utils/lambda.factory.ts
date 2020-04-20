@@ -18,7 +18,7 @@ export class LambdaFactory {
       handler: `index.${this.handler}`,
       tracing: Tracing.ACTIVE,
       memorySize: 128,
-      timeout: Duration.seconds(2),
+      timeout: Duration.minutes(3),
       environment: {
         region: Stack.of(this.parent).region,
         account: Stack.of(this.parent).account,
