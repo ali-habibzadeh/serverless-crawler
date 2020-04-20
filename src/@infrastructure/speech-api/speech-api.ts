@@ -18,8 +18,8 @@ export class SpeechApi {
     encryption: BucketEncryption.S3_MANAGED,
   });
 
-  private speechLambda = new LambdaFactory(this.parent, LambdaHandlers.text2SHandler, {
-    messageBucketName: this.speechBucket.bucketName,
+  private speechLambda = new LambdaFactory(this.parent, LambdaHandlers.SpeechHandler, {
+    speechBucketName: this.speechBucket.bucketName,
   }).getLambda();
 
   public speechApi = new LambdaApiFactory(this.parent, this.speechLambda).getApi();

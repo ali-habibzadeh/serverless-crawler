@@ -4,7 +4,7 @@ import { PollyService } from "../../core/polly/polly.service";
 import { Handler } from "../base.handler";
 
 export class SpeechHandler extends Handler {
-  private bucketName = process.env.messageBucketName;
+  private bucketName = process.env.speechBucketName;
   private message = this.event.queryStringParameters!.message;
   private polly = PollyService.getInstance();
   private synthesisInput: StartSpeechSynthesisTaskInput = {
