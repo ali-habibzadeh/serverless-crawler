@@ -1,7 +1,7 @@
-import { S3Service } from "../core/s3/s3.service";
-import { BaseHandler } from "./base.handler";
+import { S3Service } from "../../core/s3/s3.service";
+import { Handler } from "../base.handler";
 
-export class AlexaHandler extends BaseHandler {
+export class AlexaHandler extends Handler {
   private bucketArn = process.env.messageBucketName;
   private s3 = S3Service.getInstance();
 
