@@ -1,6 +1,4 @@
-import { Context as LambdaContext } from "aws-lambda";
-
-export type PublicFn = (event?: any, context?: LambdaContext) => Promise<any>;
+export type PublicFn = (e: AWSLambda.APIGatewayEvent, c?: AWSLambda.Context) => Promise<any>;
 
 export interface ILambdaHandlerFactoryConfig {
   [key: string]: PublicFn;
