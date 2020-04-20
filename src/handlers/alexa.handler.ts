@@ -1,4 +1,3 @@
-import { Context } from "aws-lambda";
 import { S3 } from "aws-sdk";
 
 export class AlexaHandler {
@@ -6,7 +5,7 @@ export class AlexaHandler {
   private region = process.env.region;
   private s3 = new S3({ region: this.region });
 
-  constructor(private event: AWSLambda.APIGatewayEvent, private c?: Context) {}
+  constructor(private event: AWSLambda.APIGatewayEvent) {}
 
   public async writeMessaage(): Promise<string> {
     if (this.bucketArn) {
