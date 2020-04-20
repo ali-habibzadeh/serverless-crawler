@@ -3,6 +3,10 @@ import { ILambdaHandlerFactoryConfig, ILambdaHandlers, PublicFn } from "./interf
 export class LambdaHandlerFactory {
   private entries = Object.entries(this.configs);
   constructor(private configs: ILambdaHandlerFactoryConfig) {}
+  private defaultConfig = {
+    statusCode: "200",
+    headers: { "Content-Type": "application/json" },
+  };
 
   public getHandlers(): ILambdaHandlers {
     return this.entries.reduce((configs, [name, fn]) => {
@@ -16,9 +20,8 @@ export class LambdaHandlerFactory {
   private getHandler(body: PublicFn): AWSLambda.Handler {
     return async (event: AWSLambda.APIGatewayEvent, context): Promise<any> => {
       return {
-        statusCode: 200,
-        headers: { "Content-Type": "application/json" },
-        body: await body(event, context),
+        ...this.defaultConfig,
+        body: JSON.stringify(await body(event, context)),
       };
     };
   }
