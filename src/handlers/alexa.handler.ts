@@ -5,6 +5,7 @@ export class AlexaHandler {
   private bucketArn = process.env.messageBucketName;
   private region = process.env.region;
   private s3 = new S3({ region: this.region });
+
   constructor(private event: AWSLambda.APIGatewayEvent, private c?: Context) {}
 
   public async writeMessaage(): Promise<string> {
