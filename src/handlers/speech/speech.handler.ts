@@ -3,7 +3,7 @@ import { StartSpeechSynthesisTaskInput } from "aws-sdk/clients/polly";
 import { PollyService } from "../../core/polly/polly.service";
 import { Handler } from "../base.handler";
 
-export class TextToSpeechHandler extends Handler {
+export class SpeechHandler extends Handler {
   private bucketName = process.env.messageBucketName;
   private message = this.event.queryStringParameters!.message;
   private polly = PollyService.getInstance();

@@ -11,8 +11,8 @@ export class LambdaFactory {
   constructor(private parent: Construct, private handler: LambdaHandlers, private environment?: {}) {}
 
   public getLambda(): Fn {
-    return new Fn(this.parent, `id-${this.handler}`, {
-      functionName: `fnName-${this.handler}`,
+    return new Fn(this.parent, `Id-${this.handler}`, {
+      functionName: `FnName-${this.handler}`,
       runtime: Runtime.NODEJS_12_X,
       code: this.lambdaCode,
       handler: `index.${this.handler}`,
