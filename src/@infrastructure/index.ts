@@ -6,7 +6,7 @@ export class AlexaStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
   }
-  private alexaApi = new AlexaApi(this);
+  public alexaApi = new AlexaApi(this);
 }
 
 const app = new App();
