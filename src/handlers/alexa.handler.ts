@@ -1,12 +1,15 @@
 import { S3Service } from "../core/s3/s3.service";
+import { BaseHandler } from "./base.handler";
 
-export class AlexaHandler {
+export class AlexaHandler extends BaseHandler {
   private bucketArn = process.env.messageBucketName;
   private s3 = S3Service.getInstance();
 
-  constructor(private event: AWSLambda.APIGatewayEvent) {}
+  constructor(protected event: AWSLambda.APIGatewayEvent) {
+    super(event);
+  }
 
-  public async writeMessaage(): Promise<string> {
+  public async respond(): Promise<string> {
     if (this.bucketArn) {
       const body = this.event.queryStringParameters!.message;
       await this.s3.putObject({ Body: body, Bucket: this.bucketArn, Key: "MyMessage" }).promise();
