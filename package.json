@@ -10,7 +10,7 @@
     "test": "jest",
     "deploy": "yarn build && cdk deploy",
     "destroy": "cdk destroy",
-    "synth": "cdk synth --output=template.json"
+    "synth": "cdk synth --output=local-synth"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.33.1",
