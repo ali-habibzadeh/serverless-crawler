@@ -9,8 +9,7 @@
     "watch": "tsc -w",
     "test": "jest",
     "deploy": "yarn build && cdk deploy",
-    "destroy": "cdk destroy",
-    "synth": "cdk synth --output=local-synth"
+    "destroy": "cdk destroy"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.34.1",
