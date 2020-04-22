@@ -33,10 +33,10 @@ jobs:
           args: build
       
       - name: AWS CDK Deploy
-      uses: MikeBild/aws-cdk-js-github-action@1.0.0
-      with:
-        args: deploy
-      env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-        AWS_REGION: us-east-1
+        uses: MikeBild/aws-cdk-js-github-action@1.0.0
+        with:
+          args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+          AWS_REGION: us-east-1
