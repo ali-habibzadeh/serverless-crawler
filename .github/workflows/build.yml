@@ -33,7 +33,7 @@ jobs:
           args: build
       
       - name: AWS CDK Deploy
-        uses: MikeBild/aws-cdk-js-github-action@1.0.0
+        uses: nuxt/actions-yarn@master
         with:
           args: deploy
         env:
