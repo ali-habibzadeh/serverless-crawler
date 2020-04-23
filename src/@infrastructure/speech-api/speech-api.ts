@@ -1,7 +1,8 @@
 import { PolicyStatement } from "@aws-cdk/aws-iam";
 import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
-import { Construct } from "@aws-cdk/core";
+import { CfnOutput, Construct } from "@aws-cdk/core";
 
+import { envVars } from "../../config/envars.enum";
 import { LambdaHandlers } from "../../handlers-list";
 import { LambdaApiFactory } from "../utils/lambda-api.factory";
 import { LambdaFactory } from "../utils/lambda.factory";
@@ -18,8 +19,12 @@ export class SpeechApi {
     encryption: BucketEncryption.S3_MANAGED,
   });
 
+  public bucketOutput = new CfnOutput(this.parent, envVars.speechBucketName, {
+    value: this.speechBucket.bucketName,
+  });
+
   private speechLambda = new LambdaFactory(this.parent, LambdaHandlers.SpeechHandler, {
-    speechBucketName: this.speechBucket.bucketName,
+    [envVars.speechBucketName]: this.speechBucket.bucketName,
   }).getLambda();
 
   public speechApi = new LambdaApiFactory(this.parent, this.speechLambda).getApi();

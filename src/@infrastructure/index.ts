@@ -2,6 +2,8 @@ import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
 
 import { SpeechApi } from "./speech-api/speech-api";
 
+export const mainStackName = "speech-app";
+
 export class SpeechStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
@@ -10,5 +12,5 @@ export class SpeechStack extends Stack {
 }
 
 const app = new App();
-new SpeechStack(app, "speech-app");
+new SpeechStack(app, mainStackName);
 app.synth();

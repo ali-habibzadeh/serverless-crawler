@@ -1,3 +1,5 @@
+import { envVars } from "./envars.enum";
+
 export const appConfigSchema = {
   region: {
     doc: "AWS Region of the app",
@@ -10,5 +12,11 @@ export const appConfigSchema = {
     format: String,
     default: "1234s",
     env: "account",
+  },
+  [envVars.speechBucketName]: {
+    doc: "S3 Bucket name for speech",
+    format: String,
+    default: "1234s",
+    env: envVars.speechBucketName,
   },
 };
