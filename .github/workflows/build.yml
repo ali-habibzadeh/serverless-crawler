@@ -11,19 +11,17 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      - uses: nuxt/actions-yarn@master
 
       - name: Yarn Install
-        uses: nuxt/actions-yarn@master
         with:
           args: install
 
       - name: Yarn Build
-        uses: nuxt/actions-yarn@master
         with:
           args: build
 
       - name: AWS CDK Deploy
-        uses: nuxt/actions-yarn@master
         with:
           args: deploy
         env:
