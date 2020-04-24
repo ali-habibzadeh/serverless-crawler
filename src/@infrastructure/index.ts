@@ -1,4 +1,4 @@
-import { App, Construct, Stack, StackProps } from "@aws-cdk/core";
+import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
 
 import { SpeechApi } from "./speech-api/speech-api";
 
@@ -9,6 +9,7 @@ export class SpeechStack extends Stack {
     super(scope, id, props);
   }
   public alexaApi = new SpeechApi(this);
+  public regionOutput = new CfnOutput(this, "region", { value: this.region });
 }
 
 const app = new App();
