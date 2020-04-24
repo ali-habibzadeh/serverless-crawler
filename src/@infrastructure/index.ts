@@ -12,6 +12,8 @@ export class SpeechStack extends Stack {
   public regionOutput = new CfnOutput(this, "region", { value: this.region });
 }
 
+console.log("GITHUB_REF", process.env.GITHUB_REF);
+
 const app = new App();
 new SpeechStack(app, mainStackName);
 app.synth();

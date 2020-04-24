@@ -31,3 +31,4 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
           AWS_REGION: us-east-1
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_PACKAGE_READ_TOKEN}}
+          REF: ${{ GITHUB_REF }}
