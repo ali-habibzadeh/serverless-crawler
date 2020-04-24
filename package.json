@@ -7,7 +7,7 @@
     "build": "tsc",
     "postbuild": "cp package.json dist/package.json && cd dist && npm install --only=production && node-prune",
     "watch": "tsc -w",
-    "test": "jest",
+    "integration": "jest --config=jest.integration.config.js",
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",
     "destroy": "cdk destroy"
   },

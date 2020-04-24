@@ -1,4 +1,3 @@
-*.js
 *.d.ts
 node_modules
 
@@ -23,7 +22,6 @@ dist/
 .idea
 /package/
 .sonarlints
-*~
 .metals
 *yarn-error.log
 outputs.json
