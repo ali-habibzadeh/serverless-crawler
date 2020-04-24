@@ -11,12 +11,6 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-        env:
-            AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-            AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
-            AWS_REGION: us-east-1
-            NODE_AUTH_TOKEN: ${{secrets.GITHUB_PACKAGE_READ_TOKEN}}
-            REF: ${GITHUB_REF}
 
       - name: Yarn Install
         uses: nuxt/actions-yarn@master
@@ -32,8 +26,17 @@ jobs:
         uses: nuxt/actions-yarn@master
         with:
           args: deploy
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+          AWS_REGION: us-east-1
+          REF: ${GITHUB_REF}
 
       - name: Run integration tests
         uses: nuxt/actions-yarn@master
         with:
           args: integration
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET }}
+          AWS_REGION: us-east-1
