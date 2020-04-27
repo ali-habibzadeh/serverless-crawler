@@ -1,9 +1,10 @@
 import { PolicyStatement } from "@aws-cdk/aws-iam";
-import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
+import { EventBridgeDestination } from "@aws-cdk/aws-lambda-destinations";
 import { CfnOutput, Construct } from "@aws-cdk/core";
 
 import { envVars } from "../../config/envars.enum";
 import { LambdaHandlers } from "../../handlers-list";
+import { BucketFactory } from "../utils/bucket.factory";
 import { LambdaApiFactory } from "../utils/lambda-api.factory";
 import { LambdaFactory } from "../utils/lambda.factory";
 
@@ -14,17 +15,15 @@ export class SpeechApi {
     this.speechLambda.addToRolePolicy(new PolicyStatement({ actions: ["polly:*"], resources: ["*"] }));
   }
 
-  private speechBucket = new Bucket(this.parent, "SpeechBucket", {
-    blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-    encryption: BucketEncryption.S3_MANAGED,
-  });
+  private speechBucket = new BucketFactory(this.parent, "SpeechBucket").getBucket();
 
   public bucketOutput = new CfnOutput(this.parent, envVars.speechBucketName, {
     value: this.speechBucket.bucketName,
   });
 
   private speechLambda = new LambdaFactory(this.parent, LambdaHandlers.SpeechHandler, {
-    [envVars.speechBucketName]: this.speechBucket.bucketName,
+    environment: { [envVars.speechBucketName]: this.speechBucket.bucketName },
+    onSuccess: new EventBridgeDestination(),
   }).getLambda();
 
   public speechApi = new LambdaApiFactory(this.parent, this.speechLambda).getApi();
