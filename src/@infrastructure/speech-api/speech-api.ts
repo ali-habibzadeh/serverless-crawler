@@ -15,7 +15,7 @@ export class SpeechApi {
     this.speechLambda.addToRolePolicy(new PolicyStatement({ actions: ["polly:*"], resources: ["*"] }));
   }
 
-  private speechBucket = new BucketFactory(this.parent, "SpeechBucket").getBucket();
+  private speechBucket = new BucketFactory(this.parent, envVars.speechBucketName).getBucket();
 
   public bucketOutput = new CfnOutput(this.parent, envVars.speechBucketName, {
     value: this.speechBucket.bucketName,
