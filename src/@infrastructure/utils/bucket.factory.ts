@@ -1,4 +1,4 @@
-import { BlockPublicAccess, Bucket, BucketEncryption, StorageClass } from "@aws-cdk/aws-s3";
+import { BlockPublicAccess, Bucket, BucketEncryption } from "@aws-cdk/aws-s3";
 import { Construct } from "@aws-cdk/core";
 
 export class BucketFactory {
@@ -7,11 +7,6 @@ export class BucketFactory {
     return new Bucket(this.parent, this.id, {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
       encryption: BucketEncryption.S3_MANAGED,
-      lifecycleRules: [
-        {
-          transitions: [{ storageClass: StorageClass.INTELLIGENT_TIERING }],
-        },
-      ],
     });
   }
 }
