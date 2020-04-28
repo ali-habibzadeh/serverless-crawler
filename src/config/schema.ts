@@ -19,4 +19,10 @@ export const appConfigSchema = {
     default: "1234s",
     env: envVars.speechBucketName,
   },
+  [envVars.speechEventBusName]: {
+    doc: "Event bus for Synthesis jobs",
+    format: String,
+    default: "1234s",
+    env: envVars.speechEventBusName,
+  },
 };

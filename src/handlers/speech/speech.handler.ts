@@ -1,17 +1,18 @@
-import { StartSpeechSynthesisTaskInput, StartSpeechSynthesisTaskOutput } from "aws-sdk/clients/polly";
+import { StartSpeechSynthesisTaskOutput } from "aws-sdk/clients/polly";
 
+import { Handler } from "../../base.handler";
 import { ConfigService } from "../../config/config.service";
+import { EventBridgeService } from "../../core/event-bridge/event-bridge.service";
 import { PollyService } from "../../core/polly/polly.service";
-import { Handler } from "../base.handler";
 
 export class SpeechHandler extends Handler {
-  private bucketName = ConfigService.getInstance().environment.speechBucketName;
-  private message = this.event.queryStringParameters.message;
+  private config = ConfigService.getInstance().environment;
+  private bridge = EventBridgeService.getInstance();
   private polly = PollyService.getInstance();
-  private synthesisInput: StartSpeechSynthesisTaskInput = {
-    Text: this.message,
+  private synthesisInput = {
+    Text: this.event.queryStringParameters.message,
     OutputFormat: "mp3",
-    OutputS3BucketName: this.bucketName || "",
+    OutputS3BucketName: this.config.speechBucketName,
     VoiceId: "Kimberly",
   };
 
@@ -20,9 +21,19 @@ export class SpeechHandler extends Handler {
   }
 
   public async respond(): Promise<StartSpeechSynthesisTaskOutput> {
-    if (this.bucketName) {
+    try {
       return this.polly.startSpeechSynthesisTask(this.synthesisInput).promise();
+    } catch (e) {
+      throw new Error(`Missing Bucket to write message to ${e}`);
     }
-    throw new Error(`Missing Bucket to write message to`);
+  }
+
+  private notifySubscribers(detail: {}): Promise<any> {
+    const event = {
+      EventBusName: this.config.speechEventBusName,
+      DetailType: "SpeechSynthesisStarted",
+      Detail: JSON.stringify(detail),
+    };
+    return this.bridge.putEvents({ Entries: [event] }).promise();
   }
 }

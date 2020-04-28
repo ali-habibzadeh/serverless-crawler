@@ -1,7 +1,5 @@
 import { SpeechHandler } from "./speech.handler";
 
-jest.setTimeout(30000);
-
 const handler = new SpeechHandler({
   queryStringParameters: { message: "hello" },
 });
