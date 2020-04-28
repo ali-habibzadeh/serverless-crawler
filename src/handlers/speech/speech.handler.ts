@@ -27,13 +27,4 @@ export class SpeechHandler extends Handler {
       throw new Error(`Missing Bucket to write message to ${e}`);
     }
   }
-
-  private notifySubscribers(detail: {}): Promise<any> {
-    const event = {
-      EventBusName: this.config.speechEventBusName,
-      DetailType: "SpeechSynthesisStarted",
-      Detail: JSON.stringify(detail),
-    };
-    return this.bridge.putEvents({ Entries: [event] }).promise();
-  }
 }

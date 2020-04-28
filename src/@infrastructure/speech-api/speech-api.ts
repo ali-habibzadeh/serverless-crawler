@@ -1,4 +1,3 @@
-import { EventBus } from "@aws-cdk/aws-events";
 import { PolicyStatement } from "@aws-cdk/aws-iam";
 import { EventBridgeDestination } from "@aws-cdk/aws-lambda-destinations";
 import { CfnOutput, Construct } from "@aws-cdk/core";
@@ -22,27 +21,21 @@ export class SpeechApi {
     value: this.speechBucket.bucketName,
   });
 
-  private speechEventBus = new EventBus(this.parent, "SpeechEventBus", {
-    eventBusName: envVars.speechEventBusName,
-  });
-
   private speechLambda = new LambdaFactory(this.parent, LambdaHandlers.SpeechHandler, {
     environment: {
       [envVars.speechBucketName]: this.speechBucket.bucketName,
-      [envVars.speechEventBusName]: this.speechEventBus.eventBusName,
     },
-    onSuccess: new EventBridgeDestination(this.speechEventBus),
   }).getLambda();
 
-  public speechApi = new LambdaApiFactory(this.parent, this.speechLambda).getApi();
+  public api = new LambdaApiFactory(this.parent, this.speechLambda).getApi();
 
-  private validator = this.speechApi.addRequestValidator("DefaultValidator", {
+  private validator = this.api.addRequestValidator("DefaultValidator", {
     validateRequestBody: false,
     validateRequestParameters: true,
   });
 
   private defineApiMethods(): void {
-    const alexa = this.speechApi.root.addResource("speech");
+    const alexa = this.api.root.addResource("speech");
     alexa.addMethod("GET", undefined, {
       requestParameters: {
         "method.request.querystring.message": true,
