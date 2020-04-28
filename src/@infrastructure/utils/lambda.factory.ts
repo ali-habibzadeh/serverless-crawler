@@ -12,19 +12,21 @@ interface ILambdaFactoryProps {
 }
 
 export class LambdaFactory {
-  private lambdaCode = Code.fromAsset(path.join(__dirname.substring(0, __dirname.indexOf("dist") + 4)));
+  private defaultSettings = {
+    runtime: Runtime.NODEJS_12_X,
+    code: Code.fromAsset(path.join(__dirname.substring(0, __dirname.indexOf("dist") + 4))),
+    memorySize: 128,
+    timeout: Duration.minutes(3),
+    tracing: Tracing.ACTIVE,
+  };
 
   constructor(private parent: Construct, private handler: LambdaHandlers, private props: ILambdaFactoryProps) {}
 
   public getLambda(): Fn {
     return new Fn(this.parent, `Id-${this.handler}`, {
+      ...this.defaultSettings,
       functionName: `FnName-${this.handler}`,
-      runtime: Runtime.NODEJS_12_X,
-      code: this.lambdaCode,
       handler: `index.${this.handler}`,
-      tracing: Tracing.ACTIVE,
-      memorySize: 128,
-      timeout: Duration.minutes(3),
       environment: {
         region: Stack.of(this.parent).region,
         account: Stack.of(this.parent).account,
