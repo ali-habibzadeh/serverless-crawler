@@ -13,10 +13,10 @@ export const appConfigSchema = {
     default: "1234s",
     env: "account",
   },
-  [envVars.speechBucketName]: {
-    doc: "S3 Bucket name for speech",
+  [envVars.crawlUrlsTableName]: {
+    doc: "Dynamodb table name for sotring crawl URLs",
     format: String,
-    default: "1234s",
-    env: envVars.speechBucketName,
+    default: "urlsTable",
+    env: envVars.crawlUrlsTableName,
   },
 };

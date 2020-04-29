@@ -1,5 +1,5 @@
 {
-  "name": "alexa",
+  "name": "serverless-crawler",
   "version": "0.1.2",
   "license": "MIT",
   "private": true,
@@ -13,16 +13,18 @@
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.36.0",
-    "@aws-cdk/aws-events-targets": "^1.36.0",
     "@aws-cdk/aws-apigateway": "^1.36.0",
     "@aws-cdk/aws-codebuild": "^1.36.0",
     "@aws-cdk/aws-codecommit": "^1.36.0",
     "@aws-cdk/aws-codepipeline": "^1.36.0",
     "@aws-cdk/aws-codepipeline-actions": "^1.36.0",
+    "@aws-cdk/aws-dynamodb": "^1.36.0",
     "@aws-cdk/aws-events": "^1.36.0",
+    "@aws-cdk/aws-events-targets": "^1.36.0",
     "@aws-cdk/aws-iam": "^1.36.0",
     "@aws-cdk/aws-lambda": "^1.36.0",
     "@aws-cdk/aws-lambda-destinations": "^1.36.0",
+    "@aws-cdk/aws-lambda-event-sources": "^1.36.0",
     "@aws-cdk/aws-s3": "^1.36.0",
     "@deepcrawl/tslint-config": "git://github.com/deepcrawl/tslint-config-deepcrawl.git",
     "@types/aws-lambda": "^8.10.50",
@@ -39,9 +41,12 @@
   },
   "dependencies": {
     "@aws-cdk/core": "1.36.0",
+    "@aws/dynamodb-data-mapper": "^0.7.3",
+    "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@types/convict": "^4.2.1",
     "aws-sdk": "^2.657.0",
     "convict": "^5.2.0",
+    "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16"
   }
 }

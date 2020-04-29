@@ -1,4 +1,4 @@
-export type PublicFn = (e: AWSLambda.APIGatewayEvent, c?: AWSLambda.Context) => Promise<any>;
+export type PublicFn = (e: any, c?: AWSLambda.Context) => Promise<any>;
 
 export interface ILambdaHandlerFactoryConfig {
   [key: string]: PublicFn;

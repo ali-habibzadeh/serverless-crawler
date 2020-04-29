@@ -239,6 +239,20 @@
     "@aws-cdk/custom-resources" "1.36.0"
     constructs "^3.0.2"
 
+"@aws-cdk/aws-dynamodb@1.36.0", "@aws-cdk/aws-dynamodb@^1.36.0":
+  version "1.36.0"
+  resolved "https://registry.npmjs.org/@aws-cdk/aws-dynamodb/-/aws-dynamodb-1.36.0.tgz#2cfd3d83970a5730dea854568b78ed3cdd3072e2"
+  integrity sha512-MHmd3Flw0bOoeL0zQ6qBU+HdH21zk7JcU3toIMcO+OgJIUzYsSWi8nxPMB/RD3IWIHzXhbzJix9DGeClRncknw==
+  dependencies:
+    "@aws-cdk/aws-applicationautoscaling" "1.36.0"
+    "@aws-cdk/aws-cloudformation" "1.36.0"
+    "@aws-cdk/aws-cloudwatch" "1.36.0"
+    "@aws-cdk/aws-iam" "1.36.0"
+    "@aws-cdk/aws-lambda" "1.36.0"
+    "@aws-cdk/core" "1.36.0"
+    "@aws-cdk/custom-resources" "1.36.0"
+    constructs "^3.0.2"
+
 "@aws-cdk/aws-ec2@1.36.0":
   version "1.36.0"
   resolved "https://registry.npmjs.org/@aws-cdk/aws-ec2/-/aws-ec2-1.36.0.tgz#c4fcaf15b13b4542840f847ee70476cd99a96e0b"
@@ -372,6 +386,17 @@
     "@aws-cdk/region-info" "1.36.0"
     constructs "^3.0.2"
 
+"@aws-cdk/aws-kinesis@1.36.0":
+  version "1.36.0"
+  resolved "https://registry.npmjs.org/@aws-cdk/aws-kinesis/-/aws-kinesis-1.36.0.tgz#8d299f344a04fc76b699992cbd4f658691359950"
+  integrity sha512-lxi8twaN8mVbgt+bvec3iDYjhKtsaBBFjui/0u4bTBEUDpbvxBT6WLUstVFxGcy/myajAqF8FrvEXvMiQeqUBg==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.36.0"
+    "@aws-cdk/aws-kms" "1.36.0"
+    "@aws-cdk/aws-logs" "1.36.0"
+    "@aws-cdk/core" "1.36.0"
+    constructs "^3.0.2"
+
 "@aws-cdk/aws-kms@1.36.0":
   version "1.36.0"
   resolved "https://registry.npmjs.org/@aws-cdk/aws-kms/-/aws-kms-1.36.0.tgz#150eafb925140edd0a5134a46b4f943d6b8b8100"
@@ -390,6 +415,25 @@
     "@aws-cdk/aws-events-targets" "1.36.0"
     "@aws-cdk/aws-lambda" "1.36.0"
     "@aws-cdk/aws-sns" "1.36.0"
+    "@aws-cdk/aws-sqs" "1.36.0"
+    "@aws-cdk/core" "1.36.0"
+    constructs "^3.0.2"
+
+"@aws-cdk/aws-lambda-event-sources@^1.36.0":
+  version "1.36.0"
+  resolved "https://registry.npmjs.org/@aws-cdk/aws-lambda-event-sources/-/aws-lambda-event-sources-1.36.0.tgz#d3461f094c3e01cc15a124ab83f51636e589fceb"
+  integrity sha512-MvaCYn2MqyOvDXc0z6AcnWI22hk+L7uRnirZaVjMdb6goem3uAiEuQIVXcE3/nn8rfnbfviwVyJdoaIkQS7EgA==
+  dependencies:
+    "@aws-cdk/aws-apigateway" "1.36.0"
+    "@aws-cdk/aws-dynamodb" "1.36.0"
+    "@aws-cdk/aws-events" "1.36.0"
+    "@aws-cdk/aws-iam" "1.36.0"
+    "@aws-cdk/aws-kinesis" "1.36.0"
+    "@aws-cdk/aws-lambda" "1.36.0"
+    "@aws-cdk/aws-s3" "1.36.0"
+    "@aws-cdk/aws-s3-notifications" "1.36.0"
+    "@aws-cdk/aws-sns" "1.36.0"
+    "@aws-cdk/aws-sns-subscriptions" "1.36.0"
     "@aws-cdk/aws-sqs" "1.36.0"
     "@aws-cdk/core" "1.36.0"
     constructs "^3.0.2"
@@ -460,6 +504,19 @@
     "@aws-cdk/aws-s3" "1.36.0"
     "@aws-cdk/core" "1.36.0"
     "@aws-cdk/cx-api" "1.36.0"
+    constructs "^3.0.2"
+
+"@aws-cdk/aws-s3-notifications@1.36.0":
+  version "1.36.0"
+  resolved "https://registry.npmjs.org/@aws-cdk/aws-s3-notifications/-/aws-s3-notifications-1.36.0.tgz#14543bbac2ed8272eebedd4d00f6f61aa1f009d7"
+  integrity sha512-Ff92kavsHXF7rG1VoOn+AwYJ814q9lIsA2d8THmJV/jJKHZuwDjUvz0YlsFL4gD5Y2d3j3gZHqYLwlAwVqj01w==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.36.0"
+    "@aws-cdk/aws-lambda" "1.36.0"
+    "@aws-cdk/aws-s3" "1.36.0"
+    "@aws-cdk/aws-sns" "1.36.0"
+    "@aws-cdk/aws-sqs" "1.36.0"
+    "@aws-cdk/core" "1.36.0"
     constructs "^3.0.2"
 
 "@aws-cdk/aws-s3@1.36.0", "@aws-cdk/aws-s3@^1.36.0":
@@ -631,6 +688,70 @@
   version "1.36.0"
   resolved "https://registry.npmjs.org/@aws-cdk/region-info/-/region-info-1.36.0.tgz#caca1a60466f7d5b1ccedf9c2decc9991c9b800e"
   integrity sha512-aHFj+MUrtWHxNnAWh32vo+MJoLZ+z2plYreBxdPO/R5phu9pWaWyFzKfBJywaQLYRiMxL7tWEyUjvbQy6/MPqw==
+
+"@aws/dynamodb-auto-marshaller@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-auto-marshaller/-/dynamodb-auto-marshaller-0.7.1.tgz#70676c056e4ecb798c08ec2e398a3d93e703858d"
+  integrity sha512-LeURlf6/avrfFo9+4Yht9J3CUTJ72yoBpm1FOUmlexuHNW4Ka61tG30w3ZDCXXXmCO2rG0k3ywAgNJEo3WPbyw==
+  dependencies:
+    tslib "^1.8.1"
+
+"@aws/dynamodb-batch-iterator@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-batch-iterator/-/dynamodb-batch-iterator-0.7.1.tgz#aa3062b2e7816ddb88ac64575a11476930c990e9"
+  integrity sha512-SdwBFnjN+ncIl+MOogTeEh1/C6O0jAcqD5YA3AujcH5JPWiMescKAefO4VQbgR0Q9ohcYcMnwL3q6mCdUpyJ9w==
+  dependencies:
+    tslib "^1.8.1"
+    utf8-bytes "^0.0.1"
+
+"@aws/dynamodb-data-mapper-annotations@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-data-mapper-annotations/-/dynamodb-data-mapper-annotations-0.7.3.tgz#8c04598a1dd3ec1b69996020afebcecc6f2c41f7"
+  integrity sha512-RROw+6EIJd0bJsl/76wxfvDkv/irY9pfpp/VRlmEIVixKW2UtMqpni+Hs0XuBRtmGKGfFrWB2WGYiikSnfv4FA==
+  dependencies:
+    "@aws/dynamodb-auto-marshaller" "^0.7.1"
+    "@aws/dynamodb-data-mapper" "^0.7.3"
+    "@aws/dynamodb-data-marshaller" "^0.7.3"
+    reflect-metadata "^0.1.10"
+    tslib "^1.8.1"
+    uuid "^3.0.0"
+
+"@aws/dynamodb-data-mapper@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-data-mapper/-/dynamodb-data-mapper-0.7.3.tgz#813aea68590017f27bc706989f8500a3c7869c3b"
+  integrity sha512-2DYHoF2jvO7L2TfwfJoTfdJz0M6qSVJ0wM0zQ97ehrTyVSz/yWDO3GqMA9jsUqf0fZl3CIItHBhiXdddsH5cpA==
+  dependencies:
+    "@aws/dynamodb-auto-marshaller" "^0.7.1"
+    "@aws/dynamodb-batch-iterator" "^0.7.1"
+    "@aws/dynamodb-data-marshaller" "^0.7.3"
+    "@aws/dynamodb-expressions" "^0.7.3"
+    "@aws/dynamodb-query-iterator" "^0.7.1"
+    tslib "^1.8.1"
+
+"@aws/dynamodb-data-marshaller@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-data-marshaller/-/dynamodb-data-marshaller-0.7.3.tgz#6769362551c01396ab224840933432a9db701f5b"
+  integrity sha512-ea9PR19J2uY7lNSUo2bEcbfI8GiD0n66dISoBHZFrHjgCO2ao2P6UlyG/k0EMhr2zNzTWYNd08VYgTSYz5GBAA==
+  dependencies:
+    "@aws/dynamodb-auto-marshaller" "^0.7.1"
+    "@aws/dynamodb-expressions" "^0.7.3"
+    tslib "^1.8.1"
+    utf8-bytes "^0.0.1"
+
+"@aws/dynamodb-expressions@^0.7.3":
+  version "0.7.3"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-expressions/-/dynamodb-expressions-0.7.3.tgz#abfda5dbda54f51c58a3bd038c710b7119fc8949"
+  integrity sha512-63vaCyNKmO8BE/JWlQ3DSFG+qCAWgO5MGif31E5CPdWKaBt5yBG5qnh5w5oFelKRK6/1M6cYKl/Yui08wimUig==
+  dependencies:
+    "@aws/dynamodb-auto-marshaller" "^0.7.1"
+    tslib "^1.8.1"
+
+"@aws/dynamodb-query-iterator@^0.7.1":
+  version "0.7.1"
+  resolved "https://registry.npmjs.org/@aws/dynamodb-query-iterator/-/dynamodb-query-iterator-0.7.1.tgz#d43bbf7644cfee55de0aec273475d680a05f3981"
+  integrity sha512-x28lcgj2HDadxszYEwQjAJyGMrdy3aznLM2TSEeQxqCxKzFT1qewmKxgWSMslH+CiLuuqs9H1FaIwvP15b6UHQ==
+  dependencies:
+    tslib "^1.8.1"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.8.3":
   version "7.8.3"
@@ -4024,7 +4145,7 @@ realpath-native@^1.1.0:
   dependencies:
     util.promisify "^1.0.0"
 
-reflect-metadata@^0.1.12:
+reflect-metadata@^0.1.10, reflect-metadata@^0.1.12, reflect-metadata@^0.1.13:
   version "0.1.13"
   resolved "https://registry.npmjs.org/reflect-metadata/-/reflect-metadata-0.1.13.tgz#67ae3ca57c972a2aa1642b10fe363fe32d49dc08"
   integrity sha512-Ts1Y/anZELhSsjMcU605fU9RE4Oi3p5ORujwbIKXfWa+0Zxs510Qrmrce5/Jowq3cHSZSJqBjypxmHarc+vEWg==
@@ -4861,6 +4982,11 @@ use@^3.1.0:
   resolved "https://registry.npmjs.org/use/-/use-3.1.1.tgz#d50c8cac79a19fbc20f2911f56eb973f4e10070f"
   integrity sha512-cwESVXlO3url9YWlFW/TA9cshCEhtu7IKJ/p5soJ/gGpj7vbvFrAY/eIioQ6Dw23KjZhYgiIo8HOs1nQ2vr/oQ==
 
+utf8-bytes@^0.0.1:
+  version "0.0.1"
+  resolved "https://registry.npmjs.org/utf8-bytes/-/utf8-bytes-0.0.1.tgz#116b025448c9b500081cdfbf1f4d6c6c37d8837d"
+  integrity sha1-EWsCVEjJtQAIHN+/H01sbDfYg30=
+
 util-deprecate@^1.0.1, util-deprecate@~1.0.1:
   version "1.0.2"
   resolved "https://registry.npmjs.org/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
@@ -4881,7 +5007,7 @@ uuid@3.3.2:
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.3.2.tgz#1b4af4955eb3077c501c23872fc6513811587131"
   integrity sha512-yXJmeNaw3DnnKAOKJE51sL/ZaYfWJRl1pK9dr19YFCu0ObS231AB1/LbqTKRAQ5kw8A90rA6fr4riOUpTZvQZA==
 
-uuid@^3.3.2:
+uuid@^3.0.0, uuid@^3.3.2:
   version "3.4.0"
   resolved "https://registry.npmjs.org/uuid/-/uuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha512-HjSDRw6gZE5JMggctHBcjVak08+KEVhSIiDzFnT9S9aegmp85S/bReBVTb4QTFaRNptJ9kuYaNhnbNEOkbKb/A==

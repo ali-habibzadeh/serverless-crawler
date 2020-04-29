@@ -1,3 +1,3 @@
 export enum envVars {
-  speechBucketName = "speechBucketName",
+  crawlUrlsTableName = "urlsTableName",
 }

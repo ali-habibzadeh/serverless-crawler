@@ -1,8 +1,10 @@
 import { EventBridge } from "aws-sdk";
 
+import { ConfigService } from "../../config/config.service";
+
 export class EventBridgeService {
   private static instance: EventBridge;
-  private static region = process.env.region;
+  private static region = ConfigService.getInstance().environment.region;
 
   private constructor() {}
 

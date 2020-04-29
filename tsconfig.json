@@ -10,7 +10,9 @@
     "composite": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
-    "strict": true
+    "strict": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true
   },
   "include": ["src/**/*"]
 }
