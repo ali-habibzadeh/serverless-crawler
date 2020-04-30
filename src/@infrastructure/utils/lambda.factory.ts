@@ -27,7 +27,6 @@ export class LambdaFactory {
       ...this.defaultSettings,
       functionName: `FnName-${this.handler}`,
       handler: `index.${this.handler}`,
-      reservedConcurrentExecutions: 400,
       environment: {
         region: Stack.of(this.parent).region,
         account: Stack.of(this.parent).account,

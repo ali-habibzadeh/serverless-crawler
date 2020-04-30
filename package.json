@@ -30,6 +30,7 @@
     "@types/aws-lambda": "^8.10.50",
     "@types/jest": "^24.0.22",
     "@types/node": "10.17.5",
+    "@types/puppeteer-core": "^2.0.0",
     "aws-cdk": "1.36.1",
     "aws-lambda": "^1.0.5",
     "jest": "^24.9.0",
@@ -44,8 +45,14 @@
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@types/convict": "^4.2.1",
+    "@types/minimatch": "^3.0.3",
     "aws-sdk": "^2.657.0",
+    "chrome-aws-lambda": "^2.1.1",
     "convict": "^5.2.0",
+    "devtools-protocol": "^0.0.762508",
+    "lodash": "^4.17.15",
+    "minimatch": "^3.0.4",
+    "puppeteer-core": "^3.0.2",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.16"
   }
