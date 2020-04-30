@@ -7,7 +7,7 @@ export async function getLaunchOptions(): Promise<LaunchOptions> {
   return {
     args: chromiumSwitches,
     userDataDir: "user-data",
-    headless: true,
+    headless: chromium.headless,
     executablePath: await chromium.executablePath,
   };
 }
