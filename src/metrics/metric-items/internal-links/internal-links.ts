@@ -1,4 +1,4 @@
-import { Page, Response } from "puppeteer";
+import { Page, Response } from "puppeteer-core";
 import { URL } from "url";
 
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";

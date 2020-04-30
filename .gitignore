@@ -12,6 +12,7 @@ local-synth
 .vscode
 
 node_modules/
+user-data/
 coverage/
 dist/
 .vs/
