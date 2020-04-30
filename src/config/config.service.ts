@@ -2,7 +2,7 @@ import convict from "convict";
 
 import { appConfigSchema } from "./schema";
 
-export class ConfigService {
+class ConfigService {
   private static instance: ConfigService;
   private config = convict(appConfigSchema);
   public environment = this.config.getProperties();
@@ -18,3 +18,5 @@ export class ConfigService {
     return ConfigService.instance;
   }
 }
+
+export const appConfig = ConfigService.getInstance().environment;

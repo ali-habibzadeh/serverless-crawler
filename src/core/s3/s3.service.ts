@@ -1,10 +1,10 @@
 import { S3 } from "aws-sdk";
 
-import { ConfigService } from "../../config/config.service";
+import { appConfig } from "../../config/config.service";
 
 export class S3Service {
   private static instance: S3;
-  private static region = ConfigService.getInstance().environment.region;
+  private static region = appConfig.region;
 
   private constructor() {}
 

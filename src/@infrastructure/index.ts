@@ -1,4 +1,4 @@
-import { AttributeType, Table } from "@aws-cdk/aws-dynamodb";
+import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
@@ -23,6 +23,8 @@ export class ServerlessCrawlerStack extends Stack {
 
   public crawlUrlsTable = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
+    replicationRegions: ["us-east-2"],
+    stream: StreamViewType.NEW_AND_OLD_IMAGES,
   });
 
   public startHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
