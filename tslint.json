@@ -3,6 +3,7 @@
   "rules": {
     "no-implicit-dependencies": [false],
     "no-console": [false],
-    "no-unused-expression": [false]
+    "no-unused-expression": [false],
+    "no-angle-bracket-type-assertion": [false]
   }
 }
