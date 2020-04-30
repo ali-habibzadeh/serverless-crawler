@@ -4,6 +4,7 @@ import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
 
 import { DynamodbService } from "../core/dynamodb/dynamodb.service";
 import { CrawlUrl } from "./url-processing/crawl-url.model";
+import { UrlsProcessor } from "./url-processing/url-processor";
 
 export class StartCrawlHandler {
   private inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
@@ -16,9 +17,10 @@ export class StartCrawlHandler {
     return "done.";
   }
 
-  private async processUrl(record: DynamoDBRecord): Promise<any> {
+  private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
-    console.log("model extracted", url);
+    const processor = new UrlsProcessor(url);
+    await processor.process();
   }
 
   private getUrl(record: DynamoDBRecord): CrawlUrl {
