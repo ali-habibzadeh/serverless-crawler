@@ -1,5 +1,5 @@
 import { camelCase, isArray } from "lodash";
-import { Page, Response } from "puppeteer";
+import { Page, Response } from "puppeteer-core";
 
 import { IMetric, IMetricValue } from "./metric.interface";
 
@@ -13,7 +13,7 @@ export abstract class BaseMetric {
       value,
       isArray,
       type: typeName,
-      name: camelCase(name)
+      name: camelCase(name),
     };
   }
 
@@ -23,7 +23,7 @@ export abstract class BaseMetric {
     const toBeDetermined = singleItem ? singleItem : {};
     return {
       isArray: isCollection,
-      name: typeof toBeDetermined
+      name: typeof toBeDetermined,
     };
   }
 

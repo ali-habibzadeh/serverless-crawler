@@ -45,6 +45,7 @@
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "@types/convict": "^4.2.1",
+    "@types/lodash": "^4.14.150",
     "@types/minimatch": "^3.0.3",
     "aws-sdk": "^2.657.0",
     "chrome-aws-lambda": "^2.1.1",
