@@ -19,4 +19,10 @@ export const appConfigSchema = {
     default: "urlsTable",
     env: envVars.crawlUrlsTableName,
   },
+  [envVars.isLocal]: {
+    doc: "Whether process is on local device",
+    format: Boolean,
+    default: false,
+    env: envVars.isLocal,
+  },
 };

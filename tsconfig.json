@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es2019",
     "module": "commonjs",
-    "lib": ["es2019", "esnext"],
+    "lib": ["es2019", "esnext", "DOM"],
     "moduleResolution": "node",
     "sourceMap": true,
     "outDir": "./dist",
@@ -10,6 +10,7 @@
     "composite": false,
     "skipLibCheck": true,
     "esModuleInterop": true,
+    "downlevelIteration": true,
     "strict": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true
