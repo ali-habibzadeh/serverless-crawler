@@ -1,5 +1,5 @@
 import chromium from "chrome-aws-lambda";
-import { LaunchOptions } from "puppeteer";
+import { LaunchOptions } from "puppeteer-core";
 
 import { appConfig } from "../../../config/config.service";
 

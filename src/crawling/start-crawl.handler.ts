@@ -31,34 +31,3 @@ export class StartCrawlHandler {
     throw new Error(`Invalid DynamoDBRecord ${record}`);
   }
 }
-
-new StartCrawlHandler({
-  Records: [
-    {
-      eventID: "3bb72ca0e31954a9cc1861708fafeae3",
-      eventName: "INSERT",
-      eventVersion: "1.1",
-      eventSource: "aws:dynamodb",
-      awsRegion: "us-east-1",
-      dynamodb: {
-        ApproximateCreationDateTime: 1549574393,
-        Keys: {
-          url: {
-            S: "https://chilliercatch.htmlpasta.com/",
-          },
-        },
-        NewImage: {
-          url: {
-            S: "https://chilliercatch.htmlpasta.com/",
-          },
-        },
-        SequenceNumber: "4191400000000051185472644",
-        SizeBytes: 48,
-        StreamViewType: "NEW_AND_OLD_IMAGES",
-      },
-      eventSourceARN: "arn:aws:dynamodb:ADD_YOUR_STREAM_ARN_HERE",
-    },
-  ],
-})
-  .handle()
-  .catch();

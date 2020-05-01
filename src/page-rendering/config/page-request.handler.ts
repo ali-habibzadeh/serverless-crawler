@@ -1,5 +1,5 @@
 import { Minimatch } from "minimatch";
-import { Request } from "puppeteer";
+import { Request } from "puppeteer-core";
 
 import { adRejections } from "./constants/ad-rejections";
 import { analyticsRejections } from "./constants/analytics-rejections";
@@ -16,8 +16,8 @@ export class PageRequestHandler {
 
   private isBlocked(): boolean {
     const isBlockedType = blockedResourceTypes.includes(this.resourceType);
-    const isAdvert = adRejections.some(token => this.globMatchesUrl(token));
-    const isAnalytics = analyticsRejections.some(token => this.globMatchesUrl(token));
+    const isAdvert = adRejections.some((token) => this.globMatchesUrl(token));
+    const isAnalytics = analyticsRejections.some((token) => this.globMatchesUrl(token));
     return isBlockedType || isAdvert || isAnalytics;
   }
 
