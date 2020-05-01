@@ -44,12 +44,12 @@ new StartCrawlHandler({
         ApproximateCreationDateTime: 1549574393,
         Keys: {
           url: {
-            S: "https://www.deepcrawl.com",
+            S: "https://chilliercatch.htmlpasta.com/",
           },
         },
         NewImage: {
           url: {
-            S: "https://www.deepcrawl.com",
+            S: "https://chilliercatch.htmlpasta.com/",
           },
         },
         SequenceNumber: "4191400000000051185472644",

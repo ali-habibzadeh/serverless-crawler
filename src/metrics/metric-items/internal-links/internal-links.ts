@@ -1,8 +1,8 @@
 import { Page, Response } from "puppeteer";
-import { URL } from "url";
 
 import { BaseMetric } from "../../base-types/base-metric";
 import { IMetricValue } from "../../base-types/metric.interface";
+import { getNormalLinks } from "./link-utils";
 
 export class InternalLinks extends BaseMetric {
   constructor(protected page: Page, response: Response | null) {
@@ -17,15 +17,13 @@ export class InternalLinks extends BaseMetric {
   }
 
   private async getAllInternalLinks(): Promise<string[]> {
-    const links = await this.page.evaluate(() => {
-      const links = Array.from(document.querySelectorAll("a"));
-      const normalLinks = links.filter((link) => {
-        const href = link.getAttribute("href");
-        return !href?.startsWith("#") && !href?.startsWith("data:") && href;
-      });
-      return normalLinks.map((link) => link.href);
-    });
-    return [...new Set(links)].filter((href) => !this.isExternalLink(href));
+    const links = await this.page.evaluate(() =>
+      [...document.querySelectorAll("a")].map((link) => ({
+        attrHref: link.getAttribute("href"),
+        href: link.href,
+      }))
+    );
+    return getNormalLinks(links).filter((href) => !this.isExternalLink(href));
   }
 
   private isExternalLink(href: string): boolean {
