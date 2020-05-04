@@ -19,8 +19,7 @@ export class StartCrawlHandler {
 
   private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
-    const processor = new UrlsProcessor(url);
-    await processor.process();
+    await new UrlsProcessor(url).process();
   }
 
   private getUrl(record: DynamoDBRecord): CrawlUrl {

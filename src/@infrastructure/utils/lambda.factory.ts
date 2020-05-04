@@ -9,6 +9,7 @@ interface ILambdaFactoryProps {
   environment?: {};
   onSuccess?: IDestination;
   onFailure?: IDestination;
+  reservedConcurrentExecutions?: number;
 }
 
 export class LambdaFactory {
@@ -20,13 +21,18 @@ export class LambdaFactory {
     tracing: Tracing.ACTIVE,
   };
 
-  constructor(private parent: Construct, private handler: LambdaHandlers, private props: ILambdaFactoryProps) {}
+  constructor(
+    private parent: Construct,
+    private handler: LambdaHandlers,
+    private props: ILambdaFactoryProps
+  ) {}
 
   public getLambda(): Fn {
     return new Fn(this.parent, `Id-${this.handler}`, {
       ...this.defaultSettings,
       functionName: `FnName-${this.handler}`,
       handler: `index.${this.handler}`,
+      reservedConcurrentExecutions: this.props.reservedConcurrentExecutions,
       environment: {
         region: Stack.of(this.parent).region,
         account: Stack.of(this.parent).account,

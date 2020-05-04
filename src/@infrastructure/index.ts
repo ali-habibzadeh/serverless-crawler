@@ -1,7 +1,7 @@
 import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
-import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
+import { App, CfnOutput, Construct, Duration, Stack, StackProps } from "@aws-cdk/core";
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";
@@ -10,15 +10,9 @@ import { LambdaFactory } from "./utils/lambda.factory";
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
-
-    this.crawlUrlsTable.grantReadWriteData(this.startHandler);
-
-    this.startHandler.addEventSource(
-      new DynamoEventSource(this.crawlUrlsTable, {
-        startingPosition: StartingPosition.LATEST,
-      })
-    );
+    this.configure();
   }
+
   public regionOutput = new CfnOutput(this, "region", { value: this.region });
 
   public crawlUrlsTable = new Table(this, "crawlUrlsTable", {
@@ -28,8 +22,26 @@ export class ServerlessCrawlerStack extends Stack {
   });
 
   public startHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
-    environment: { [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName },
+    environment: {
+      [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName,
+    },
+    reservedConcurrentExecutions: 20,
   }).getLambda();
+
+  private configure(): void {
+    this.crawlUrlsTable.grantReadWriteData(this.startHandler);
+    this.crawlUrlsTable.grant(this.startHandler);
+
+    this.startHandler.addEventSource(
+      new DynamoEventSource(this.crawlUrlsTable, {
+        startingPosition: StartingPosition.LATEST,
+        maxBatchingWindow: Duration.minutes(5),
+        parallelizationFactor: 1,
+        retryAttempts: 4,
+        batchSize: 30,
+      })
+    );
+  }
 }
 
 console.log("GITHUB_REF", process.env.GITHUB_REF);

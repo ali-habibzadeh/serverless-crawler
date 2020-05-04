@@ -1,5 +1,6 @@
 import { Browser, launch, Page, Response } from "puppeteer-core";
 
+import { IMetric } from "../metrics/base-types/metric.interface";
 import { metricsList as metrics } from "../metrics/metrics-list";
 import { getLaunchOptions } from "./config/constants/launch-options";
 import { PageRequestHandler } from "./config/page-request.handler";
@@ -10,7 +11,7 @@ export class PageRenderService {
 
   constructor(private url: string) {}
 
-  public async getPageRenderMetrics(): Promise<any[]> {
+  public async getPageRenderMetrics(): Promise<IMetric<any>[]> {
     const response = await this.getResponse();
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetric()));
     await this.close();
