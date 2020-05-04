@@ -29,7 +29,6 @@ export class ServerlessCrawlerStack extends Stack {
   }).getLambda();
 
   private configure(): void {
-    this.crawlUrlsTable.grantReadWriteData(this.startHandler);
     this.crawlUrlsTable.grant(this.startHandler);
 
     this.startHandler.addEventSource(
