@@ -29,7 +29,7 @@ export class ServerlessCrawlerStack extends Stack {
   }).getLambda();
 
   private configure(): void {
-    this.crawlUrlsTable.grant(this.startHandler);
+    this.crawlUrlsTable.grantReadWriteData(this.startHandler);
 
     this.startHandler.addEventSource(
       new DynamoEventSource(this.crawlUrlsTable, {
