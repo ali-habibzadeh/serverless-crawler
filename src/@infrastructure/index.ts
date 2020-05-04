@@ -34,7 +34,7 @@ export class ServerlessCrawlerStack extends Stack {
     this.startHandler.addEventSource(
       new DynamoEventSource(this.crawlUrlsTable, {
         startingPosition: StartingPosition.LATEST,
-        maxBatchingWindow: Duration.minutes(5),
+        maxBatchingWindow: Duration.seconds(2),
         parallelizationFactor: 1,
         retryAttempts: 4,
         batchSize: 30,
