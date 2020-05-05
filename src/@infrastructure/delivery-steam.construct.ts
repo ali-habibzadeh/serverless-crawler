@@ -12,12 +12,12 @@ export class DeliverySteam extends Construct {
 
   public crawlDataBucket = new BucketFactory(this, "CrawlDataBucket").getBucket();
 
-  private deliverySteamRole = new Role(this, "DeliverySteamRole", {
+  private deliveryStreamRole = new Role(this, "DeliveryStreamRole", {
     assumedBy: new ServicePrincipal("firehose.amazonaws.com"),
   });
 
   public crawlDatasDeliveryStream = new CfnDeliveryStream(this, "CrawlDataDeliveryStream", {
-    deliveryStreamType: "DIRECTPUT",
+    deliveryStreamType: "DirectPut",
     extendedS3DestinationConfiguration: {
       bucketArn: this.crawlDataBucket.bucketArn,
       compressionFormat: "UNCOMPRESSED",
@@ -25,12 +25,12 @@ export class DeliverySteam extends Construct {
         intervalInSeconds: 100,
         sizeInMBs: 5,
       },
-      roleArn: this.deliverySteamRole.roleArn,
+      roleArn: this.deliveryStreamRole.roleArn,
     },
   });
 
   private configure(): void {
-    this.deliverySteamRole.addToPolicy(
+    this.deliveryStreamRole.addToPolicy(
       new PolicyStatement({
         resources: [this.crawlDataBucket.bucketArn, `${this.crawlDataBucket.bucketArn}/*`],
         actions: [

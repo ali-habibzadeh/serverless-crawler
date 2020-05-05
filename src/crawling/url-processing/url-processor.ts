@@ -30,7 +30,7 @@ export class UrlsProcessor {
       .putRecord({
         DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,
         Record: {
-          Data: data,
+          Data: JSON.stringify(data),
         },
       })
       .promise();
