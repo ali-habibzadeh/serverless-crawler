@@ -30,7 +30,7 @@ export class DeliverySteam extends Construct {
         type: Schema.STRING,
       },
       {
-        name: "responseStatus",
+        name: "status",
         type: Schema.INTEGER,
       },
     ],

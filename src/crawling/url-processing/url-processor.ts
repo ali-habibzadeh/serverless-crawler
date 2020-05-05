@@ -17,7 +17,7 @@ export class UrlsProcessor {
 
     await this.writeToS3({
       url: this.crawlUrl.url,
-      responseStatus: metrics.find((metric) => metric.name === "responseStatus")?.value,
+      status: metrics.find((metric) => metric.name === "responseStatus")?.value,
     });
 
     const allLinks: string[] = metrics.find((metric) => metric.name === "internalLinks")?.value;
