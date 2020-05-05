@@ -71,7 +71,7 @@ export class DeliverySteam extends Construct {
       compressionFormat: "UNCOMPRESSED",
       bufferingHints: {
         intervalInSeconds: 60,
-        sizeInMBs: 1,
+        sizeInMBs: 64,
       },
       roleArn: this.deliveryStreamS3Role.roleArn,
     },
