@@ -14,7 +14,7 @@ export class ResponseStatus extends BaseMetric {
     return {
       name: camelCase(ResponseStatus.name),
       value: this.response!.status(),
-      parquetType: ParquetTypes.DECIMAL,
+      parquetType: ParquetTypes.INT_32,
     };
   }
 }

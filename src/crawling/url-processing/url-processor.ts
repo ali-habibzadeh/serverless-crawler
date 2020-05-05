@@ -15,10 +15,11 @@ export class UrlsProcessor {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
 
-    await this.writeToS3({
+    const data = {
       url: this.crawlUrl.url,
       status: metrics.find((metric) => metric.name === "responseStatus")?.value,
-    });
+    };
+    await this.writeToS3(data);
 
     const allLinks: string[] = metrics.find((metric) => metric.name === "internalLinks")?.value;
     // tslint:disable-next-line: ban
