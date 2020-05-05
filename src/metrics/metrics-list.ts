@@ -21,8 +21,6 @@ export class CrawlMetrics {
   private getGlueMetrics(): BaseMetric[] {
     return this.metricsList
       .map((metric) => Reflect.construct(metric, []))
-      .filter((metric) => metric.isGlueColumn);
+      .filter((metric: BaseMetric) => metric.isGlueColumn);
   }
 }
-
-export const metricsList = [InternalLinks, ResponseStatus];
