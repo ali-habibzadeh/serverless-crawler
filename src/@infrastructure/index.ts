@@ -6,7 +6,7 @@ import { App, CfnOutput, Construct, Duration, Stack, StackProps } from "@aws-cdk
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";
-import { DeliverySteam as DeliveryStream } from "./delivery-steam.construct";
+import { DeliverySteam as DeliveryStream } from "./delivery/delivery-steam.construct";
 import { LambdaFactory } from "./utils/lambda.factory";
 
 export class ServerlessCrawlerStack extends Stack {

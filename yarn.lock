@@ -377,6 +377,17 @@
     "@aws-cdk/core" "1.36.1"
     constructs "^3.0.2"
 
+"@aws-cdk/aws-glue@^1.36.1":
+  version "1.36.1"
+  resolved "https://registry.npmjs.org/@aws-cdk/aws-glue/-/aws-glue-1.36.1.tgz#167c2c8af6cb2faf769a658421786b44e3a102c5"
+  integrity sha512-q9/ymvzEFyXURuojbwkAbadO/8M2sBK3Ke5rrlM8So/gbkja4A3b4qIPudn+A4Aedd6J5TZ2Bic6IJxyWOKWEw==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.36.1"
+    "@aws-cdk/aws-kms" "1.36.1"
+    "@aws-cdk/aws-s3" "1.36.1"
+    "@aws-cdk/core" "1.36.1"
+    constructs "^3.0.2"
+
 "@aws-cdk/aws-iam@1.36.1", "@aws-cdk/aws-iam@^1.36.1":
   version "1.36.1"
   resolved "https://registry.npmjs.org/@aws-cdk/aws-iam/-/aws-iam-1.36.1.tgz#ba6f5d89b4fc96997c4b9797d241f93090a2865f"

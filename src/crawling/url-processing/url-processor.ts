@@ -10,11 +10,15 @@ export class UrlsProcessor {
   private fh = FirehoseService.getInstance();
   constructor(private crawlUrl: CrawlUrl) {}
 
+  // tslint:disable-next-line: no-big-function
   public async process(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
 
-    await this.writeToS3(metrics);
+    await this.writeToS3({
+      url: this.crawlUrl.url,
+      responseStatus: metrics.find((metric) => metric.name === "responseStatus")?.value,
+    });
 
     const allLinks: string[] = metrics.find((metric) => metric.name === "internalLinks")?.value;
     // tslint:disable-next-line: ban
@@ -25,7 +29,7 @@ export class UrlsProcessor {
     }
   }
 
-  private writeToS3(data: any): Promise<PutRecordOutput> {
+  private async writeToS3(data: any): Promise<PutRecordOutput> {
     return this.fh
       .putRecord({
         DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,
