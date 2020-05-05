@@ -5,7 +5,7 @@ import { Construct } from "@aws-cdk/core";
 import { BucketFactory } from "./utils/bucket.factory";
 
 export class DeliverySteam extends Construct {
-  constructor(parent: Construct, id: string) {
+  constructor(parent: Construct, id: string, private startHandlerArn: string) {
     super(parent, id);
     this.configure();
   }
@@ -33,14 +33,13 @@ export class DeliverySteam extends Construct {
     this.deliveryStreamRole.addToPolicy(
       new PolicyStatement({
         resources: [this.crawlDataBucket.bucketArn, `${this.crawlDataBucket.bucketArn}/*`],
-        actions: [
-          "s3:AbortMultipartUpload",
-          "s3:GetBucketLocation",
-          "s3:GetObject",
-          "s3:ListBucket",
-          "s3:ListBucketMultipartUploads",
-          "s3:PutObject",
-        ],
+        actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"],
+      })
+    );
+    this.deliveryStreamRole.addToPolicy(
+      new PolicyStatement({
+        resources: [this.startHandlerArn],
+        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
       })
     );
   }

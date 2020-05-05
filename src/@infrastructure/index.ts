@@ -22,16 +22,12 @@ export class ServerlessCrawlerStack extends Stack {
     stream: StreamViewType.NEW_AND_OLD_IMAGES,
   });
 
-  public deliveryStream = new DeliveryStream(this, "DeliveryStream");
-
   public startHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
-    environment: {
-      [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName,
-      [envVars.crawlDataBucketName]: this.deliveryStream.crawlDataBucket.bucketName,
-      [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
-    },
+    environment: this.getStartHandlerEnv(),
     reservedConcurrentExecutions: 20,
   }).getLambda();
+
+  public deliveryStream = new DeliveryStream(this, "DeliveryStream", this.startHandler.functionArn);
 
   private configure(): void {
     this.crawlUrlsTable.grantReadWriteData(this.startHandler);
@@ -45,6 +41,14 @@ export class ServerlessCrawlerStack extends Stack {
         batchSize: 30,
       })
     );
+  }
+
+  private getStartHandlerEnv(): any {
+    return {
+      [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName,
+      [envVars.crawlDataBucketName]: this.deliveryStream.crawlDataBucket.bucketName,
+      [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
+    };
   }
 }
 
