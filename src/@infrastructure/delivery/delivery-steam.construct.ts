@@ -70,8 +70,8 @@ export class DeliverySteam extends Construct {
       bucketArn: this.crawlDataBucket.bucketArn,
       compressionFormat: "UNCOMPRESSED",
       bufferingHints: {
-        intervalInSeconds: 100,
-        sizeInMBs: 64,
+        intervalInSeconds: 60,
+        sizeInMBs: 1,
       },
       roleArn: this.deliveryStreamS3Role.roleArn,
     },
