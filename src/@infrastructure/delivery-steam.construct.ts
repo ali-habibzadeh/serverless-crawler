@@ -17,6 +17,7 @@ export class DeliverySteam extends Construct {
   });
 
   public crawlDatasDeliveryStream = new CfnDeliveryStream(this, "CrawlDataDeliveryStream", {
+    deliveryStreamName: "crawlDataDeliveryStream",
     deliveryStreamType: "DirectPut",
     extendedS3DestinationConfiguration: {
       bucketArn: this.crawlDataBucket.bucketArn,
