@@ -1,3 +1,5 @@
+import {} from "parquetjs";
+
 export interface IMetricValue<T> {
   /**
    * Name of the metric
@@ -7,13 +9,17 @@ export interface IMetricValue<T> {
    * Value of the metric
    */
   value: T;
+  /**
+   * Name of the data type of this metric for Parquet
+   */
+  parquetType: string;
 }
 
 export interface IMetric<T> extends IMetricValue<T> {
   /**
-   * Name of the data type of this metric
+   * Name of the data type of this metric within JS
    */
-  type: string;
+  jsType: string;
   /**
    * Whether the value is an array or not
    */

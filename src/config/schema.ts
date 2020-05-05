@@ -25,4 +25,16 @@ export const appConfigSchema = {
     default: false,
     env: envVars.isLocal,
   },
+  [envVars.crawlDataDeliveryStreamName]: {
+    doc: "Stream name for delivering crawl data to s3",
+    format: String,
+    default: "123",
+    env: envVars.crawlDataDeliveryStreamName,
+  },
+  [envVars.crawlDataBucketName]: {
+    doc: "S3 Bucket for Crawl data",
+    format: String,
+    default: "123",
+    env: envVars.crawlDataBucketName,
+  },
 };

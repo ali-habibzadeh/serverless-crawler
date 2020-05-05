@@ -1,0 +1,16 @@
+export enum ParquetTypes {
+  DATE = "DATE",
+  UTF8 = "UTF8",
+  INT_8 = "INT_8",
+  INT_16 = "INT_16",
+  INT_32 = "INT_32",
+  INT_64 = "INT_64",
+  UINT_8 = "UINT_8",
+  UINT_16 = "UINT_16",
+  UINT_32 = "UINT_32",
+  UINT_64 = "UINT_64",
+  DECIMAL = "DECIMAL",
+  TIME_MILLIS = "TIME_MILLIS",
+  TIMESTAMP_MILLIS = "TIMESTAMP_MILLIS",
+  INTERVAL = "INTERVAL",
+}

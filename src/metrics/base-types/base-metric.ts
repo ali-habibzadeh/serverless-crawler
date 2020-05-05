@@ -7,12 +7,13 @@ export abstract class BaseMetric {
   constructor(protected page: Page, protected response: Response | null) {}
 
   public async getMetric(): Promise<IMetric<any>> {
-    const { name, value } = await this.getMetricValue();
-    const { name: typeName, isArray } = this.getDataType(value);
+    const { name, value, parquetType } = await this.getMetricValue();
+    const { name: jsTypeName, isArray } = this.getDataType(value);
     return {
       value,
       isArray,
-      type: typeName,
+      parquetType,
+      jsType: jsTypeName,
       name: camelCase(name),
     };
   }
