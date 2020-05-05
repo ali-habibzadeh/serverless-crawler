@@ -1,11 +1,16 @@
 import { Page, Response } from "puppeteer";
 
+import { Schema } from "@aws-cdk/aws-glue";
+
 import { BaseMetric } from "../../base-types/base-metric";
 import { IMetricValue } from "../../base-types/metric.interface";
-import { ParquetTypes } from "../../base-types/parquet-types.enum";
 import { getNormalLinks } from "./link-utils";
 
 export class InternalLinks extends BaseMetric {
+  public columnName = "internal_links";
+  public schemaType = Schema.STRING;
+  public isGlueColumn = false;
+
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -14,7 +19,7 @@ export class InternalLinks extends BaseMetric {
     return {
       value: await this.getAllInternalLinks(),
       name: InternalLinks.name,
-      parquetType: ParquetTypes.UTF8,
+      parquetType: Schema.STRING,
     };
   }
 

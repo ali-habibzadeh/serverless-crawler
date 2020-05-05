@@ -1,9 +1,15 @@
 import { camelCase, isArray } from "lodash";
 import { Page, Response } from "puppeteer-core";
 
+import { Type } from "@aws-cdk/aws-glue";
+
 import { IMetric, IMetricValue } from "./metric.interface";
 
 export abstract class BaseMetric {
+  public abstract columnName: string;
+  public abstract schemaType: Type;
+  public abstract isGlueColumn: boolean;
+
   constructor(protected page: Page, protected response: Response | null) {}
 
   public async getMetric(): Promise<IMetric<any>> {

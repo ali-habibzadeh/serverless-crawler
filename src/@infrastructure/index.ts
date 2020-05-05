@@ -6,7 +6,7 @@ import { App, CfnOutput, Construct, Duration, Stack, StackProps } from "@aws-cdk
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";
-import { DeliverySteam as DeliveryStream } from "./delivery/delivery-steam.construct";
+import { DeliverySteam as DeliveryStream } from "./delivery/delivery-stream";
 import { LambdaFactory } from "./utils/lambda.factory";
 
 export class ServerlessCrawlerStack extends Stack {
@@ -28,7 +28,7 @@ export class ServerlessCrawlerStack extends Stack {
   public startHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
     environment: {
       [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName,
-      [envVars.crawlDataBucketName]: this.deliveryStream.crawlDataBucket.bucketName,
+      [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
       [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
     },
     reservedConcurrentExecutions: 20,

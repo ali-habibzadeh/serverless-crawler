@@ -6,19 +6,19 @@ import { Schema } from "@aws-cdk/aws-glue";
 import { BaseMetric } from "../../base-types/base-metric";
 import { IMetricValue } from "../../base-types/metric.interface";
 
-export class ResponseStatus extends BaseMetric {
-  public columnName = "status";
-  public schemaType = Schema.INTEGER;
+export class PageUrl extends BaseMetric {
+  public columnName = "url";
+  public schemaType = Schema.STRING;
   public isGlueColumn = true;
 
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
 
-  public async getMetricValue(): Promise<IMetricValue<number>> {
+  public async getMetricValue(): Promise<IMetricValue<string>> {
     return {
-      name: camelCase(ResponseStatus.name),
-      value: this.response!.status(),
+      name: camelCase(PageUrl.name),
+      value: this.page.url(),
       parquetType: Schema.INTEGER,
     };
   }

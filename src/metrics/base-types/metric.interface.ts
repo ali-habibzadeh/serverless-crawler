@@ -1,4 +1,4 @@
-import {} from "parquetjs";
+import { Schema } from "@aws-cdk/aws-glue";
 
 export interface IMetricValue<T> {
   /**
@@ -12,7 +12,7 @@ export interface IMetricValue<T> {
   /**
    * Name of the data type of this metric for Parquet
    */
-  parquetType: string;
+  parquetType: Schema;
 }
 
 export interface IMetric<T> extends IMetricValue<T> {
