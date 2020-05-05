@@ -30,15 +30,6 @@ export class DeliverySteam extends Construct {
     },
   });
 
-  public grantWriteToLambda(functionArn: string): void {
-    this.deliveryStreamRole.addToPolicy(
-      new PolicyStatement({
-        resources: [functionArn],
-        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
-      })
-    );
-  }
-
   private configure(): void {
     this.deliveryStreamRole.addToPolicy(
       new PolicyStatement({

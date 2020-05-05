@@ -1,4 +1,5 @@
 import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
+import { PolicyStatement } from "@aws-cdk/aws-iam";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import { App, CfnOutput, Construct, Duration, Stack, StackProps } from "@aws-cdk/core";
@@ -35,8 +36,11 @@ export class ServerlessCrawlerStack extends Stack {
 
   private configure(): void {
     this.crawlUrlsTable.grantReadWriteData(this.startHandler);
-    this.deliveryStream.grantWriteToLambda(this.startHandler.functionArn);
+    this.attachStartHandlerEventSource();
+    this.grantStartHandlerFireosePermission();
+  }
 
+  private attachStartHandlerEventSource(): void {
     this.startHandler.addEventSource(
       new DynamoEventSource(this.crawlUrlsTable, {
         startingPosition: StartingPosition.LATEST,
@@ -44,6 +48,15 @@ export class ServerlessCrawlerStack extends Stack {
         parallelizationFactor: 1,
         retryAttempts: 4,
         batchSize: 30,
+      })
+    );
+  }
+
+  private grantStartHandlerFireosePermission(): void {
+    this.startHandler.addToRolePolicy(
+      new PolicyStatement({
+        resources: [this.deliveryStream.crawlDatasDeliveryStream.attrArn],
+        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
       })
     );
   }
