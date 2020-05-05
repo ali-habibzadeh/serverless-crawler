@@ -5,7 +5,7 @@ import { Construct } from "@aws-cdk/core";
 import { BucketFactory } from "./utils/bucket.factory";
 
 export class DeliverySteam extends Construct {
-  constructor(parent: Construct, id: string, private startHandlerArn: string) {
+  constructor(parent: Construct, id: string) {
     super(parent, id);
     this.configure();
   }
@@ -29,17 +29,20 @@ export class DeliverySteam extends Construct {
     },
   });
 
+  public grantWriteToLambda(functionArn: string): void {
+    this.deliveryStreamRole.addToPolicy(
+      new PolicyStatement({
+        resources: [functionArn],
+        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
+      })
+    );
+  }
+
   private configure(): void {
     this.deliveryStreamRole.addToPolicy(
       new PolicyStatement({
         resources: [this.crawlDataBucket.bucketArn, `${this.crawlDataBucket.bucketArn}/*`],
         actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"],
-      })
-    );
-    this.deliveryStreamRole.addToPolicy(
-      new PolicyStatement({
-        resources: [this.startHandlerArn],
-        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
       })
     );
   }
