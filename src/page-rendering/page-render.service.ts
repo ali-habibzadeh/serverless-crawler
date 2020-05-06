@@ -1,6 +1,6 @@
 import { Browser, launch, Page, Response } from "puppeteer-core";
 
-import { CrawlMetrics } from "../metrics/metrics-list";
+import { MetricNames, metricsList as metrics } from "../metrics/metrics-list";
 import { getLaunchOptions } from "./config/constants/launch-options";
 import { PageRequestHandler } from "./config/page-request.handler";
 
@@ -10,15 +10,11 @@ export class PageRenderService {
 
   constructor(private url: string) {}
 
-  public async getPageRenderMetrics(): Promise<Record<string, any>> {
+  public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
-    const metrics = new CrawlMetrics().metricsList;
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetric()));
     await this.close();
-    return results.reduce((obj, metric) => ({
-      ...obj,
-      ...metric,
-    }));
+    return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
   private async getResponse(): Promise<Response | null> {
