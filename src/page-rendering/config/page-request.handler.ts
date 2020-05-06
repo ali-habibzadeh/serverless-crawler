@@ -1,5 +1,5 @@
 import { Minimatch } from "minimatch";
-import { Request } from "puppeteer-core";
+import { Request } from "puppeteer";
 
 import { adRejections } from "./constants/ad-rejections";
 import { analyticsRejections } from "./constants/analytics-rejections";

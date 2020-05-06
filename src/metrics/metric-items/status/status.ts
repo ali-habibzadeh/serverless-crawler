@@ -12,7 +12,7 @@ export class ResponseStatus extends MetricContainer {
     super(page, response);
   }
 
-  public async getMetric(): Promise<Record<string, number>[]> {
+  public async getMetrics(): Promise<Record<string, number>[]> {
     return [
       {
         [this.columns[0].name]: this.response!.status(),

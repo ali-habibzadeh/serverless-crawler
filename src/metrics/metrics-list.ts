@@ -1,6 +1,7 @@
 import { Column } from "@aws-cdk/aws-glue";
 
 import { InternalLinks } from "./metric-items/internal-links/internal-links";
+import { WebPerformance } from "./metric-items/performance/performance";
 import { ResponseStatus } from "./metric-items/status/status";
 import { PageUrl } from "./metric-items/url/page-url";
 
@@ -8,12 +9,14 @@ export enum MetricNames {
   Url = "url",
   Status = "status",
   InternalLinks = "internal_links",
+  FCP = "first_contentful_paint",
+  PageResourcesCount = "page_resources_count",
 }
 
-export const metricsList = [PageUrl, InternalLinks, ResponseStatus];
+export const metricsContainers = [PageUrl, InternalLinks, ResponseStatus, WebPerformance];
 
 export function getGlueColumns(): Column[] {
-  return metricsList
+  return metricsContainers
     .map((metric) => Reflect.construct(metric, []).columns)
     .flat()
     .filter((col) => col.isGlueColumn)

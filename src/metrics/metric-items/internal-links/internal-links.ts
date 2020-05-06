@@ -13,7 +13,7 @@ export class InternalLinks extends MetricContainer {
     super(page, response);
   }
 
-  public async getMetric(): Promise<Record<string, string[]>[]> {
+  public async getMetrics(): Promise<Record<string, string[]>[]> {
     return [
       {
         [this.columns[0].name]: await this.getAllInternalLinks(),

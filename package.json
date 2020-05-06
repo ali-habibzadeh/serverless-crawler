@@ -51,12 +51,13 @@
     "typescript": "^3.8.3"
   },
   "dependencies": {
-    "@aws-cdk/core": "1.36.1",
     "@aws-cdk/aws-glue": "^1.36.1",
+    "@aws-cdk/core": "1.36.1",
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "aws-sdk": "^2.657.0",
     "chrome-aws-lambda": "^2.1.1",
+    "class-transformer": "^0.2.3",
     "convict": "^5.2.0",
     "lodash": "^4.17.15",
     "minimatch": "^3.0.4",

@@ -1,3 +1,5 @@
+import { plainToClass } from "class-transformer";
+
 import { DynamodbService } from "../../core/dynamodb/dynamodb.service";
 import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 import { MetricNames } from "../../metrics/metrics-list";
@@ -16,7 +18,7 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    const toSave = links.map((href) => Object.assign(new CrawlUrl(), { url: href }));
+    const toSave = links.map((url) => plainToClass(CrawlUrl, { url }));
     const writer = this.dynamodb.batchPut(toSave);
     for await (const persisted of writer) {
       console.log(`Successfully wrote ${persisted.url}`);

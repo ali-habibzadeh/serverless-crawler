@@ -13,6 +13,18 @@ export class CDPSessionClient {
     return listeners;
   }
 
+  public async startSession(): Promise<void> {
+    this.client = await this.page.target().createCDPSession();
+  }
+
+  public async enablePerformance(): Promise<void> {
+    await this.client.send("Performance.enable");
+  }
+
+  public async getPerformanceMetrics(): Promise<CDP.Performance.GetMetricsResponse> {
+    return <CDP.Performance.GetMetricsResponse>await this.client.send("Performance.getMetrics");
+  }
+
   public async querySelectorAll(selector: string): Promise<number[]> {
     const doc = await this.getDocument();
     const { nodeIds } = <CDP.DOM.QuerySelectorAllResponse>(
@@ -21,8 +33,11 @@ export class CDPSessionClient {
     return nodeIds;
   }
 
+  public async getPageResourceTree(): Promise<CDP.Page.GetResourceTreeResponse> {
+    return <CDP.Page.GetResourceTreeResponse>await this.client.send("Page.getResourceTree");
+  }
+
   public async getDocument(): Promise<CDP.DOM.GetDocumentResponse> {
-    this.client = await this.page.target().createCDPSession();
     return <Promise<CDP.DOM.GetDocumentResponse>>this.client.send("DOM.getDocument");
   }
 
@@ -34,7 +49,9 @@ export class CDPSessionClient {
   }
 
   public async getAttribute(nodeId: number, attribute: string): Promise<string | null> {
-    const { attributes } = <CDP.DOM.GetAttributesResponse>await this.client.send("DOM.getAttributes", { nodeId });
+    const { attributes } = <CDP.DOM.GetAttributesResponse>(
+      await this.client.send("DOM.getAttributes", { nodeId })
+    );
     const attrIndex = attributes.indexOf(attribute);
     return attrIndex === -1 ? null : attributes[attrIndex + 1];
   }

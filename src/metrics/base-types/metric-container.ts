@@ -15,5 +15,5 @@ export abstract class MetricContainer {
 
   constructor(protected page: Page, protected response: Response | null) {}
 
-  public abstract getMetric(): Promise<Record<MetricNames, any>[]>;
+  public abstract getMetrics(): Promise<Record<MetricNames, any>[]>;
 }
