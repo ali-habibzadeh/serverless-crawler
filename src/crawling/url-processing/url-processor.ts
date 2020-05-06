@@ -11,12 +11,11 @@ export class UrlsProcessor {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
     await new DataDeliveryService(metrics).deliver();
-    await this.crawlNextBatch(metrics);
+    await this.crawlNextBatch(metrics["internal_links"]);
   }
 
-  private async crawlNextBatch(metrics: Record<string, any>): Promise<void> {
-    const internalLinksMetric: string[] = metrics["internal_links"];
-    const toSave = internalLinksMetric?.map((href) => Object.assign(new CrawlUrl(), { url: href }));
+  private async crawlNextBatch(links: string[]): Promise<void> {
+    const toSave = links.map((href) => Object.assign(new CrawlUrl(), { url: href }));
     const writer = this.dynamodb.batchPut(toSave);
     for await (const persisted of writer) {
       console.log(`Successfully wrote ${persisted.url}`);
