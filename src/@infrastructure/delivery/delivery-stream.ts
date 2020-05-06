@@ -29,13 +29,13 @@ export class DeliverySteam extends Construct {
         outputFormatConfiguration: {
           serializer: {
             parquetSerDe: {
-              compression: "UNCOMPRESSED",
+              compression: "GZIP",
             },
           },
         },
       },
       bucketArn: this.crawlData.crawlDataBucket.bucketArn,
-      compressionFormat: "UNCOMPRESSED",
+      compressionFormat: "GZIP",
       bufferingHints: {
         intervalInSeconds: 60,
         sizeInMBs: 64,

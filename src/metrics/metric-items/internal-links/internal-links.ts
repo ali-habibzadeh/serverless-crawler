@@ -7,11 +7,11 @@ import { MetricNames } from "../../metrics-list";
 import { getNormalLinks } from "./link-utils";
 
 export class InternalLinks extends MetricContainer {
-  public columns = [{ name: MetricNames.InternalLinks, type: Schema.STRING, isGlueColumn: false }];
-
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
+
+  public columns = [{ name: MetricNames.InternalLinks, type: Schema.STRING, isGlueColumn: false }];
 
   public async getMetrics(): Promise<Record<string, string[]>[]> {
     return [

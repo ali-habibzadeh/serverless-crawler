@@ -7,6 +7,10 @@ import { MetricContainer } from "../../base-types/metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class WebPerformance extends MetricContainer {
+  constructor(protected page: Page, response: Response | null) {
+    super(page, response);
+  }
+
   private cdpSession = new CDPSessionClient(this.page);
 
   public columns = [
@@ -18,10 +22,6 @@ export class WebPerformance extends MetricContainer {
     const perf = performance.getEntries().filter((entry) => entry.entryType === "paint");
     return JSON.stringify(perf);
   };
-
-  constructor(protected page: Page, response: Response | null) {
-    super(page, response);
-  }
 
   public async getMetrics(): Promise<Record<string, number>[]> {
     return [
