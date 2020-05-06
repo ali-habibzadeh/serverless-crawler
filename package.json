@@ -28,7 +28,6 @@
     "@aws-cdk/aws-lambda": "^1.36.1",
     "@aws-cdk/aws-lambda-destinations": "^1.36.1",
     "@aws-cdk/aws-lambda-event-sources": "^1.36.1",
-    "@aws-cdk/aws-glue": "^1.36.1",
     "@aws-cdk/aws-s3": "^1.36.1",
     "@aws-cdk/aws-sqs": "^1.36.1",
     "@deepcrawl/tslint-config": "git://github.com/deepcrawl/tslint-config-deepcrawl.git",
@@ -53,6 +52,7 @@
   },
   "dependencies": {
     "@aws-cdk/core": "1.36.1",
+    "@aws-cdk/aws-glue": "^1.36.1",
     "@aws/dynamodb-data-mapper": "^0.7.3",
     "@aws/dynamodb-data-mapper-annotations": "^0.7.3",
     "aws-sdk": "^2.657.0",
