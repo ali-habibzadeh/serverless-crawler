@@ -3,7 +3,7 @@ import { PolicyStatement, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { CfnDeliveryStream } from "@aws-cdk/aws-kinesisfirehose";
 import { Construct, Stack } from "@aws-cdk/core";
 
-import { CrawlMetrics } from "../../metrics/metrics-list";
+import { getGlueColumns } from "../../metrics/metrics-list";
 
 export class DeliverySchema extends Construct {
   constructor(parent: Construct, id: string) {
@@ -15,7 +15,7 @@ export class DeliverySchema extends Construct {
   private schemaTable = new Table(this, "SchemaTable", {
     database: this.schemaDatabase,
     tableName: "metadata-table",
-    columns: new CrawlMetrics().getGlueColumns(),
+    columns: getGlueColumns(),
     dataFormat: DataFormat.PARQUET,
   });
 
