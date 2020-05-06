@@ -1,10 +1,8 @@
-import { camelCase } from "lodash";
 import { Page, Response } from "puppeteer";
 
 import { Schema } from "@aws-cdk/aws-glue";
 
 import { BaseMetric } from "../../base-types/base-metric";
-import { IMetricValue } from "../../base-types/metric.interface";
 
 export class PageUrl extends BaseMetric {
   public columnName = "url";
@@ -15,11 +13,9 @@ export class PageUrl extends BaseMetric {
     super(page, response);
   }
 
-  public async getMetricValue(): Promise<IMetricValue<string>> {
+  public async getMetric(): Promise<Record<string, any>> {
     return {
-      name: camelCase(PageUrl.name),
-      value: this.page.url(),
-      parquetType: Schema.INTEGER,
+      [this.columnName]: this.page.url(),
     };
   }
 }

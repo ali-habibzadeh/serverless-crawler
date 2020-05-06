@@ -5,8 +5,10 @@ import { InternalLinks } from "./metric-items/internal-links/internal-links";
 import { ResponseStatus } from "./metric-items/status/status";
 import { PageUrl } from "./metric-items/url/page-url";
 
+const list = [PageUrl, InternalLinks, ResponseStatus];
+
 export class CrawlMetrics {
-  public metricsList = [PageUrl, InternalLinks, ResponseStatus];
+  public metricsList = list;
 
   public getGlueColumns(): Column[] {
     return this.getGlueMetrics().map((metric) => {

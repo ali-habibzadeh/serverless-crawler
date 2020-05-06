@@ -3,7 +3,6 @@ import { Page, Response } from "puppeteer";
 import { Schema } from "@aws-cdk/aws-glue";
 
 import { BaseMetric } from "../../base-types/base-metric";
-import { IMetricValue } from "../../base-types/metric.interface";
 import { getNormalLinks } from "./link-utils";
 
 export class InternalLinks extends BaseMetric {
@@ -15,11 +14,9 @@ export class InternalLinks extends BaseMetric {
     super(page, response);
   }
 
-  public async getMetricValue(): Promise<IMetricValue<string[]>> {
+  public async getMetric(): Promise<Record<string, string[]>> {
     return {
-      value: await this.getAllInternalLinks(),
-      name: InternalLinks.name,
-      parquetType: Schema.STRING,
+      [this.columnName]: await this.getAllInternalLinks(),
     };
   }
 
