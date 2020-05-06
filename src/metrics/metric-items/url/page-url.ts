@@ -1,4 +1,4 @@
-import { Page, Response } from "puppeteer";
+import { Page, Response } from "puppeteer-core";
 
 import { Schema } from "@aws-cdk/aws-glue";
 

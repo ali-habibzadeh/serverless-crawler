@@ -1,7 +1,5 @@
 import chromium from "chrome-aws-lambda";
-import { LaunchOptions } from "puppeteer";
-
-import { appConfig } from "../../../config/config.service";
+import { LaunchOptions } from "puppeteer-core";
 
 export async function getLaunchOptions(): Promise<LaunchOptions> {
   return {
@@ -9,6 +7,6 @@ export async function getLaunchOptions(): Promise<LaunchOptions> {
     defaultViewport: chromium.defaultViewport,
     userDataDir: "user-data",
     headless: chromium.headless,
-    ...(!appConfig.isLocal && { executablePath: await chromium.executablePath }),
+    executablePath: await chromium.executablePath,
   };
 }

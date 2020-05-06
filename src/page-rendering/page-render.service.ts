@@ -1,4 +1,4 @@
-import { Browser, launch, Page, Response } from "puppeteer";
+import { Browser, launch, Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
 import { getLaunchOptions } from "./config/constants/launch-options";

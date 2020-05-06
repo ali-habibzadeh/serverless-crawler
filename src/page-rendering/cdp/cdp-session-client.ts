@@ -1,5 +1,5 @@
 import CDP from "devtools-protocol/types/protocol";
-import { CDPSession, Page } from "puppeteer";
+import { CDPSession, Page } from "puppeteer-core";
 
 export class CDPSessionClient {
   private client!: CDPSession;
