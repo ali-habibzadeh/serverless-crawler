@@ -41,6 +41,7 @@ export class DeliverySteam extends Construct {
         sizeInMBs: 64,
       },
       roleArn: this.crawlData.deliveryStreamS3Role.roleArn,
+      prefix: "crawl-data/",
     },
   });
 }
