@@ -10,7 +10,7 @@ export class ResponseStatus extends MetricContainer {
     super(page, response);
   }
 
-  public columns = [{ name: MetricNames.Status, type: Schema.STRING, isGlueColumn: true }];
+  public columns = [{ name: MetricNames.Status, type: Schema.INTEGER, isGlueColumn: true }];
 
   public async getMetrics(): Promise<Record<string, number>[]> {
     return [

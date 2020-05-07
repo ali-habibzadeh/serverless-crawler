@@ -1,10 +1,11 @@
+import { PolicyStatement } from "@aws-cdk/aws-iam";
 import { CfnDeliveryStream } from "@aws-cdk/aws-kinesisfirehose";
 import { Construct } from "@aws-cdk/core";
 
 import { CrawlData } from "./crawl-data";
 import { DeliverySchema } from "./delivery-schema";
 
-export class DeliverySteam extends Construct {
+export class DeliveryStream extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
   }
@@ -44,4 +45,11 @@ export class DeliverySteam extends Construct {
       prefix: "crawl-data/",
     },
   });
+
+  public getWritingPolicy(): PolicyStatement {
+    return new PolicyStatement({
+      resources: [this.crawlDatasDeliveryStream.attrArn],
+      actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
+    });
+  }
 }

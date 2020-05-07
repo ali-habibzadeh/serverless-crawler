@@ -1,12 +1,10 @@
-import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
-import { PolicyStatement } from "@aws-cdk/aws-iam";
-import { StartingPosition } from "@aws-cdk/aws-lambda";
-import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
-import { App, CfnOutput, Construct, Duration, Stack, StackProps } from "@aws-cdk/core";
+import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";
-import { DeliverySteam as DeliveryStream } from "./delivery/delivery-stream";
+import { StartCrawlRestApi } from "./api/crawler-api";
+import { CrawlUrlsTable } from "./crawl-urls/crawl-urls-table";
+import { DeliveryStream } from "./delivery/delivery-stream";
 import { LambdaFactory } from "./utils/lambda.factory";
 
 export class ServerlessCrawlerStack extends Stack {
@@ -16,49 +14,33 @@ export class ServerlessCrawlerStack extends Stack {
   }
 
   public regionOutput = new CfnOutput(this, "region", { value: this.region });
-
-  public crawlUrlsTable = new Table(this, "crawlUrlsTable", {
-    partitionKey: { name: "url", type: AttributeType.STRING },
-    replicationRegions: ["us-east-2"],
-    stream: StreamViewType.NEW_AND_OLD_IMAGES,
-  });
-
+  public crawlUrlsTable = new CrawlUrlsTable(this, "CrawlUrlsDynamodb");
   public deliveryStream = new DeliveryStream(this, "DeliveryStream");
 
-  public startHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
-    environment: {
-      [envVars.crawlUrlsTableName]: this.crawlUrlsTable.tableName,
-      [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
-      [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
-    },
+  public lambdaEnv = {
+    [envVars.crawlUrlsTableName]: this.crawlUrlsTable.table.tableName,
+    [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
+    [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
+  };
+
+  public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {
+    environment: this.lambdaEnv,
     reservedConcurrentExecutions: 20,
   }).getLambda();
 
+  public startCrawlHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
+    environment: this.lambdaEnv,
+  }).getLambda();
+
+  public startCrawlRestApi = new StartCrawlRestApi(this, "StartCrawlRestApi", this.startCrawlHandler);
+
   private configure(): void {
-    this.crawlUrlsTable.grantReadWriteData(this.startHandler);
-    this.attachStartHandlerEventSource();
-    this.grantStartHandlerFireosePermission();
-  }
-
-  private attachStartHandlerEventSource(): void {
-    this.startHandler.addEventSource(
-      new DynamoEventSource(this.crawlUrlsTable, {
-        startingPosition: StartingPosition.LATEST,
-        maxBatchingWindow: Duration.seconds(2),
-        parallelizationFactor: 1,
-        retryAttempts: 4,
-        batchSize: 30,
-      })
-    );
-  }
-
-  private grantStartHandlerFireosePermission(): void {
-    this.startHandler.addToRolePolicy(
-      new PolicyStatement({
-        resources: [this.deliveryStream.crawlDatasDeliveryStream.attrArn],
-        actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
-      })
-    );
+    const urlWriterLamdas = [this.streamHandler, this.startCrawlHandler];
+    urlWriterLamdas.forEach((lambda) => {
+      this.crawlUrlsTable.table.grantWriteData(lambda);
+      lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
+    });
+    this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
   }
 }
 

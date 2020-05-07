@@ -11,10 +11,10 @@ export class DeliverySchema extends Construct {
     this.attachRoles();
   }
 
-  private schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema-database" });
+  private schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
   private schemaTable = new Table(this, "SchemaTable", {
     database: this.schemaDatabase,
-    tableName: "metadata-table",
+    tableName: "metadata_table",
     columns: getGlueColumns(),
     dataFormat: DataFormat.PARQUET,
   });
