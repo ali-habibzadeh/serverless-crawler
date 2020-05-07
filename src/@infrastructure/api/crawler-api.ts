@@ -27,11 +27,12 @@ export class StartCrawlRestApi extends Construct {
     });
   }
 
-  private crawlUrlModel: Model = this.api.addModel("CrawlUrl", {
+  private crawlUrlModel = this.api.addModel("CrawlUrl", {
     schema: {
       type: JsonSchemaType.OBJECT,
       properties: {
         url: {
+          format: "url",
           type: JsonSchemaType.STRING,
         },
       },
