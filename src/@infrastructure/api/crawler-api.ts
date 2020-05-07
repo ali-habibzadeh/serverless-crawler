@@ -6,6 +6,7 @@ import { LambdaApiFactory } from "../utils/lambda-api.factory";
 export class StartCrawlRestApi extends Construct {
   constructor(parent: Construct, id: string, private startHandler: Fn) {
     super(parent, id);
+    this.defineApiMethods();
   }
 
   public api = new LambdaApiFactory(this, this.startHandler).getApi();

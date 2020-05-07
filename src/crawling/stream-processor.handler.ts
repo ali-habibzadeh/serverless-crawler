@@ -1,6 +1,6 @@
 import "reflect-metadata";
 
-import { APIGatewayProxyEvent, DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
+import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
 
 import { DynamodbService } from "../core/dynamodb/dynamodb.service";
 import { CrawlUrl } from "./url-processing/crawl-url.model";
