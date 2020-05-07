@@ -18,8 +18,8 @@ export class StartCrawlRestApi extends Construct {
   });
 
   private defineApiMethods(): void {
-    const alexa = this.api.root.addResource("crawl");
-    alexa.addMethod("POST", undefined, {
+    const crawlResource = this.api.root.addResource("crawl");
+    crawlResource.addMethod("POST", undefined, {
       requestModels: {
         "application/json": this.crawlUrlModel,
       },
@@ -32,7 +32,7 @@ export class StartCrawlRestApi extends Construct {
       type: JsonSchemaType.OBJECT,
       properties: {
         url: {
-          format: "uri",
+          pattern: "@(https?)://(-.)?([^s/?.#-]+.?)+(/[^s]*)?$@iS",
           type: JsonSchemaType.STRING,
         },
       },
