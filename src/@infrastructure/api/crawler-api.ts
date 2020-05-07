@@ -1,4 +1,4 @@
-import { JsonSchemaType, Model } from "@aws-cdk/aws-apigateway";
+import { JsonSchemaType } from "@aws-cdk/aws-apigateway";
 import { Function as Fn } from "@aws-cdk/aws-lambda";
 import { Construct } from "@aws-cdk/core";
 
@@ -32,7 +32,7 @@ export class StartCrawlRestApi extends Construct {
       type: JsonSchemaType.OBJECT,
       properties: {
         url: {
-          format: "url",
+          format: "uri",
           type: JsonSchemaType.STRING,
         },
       },
