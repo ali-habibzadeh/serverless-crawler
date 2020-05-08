@@ -4,8 +4,9 @@ import { Browser } from "puppeteer-core";
 export class BrowserService {
   public static browser: Browser;
 
-  public static async getBrowser(): Promise<Browser> {
+  public static async createBrowser(): Promise<Browser> {
     if (!this.browser) {
+      console.log("called createBrowser once");
       this.browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
@@ -14,6 +15,7 @@ export class BrowserService {
         executablePath: await chromium.executablePath,
       });
     }
+    console.log("called createBrowser again");
     return this.browser;
   }
 }
