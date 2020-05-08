@@ -6,16 +6,15 @@ export class BrowserService {
 
   public static async createBrowser(): Promise<Browser> {
     if (!this.browser) {
-      console.log("called createBrowser once");
+      const binary = await chromium.executablePath;
       this.browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
         userDataDir: "user-data",
         headless: chromium.headless,
-        executablePath: await chromium.executablePath,
+        executablePath: binary,
       });
     }
-    console.log("called createBrowser again");
     return this.browser;
   }
 }
