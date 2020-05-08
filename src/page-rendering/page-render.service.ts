@@ -2,7 +2,7 @@ import chromium from "chrome-aws-lambda";
 import { Browser, Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
-import { LaunchOptionsService } from "./config/constants/launch-options";
+import { BrowserService } from "./config/constants/launch-options";
 import { PageRequestHandler } from "./config/page-request.handler";
 
 export class PageRenderService {
@@ -19,8 +19,7 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    const options = await LaunchOptionsService.getOptions();
-    this.browser = await chromium.puppeteer.launch(options);
+    this.browser = await BrowserService.getBrowser();
     this.page = await this.browser.newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);
