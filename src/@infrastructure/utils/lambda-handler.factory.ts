@@ -17,11 +17,11 @@ export class LambdaHandlerFactory {
     }, {});
   }
 
-  private getHandler(body: PublicFn): AWSLambda.Handler {
+  private getHandler(fn: PublicFn): AWSLambda.Handler {
     return async (event: AWSLambda.APIGatewayEvent, context): Promise<any> => {
       return {
         ...this.defaultConfig,
-        body: JSON.stringify(await body(event, context)),
+        body: JSON.stringify(await fn(event, context)),
       };
     };
   }

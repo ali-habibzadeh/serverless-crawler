@@ -1,7 +1,7 @@
 import { Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
-import { BrowserService } from "./config/constants/launch-options";
+import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
 
 export class PageRenderService {
