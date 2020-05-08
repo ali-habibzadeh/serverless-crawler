@@ -1,4 +1,3 @@
-import chromium from "chrome-aws-lambda";
 import { Browser, Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";

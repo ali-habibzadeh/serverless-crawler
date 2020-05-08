@@ -6,7 +6,7 @@ export class BrowserService {
 
   public static async getBrowser(): Promise<Browser> {
     if (!this.browser) {
-      await chromium.puppeteer.launch({
+      this.browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
         userDataDir: "user-data",
