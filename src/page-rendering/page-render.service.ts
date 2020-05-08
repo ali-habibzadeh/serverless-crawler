@@ -1,7 +1,7 @@
 import { Browser, launch, Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
-import { getLaunchOptions } from "./config/constants/launch-options";
+import { LaunchOptionsService } from "./config/constants/launch-options";
 import { PageRequestHandler } from "./config/page-request.handler";
 
 export class PageRenderService {
@@ -18,7 +18,8 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    this.browser = await launch(await getLaunchOptions());
+    const options = await LaunchOptionsService.getOptions();
+    this.browser = await launch(options);
     this.page = await this.browser.newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);
