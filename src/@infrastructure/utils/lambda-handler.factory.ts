@@ -7,7 +7,6 @@ export class LambdaHandlerFactory {
   constructor(private configs: ILambdaHandlerFactoryConfig) {}
   private defaultConfig = {
     statusCode: 200,
-    isBase64Encoded: false,
     headers: { "Content-Type": "application/json" },
   };
 
@@ -22,15 +21,10 @@ export class LambdaHandlerFactory {
 
   private getHandler(fn: PublicFn): AWSLambda.Handler {
     return async (event, context): Promise<APIGatewayProxyResult> => {
-      try {
-        return {
-          ...this.defaultConfig,
-          body: JSON.stringify(await fn(event, context)),
-        };
-      } catch (e) {
-        context.fail(e);
-        throw new Error(e);
-      }
+      return {
+        ...this.defaultConfig,
+        body: JSON.stringify(await fn(event, context)),
+      };
     };
   }
 }
