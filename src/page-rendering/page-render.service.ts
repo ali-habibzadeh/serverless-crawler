@@ -12,6 +12,7 @@ export class PageRenderService {
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetrics()));
+    console.log(`Metrics for ${this.url}`, results);
     await BrowserService.browser.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }

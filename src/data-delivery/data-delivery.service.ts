@@ -12,7 +12,7 @@ export class DataDeliveryService {
     return this.writeToS3(this.metrics);
   }
 
-  private async writeToS3(data: any): Promise<PutRecordOutput> {
+  private async writeToS3(data: Record<MetricNames, any>): Promise<PutRecordOutput> {
     const input = {
       DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,
       Record: {

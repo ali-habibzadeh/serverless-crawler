@@ -16,7 +16,7 @@ export class LambdaFactory {
   private defaultSettings = {
     runtime: Runtime.NODEJS_12_X,
     code: Code.fromAsset(path.join(__dirname.substring(0, __dirname.indexOf("dist") + 4))),
-    memorySize: 1600,
+    memorySize: 2000,
     timeout: Duration.minutes(3),
     tracing: Tracing.ACTIVE,
   };

@@ -13,6 +13,8 @@ export class StreamProcessorHandler {
 
   public async handle(): Promise<string> {
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
+    console.log("all events Records", this.event.Records);
+    console.log("Inserts recieved", inserts);
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
     return "done.";
   }

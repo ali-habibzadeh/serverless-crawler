@@ -7,6 +7,7 @@ export class BrowserService {
   public static async createBrowser(): Promise<Browser> {
     if (!this.browser) {
       const binary = await chromium.executablePath;
+      console.log(`executablePath ${process.pid}`, binary);
       this.browser = await chromium.puppeteer.launch({
         args: chromium.args,
         defaultViewport: chromium.defaultViewport,
