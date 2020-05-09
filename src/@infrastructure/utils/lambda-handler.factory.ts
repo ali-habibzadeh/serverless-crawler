@@ -1,10 +1,13 @@
+import { APIGatewayProxyResult } from "aws-lambda";
+
 import { ILambdaHandlerFactoryConfig, ILambdaHandlers, PublicFn } from "./interfaces/lambda-handler.interface";
 
 export class LambdaHandlerFactory {
   private entries = Object.entries(this.configs);
   constructor(private configs: ILambdaHandlerFactoryConfig) {}
   private defaultConfig = {
-    statusCode: "200",
+    statusCode: 200,
+    isBase64Encoded: false,
     headers: { "Content-Type": "application/json" },
   };
 
@@ -17,11 +20,11 @@ export class LambdaHandlerFactory {
     }, {});
   }
 
-  private getHandler(body: PublicFn): AWSLambda.Handler {
-    return async (event: AWSLambda.APIGatewayEvent, context): Promise<any> => {
+  private getHandler(fn: PublicFn): AWSLambda.Handler {
+    return async (event: any, context): Promise<APIGatewayProxyResult> => {
       return {
         ...this.defaultConfig,
-        body: JSON.stringify(await body(event, context)),
+        body: JSON.stringify(await fn(event, context)),
       };
     };
   }

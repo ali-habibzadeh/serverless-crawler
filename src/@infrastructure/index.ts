@@ -37,7 +37,7 @@ export class ServerlessCrawlerStack extends Stack {
   private configure(): void {
     const urlWriterLamdas = [this.streamHandler, this.startCrawlHandler];
     urlWriterLamdas.forEach((lambda) => {
-      this.crawlUrlsTable.table.grantWriteData(lambda);
+      this.crawlUrlsTable.table.grantReadWriteData(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
