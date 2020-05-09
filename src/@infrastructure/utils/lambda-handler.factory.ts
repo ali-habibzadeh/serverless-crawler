@@ -21,11 +21,16 @@ export class LambdaHandlerFactory {
   }
 
   private getHandler(fn: PublicFn): AWSLambda.Handler {
-    return async (event: any, context): Promise<APIGatewayProxyResult> => {
-      return {
-        ...this.defaultConfig,
-        body: JSON.stringify(await fn(event, context)),
-      };
+    return async (event, context): Promise<APIGatewayProxyResult> => {
+      try {
+        return {
+          ...this.defaultConfig,
+          body: JSON.stringify(await fn(event, context)),
+        };
+      } catch (e) {
+        context.fail(e);
+        throw new Error(e);
+      }
     };
   }
 }
