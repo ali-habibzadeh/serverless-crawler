@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent, Context } from "aws-lambda";
+import { APIGatewayProxyEvent, APIGatewayProxyResult, Context } from "aws-lambda";
 import { plainToClass } from "class-transformer";
 
 import { CrawlUrl } from "./url-processing/crawl-url.model";
@@ -7,9 +7,14 @@ import { UrlsProcessor } from "./url-processing/url-processor";
 export class StartCrawlHandler {
   constructor(private event: APIGatewayProxyEvent, private context?: Context) {}
 
-  public async handle(): Promise<string> {
+  public async handle(): Promise<APIGatewayProxyResult> {
     await new UrlsProcessor(this.getUrl()).process();
-    return "started";
+    return {
+      statusCode: 200,
+      isBase64Encoded: false,
+      headers: { "Content-Type": "application/json" },
+      body: "started",
+    };
   }
 
   private getUrl(): CrawlUrl {

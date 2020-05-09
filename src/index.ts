@@ -9,4 +9,4 @@ const handlers: Record<LambdaHandlers, PublicFn> = {
   [LambdaHandlers.StartCrawlHandler]: (e, c) => new StartCrawlHandler(e, c).handle(),
 };
 
-module.exports = new LambdaHandlerFactory(handlers).getHandlers();
+module.exports = handlers;
