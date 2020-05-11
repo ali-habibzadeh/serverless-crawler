@@ -20,7 +20,7 @@ export class StreamProcessorHandler {
     await BrowserService.createBrowser();
     // ... const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
     // ... await Promise.all(inserts.map(async (record) => this.processUrl(record)));
-    const isConnected = BrowserService.getBrowser().isConnected;
+    const isConnected = BrowserService.getBrowser().isConnected();
     await BrowserService.close();
     return `Browser was connected?: ${isConnected}`;
   }
