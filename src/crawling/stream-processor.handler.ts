@@ -14,15 +14,13 @@ export class StreamProcessorHandler {
 
   constructor(private event: DynamoDBStreamEvent) {}
 
-  // tslint:disable-next-line: no-feature-envy
   @CatchAll
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
-    // ... const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    // ... await Promise.all(inserts.map(async (record) => this.processUrl(record)));
-    const isConnected = BrowserService.getBrowser().isConnected();
+    const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
+    await Promise.all(inserts.map(async (record) => this.processUrl(record)));
     await BrowserService.close();
-    return `Browser was connected?: ${isConnected}`;
+    return `done.`;
   }
 
   @CatchAll
