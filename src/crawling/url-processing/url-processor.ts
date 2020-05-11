@@ -13,7 +13,7 @@ export class UrlsProcessor {
   public async process(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
-    // ... await new DataDeliveryService(metrics).deliver();
+    await new DataDeliveryService(metrics).deliver();
     return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
   }
 
