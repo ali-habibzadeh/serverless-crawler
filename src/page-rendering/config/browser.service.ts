@@ -16,7 +16,7 @@ export class BrowserService {
     });
   }
 
-  public static async getBrowser(): Promise<Browser> {
+  public static getBrowser(): Browser {
     return this.browser;
   }
 
