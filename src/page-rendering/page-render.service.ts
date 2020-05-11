@@ -22,7 +22,10 @@ export class PageRenderService {
   private async getResponse(): Promise<Response | null> {
     this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();
-    return this.page.goto(this.url);
+    return this.page.goto(this.url, {
+      waitUntil: "networkidle0",
+      timeout: 15000,
+    });
   }
 
   private async setPageHandlers(): Promise<void> {
