@@ -13,16 +13,11 @@ export class StreamProcessorHandler {
 
   constructor(private event: DynamoDBStreamEvent) {}
 
-  // tslint:disable-next-line: no-feature-envy
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
-    console.log("create browser");
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    console.log("read inserts");
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
-    console.log("process all records");
     await BrowserService.close();
-    console.log("closed browser");
     return "done.";
   }
 
@@ -32,9 +27,9 @@ export class StreamProcessorHandler {
   }
 
   private getUrl(record: DynamoDBRecord): CrawlUrl {
-    const { OldImage } = record.dynamodb!;
-    if (OldImage) {
-      const { url } = <CrawlUrl>this.converter.unmarshall(OldImage);
+    const { NewImage } = record.dynamodb!;
+    if (NewImage) {
+      const { url } = <CrawlUrl>this.converter.unmarshall(NewImage);
       return plainToClass(CrawlUrl, { url });
     }
     throw new Error(`Invalid DynamoDBRecord ${record}`);
