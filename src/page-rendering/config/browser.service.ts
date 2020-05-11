@@ -12,14 +12,13 @@ export class BrowserService {
       return;
     }
     this.browser = await chromium.puppeteer.launch({
-      args: [...chromium.args, "--disable-software-rasterizer", "--disable-gpu"],
+      args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
       executablePath: await chromium.executablePath,
     });
   }
 
-  // 456 URLS
   public static getBrowser(): Browser {
     return this.browser!;
   }
