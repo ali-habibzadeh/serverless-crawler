@@ -15,9 +15,6 @@ export class UrlsProcessor {
   public async process(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
-    if (!metrics) {
-      console.log(`No metrics returned for ${this.crawlUrl.url}`);
-    }
     await new DataDeliveryService(metrics).deliver();
     return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
   }
