@@ -10,6 +10,7 @@ export class CrawlUrlsTable extends Construct {
 
   public table = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
+    replicationRegions: ["us-east-2"],
     stream: StreamViewType.NEW_IMAGE,
   });
 
