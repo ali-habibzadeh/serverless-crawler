@@ -14,8 +14,11 @@ export class UrlsProcessor {
   @CatchAll
   public async process(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
+    console.log(`Rendering ${this.crawlUrl.url}`);
     const metrics = await renderer.getPageRenderMetrics();
+    console.log(`Got metrics for ${this.crawlUrl.url}`, metrics);
     await new DataDeliveryService(metrics).deliver();
+    console.log(`Delivered data`);
     return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
   }
 

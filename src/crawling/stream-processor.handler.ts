@@ -18,7 +18,6 @@ export class StreamProcessorHandler {
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    console.log("FIRED with INSERTS", inserts);
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
     await BrowserService.close();
     return `done.`;
@@ -27,6 +26,7 @@ export class StreamProcessorHandler {
   @CatchAll
   private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
+    console.log(`Trying to process ${url}`);
     await new UrlsProcessor(url).process();
   }
 
