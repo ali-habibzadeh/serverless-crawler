@@ -10,11 +10,16 @@ export class UrlsProcessor {
   private dynamodb = DynamodbService.getInstance();
   constructor(private crawlUrl: CrawlUrl) {}
 
+  // tslint:disable-next-line: no-feature-envy
   public async process(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
+    console.log("created renderer");
     const metrics = await renderer.getPageRenderMetrics();
+    console.log("got metrics renderer");
     await new DataDeliveryService(metrics).deliver();
+    console.log("delivered firehose stream", metrics);
     await this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
+    console.log("crawling next batch", metrics[MetricNames.InternalLinks]);
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
