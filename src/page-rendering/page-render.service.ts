@@ -10,7 +10,7 @@ export class PageRenderService {
 
   constructor(private url: string) {}
 
-  @CatchAll()
+  @CatchAll
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetrics()));
@@ -18,7 +18,7 @@ export class PageRenderService {
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
-  @CatchAll()
+  @CatchAll
   private async getResponse(): Promise<Response | null> {
     this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();

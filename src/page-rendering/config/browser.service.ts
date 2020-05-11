@@ -6,7 +6,7 @@ import { CatchAll } from "../../core/utils/catch-all";
 export class BrowserService {
   private static browser: Browser;
 
-  @CatchAll()
+  @CatchAll
   public static async createBrowser(): Promise<void> {
     if (this.browser) {
       return;
