@@ -8,11 +8,11 @@ import { CrawlUrl } from "./crawl-url.model";
 
 export class UrlsProcessor {
   private dynamodb = DynamodbService.getInstance();
-  constructor(private crawlUrl: CrawlUrl) {}
+  constructor(private url: string) {}
 
   // tslint:disable-next-line: no-feature-envy
   public async process(): Promise<void> {
-    const renderer = new PageRenderService(this.crawlUrl.url);
+    const renderer = new PageRenderService(this.url);
     console.log("created renderer");
     const metrics = await renderer.getPageRenderMetrics();
     console.log("got metrics renderer");

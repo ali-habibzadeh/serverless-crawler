@@ -13,7 +13,7 @@ export enum MetricNames {
   PageResourcesCount = "page_resources_count",
 }
 
-export const metricsContainers = [PageUrl, InternalLinks, ResponseStatus];
+export const metricsContainers = [PageUrl, InternalLinks, ResponseStatus, WebPerformance];
 
 export function getGlueColumns(): Column[] {
   return metricsContainers

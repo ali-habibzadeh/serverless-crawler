@@ -30,10 +30,12 @@ export class StreamProcessorHandler {
     await new UrlsProcessor(url).process();
   }
 
-  private getUrl(record: DynamoDBRecord): CrawlUrl {
-    const { NewImage } = record.dynamodb!;
-    if (NewImage) {
-      return <CrawlUrl>this.converter.unmarshall(NewImage);
+  private getUrl(record: DynamoDBRecord): string {
+    const { NewImage, OldImage } = record.dynamodb!;
+    const image = NewImage || OldImage;
+    if (image) {
+      const { url } = <CrawlUrl>this.converter.unmarshall(image);
+      return url;
     }
     throw new Error(`Invalid DynamoDBRecord ${record}`);
   }
