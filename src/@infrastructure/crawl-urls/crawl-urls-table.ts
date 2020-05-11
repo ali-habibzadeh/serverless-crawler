@@ -10,14 +10,15 @@ export class CrawlUrlsTable extends Construct {
   public table = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
     replicationRegions: ["us-east-2"],
-    stream: StreamViewType.NEW_AND_OLD_IMAGES,
+    stream: StreamViewType.NEW_IMAGE,
   });
 
   public eventSource = new DynamoEventSource(this.table, {
-    startingPosition: StartingPosition.LATEST,
+    startingPosition: StartingPosition.TRIM_HORIZON,
     maxBatchingWindow: Duration.seconds(2),
     parallelizationFactor: 2,
-    retryAttempts: 4,
-    batchSize: 30,
+    retryAttempts: 10,
+    batchSize: 5,
+    bisectBatchOnError: true,
   });
 }
