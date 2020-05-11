@@ -3,6 +3,7 @@ import "reflect-metadata";
 import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
 
 import { DynamodbService } from "../core/dynamodb/dynamodb.service";
+import { BrowserService } from "../page-rendering/config/browser.service";
 import { CrawlUrl } from "./url-processing/crawl-url.model";
 import { UrlsProcessor } from "./url-processing/url-processor";
 
@@ -12,10 +13,10 @@ export class StreamProcessorHandler {
   constructor(private event: DynamoDBStreamEvent) {}
 
   public async handle(): Promise<string> {
+    await BrowserService.createBrowser();
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    console.log("all events Records", this.event.Records);
-    console.log("Inserts recieved", inserts);
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
+    await BrowserService.close();
     return "done.";
   }
 

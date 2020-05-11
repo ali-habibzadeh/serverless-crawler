@@ -2,20 +2,25 @@ import chromium from "chrome-aws-lambda";
 import { Browser } from "puppeteer-core";
 
 export class BrowserService {
-  public static browser: Browser;
+  private static browser: Browser;
 
-  public static async createBrowser(): Promise<Browser> {
-    if (!this.browser) {
-      const binary = await chromium.executablePath;
-      console.log(`executablePath ${process.pid}`, binary);
-      this.browser = await chromium.puppeteer.launch({
-        args: chromium.args,
-        defaultViewport: chromium.defaultViewport,
-        userDataDir: "user-data",
-        headless: chromium.headless,
-        executablePath: binary,
-      });
+  public static async createBrowser(): Promise<void> {
+    if (this.browser) {
+      return;
     }
+    this.browser = await chromium.puppeteer.launch({
+      args: chromium.args,
+      defaultViewport: chromium.defaultViewport,
+      headless: chromium.headless,
+      executablePath: await chromium.executablePath,
+    });
+  }
+
+  public static async getBrowser(): Promise<Browser> {
     return this.browser;
+  }
+
+  public static async close(): Promise<void> {
+    return this.browser.close();
   }
 }

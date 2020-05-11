@@ -12,14 +12,13 @@ export class PageRenderService {
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetrics()));
-    console.log(`Metrics for ${this.url}`, results);
-    await BrowserService.browser.close();
+    await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
   private async getResponse(): Promise<Response | null> {
-    await BrowserService.createBrowser();
-    this.page = await BrowserService.browser.newPage();
+    const browser = await BrowserService.getBrowser();
+    this.page = await browser.newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);
   }
