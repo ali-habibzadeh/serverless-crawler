@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import { APIGatewayProxyEvent } from "aws-lambda";
 import { plainToClass } from "class-transformer";
 

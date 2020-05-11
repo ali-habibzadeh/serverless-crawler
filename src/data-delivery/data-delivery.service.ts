@@ -2,6 +2,7 @@ import { PutRecordOutput } from "aws-sdk/clients/firehose";
 
 import { appConfig } from "../config/config.service";
 import { FirehoseService } from "../core/firehose/firehose.service";
+import { CatchAll } from "../core/utils/catch-all";
 import { MetricNames } from "../metrics/metrics-list";
 
 export class DataDeliveryService {
@@ -12,6 +13,7 @@ export class DataDeliveryService {
     return this.writeToS3(this.metrics);
   }
 
+  @CatchAll()
   private async writeToS3(data: Record<MetricNames, any>): Promise<PutRecordOutput> {
     const input = {
       DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,

@@ -4,6 +4,7 @@ import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
 import { plainToClass } from "class-transformer";
 
 import { DynamodbService } from "../core/dynamodb/dynamodb.service";
+import { CatchAll } from "../core/utils/catch-all";
 import { BrowserService } from "../page-rendering/config/browser.service";
 import { CrawlUrl } from "./url-processing/crawl-url.model";
 import { UrlsProcessor } from "./url-processing/url-processor";
@@ -13,6 +14,7 @@ export class StreamProcessorHandler {
 
   constructor(private event: DynamoDBStreamEvent) {}
 
+  @CatchAll()
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
@@ -21,6 +23,7 @@ export class StreamProcessorHandler {
     return "done.";
   }
 
+  @CatchAll()
   private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
     await new UrlsProcessor(url).process();

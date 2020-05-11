@@ -1,5 +1,6 @@
 import { Page, Response } from "puppeteer-core";
 
+import { CatchAll } from "../core/utils/catch-all";
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
 import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
@@ -9,6 +10,7 @@ export class PageRenderService {
 
   constructor(private url: string) {}
 
+  @CatchAll()
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
     const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetrics()));
@@ -16,6 +18,7 @@ export class PageRenderService {
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
+  @CatchAll()
   private async getResponse(): Promise<Response | null> {
     this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();

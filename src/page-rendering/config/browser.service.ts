@@ -1,9 +1,12 @@
 import chromium from "chrome-aws-lambda";
 import { Browser } from "puppeteer-core";
 
+import { CatchAll } from "../../core/utils/catch-all";
+
 export class BrowserService {
   private static browser: Browser;
 
+  @CatchAll()
   public static async createBrowser(): Promise<void> {
     if (this.browser) {
       return;
