@@ -16,9 +16,9 @@ export class CrawlUrlsTable extends Construct {
   public eventSource = new DynamoEventSource(this.table, {
     startingPosition: StartingPosition.TRIM_HORIZON,
     maxBatchingWindow: Duration.seconds(2),
-    parallelizationFactor: 2,
+    parallelizationFactor: 1,
     retryAttempts: 10,
-    batchSize: 5,
+    batchSize: 30,
     bisectBatchOnError: true,
   });
 }
