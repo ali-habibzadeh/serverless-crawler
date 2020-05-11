@@ -12,11 +12,16 @@ export class StreamProcessorHandler {
 
   constructor(private event: DynamoDBStreamEvent) {}
 
+  // tslint:disable-next-line: no-feature-envy
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
+    console.log("create browser");
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
+    console.log("read inserts");
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
+    console.log("process all records");
     await BrowserService.close();
+    console.log("closed browser");
     return "done.";
   }
 
