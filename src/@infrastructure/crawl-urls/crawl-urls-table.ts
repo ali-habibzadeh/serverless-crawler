@@ -1,7 +1,6 @@
 import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
-import { DynamoEventSource, SqsDlq } from "@aws-cdk/aws-lambda-event-sources";
-import { Queue } from "@aws-cdk/aws-sqs";
+import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import { Construct, Duration } from "@aws-cdk/core";
 
 export class CrawlUrlsTable extends Construct {
@@ -14,8 +13,6 @@ export class CrawlUrlsTable extends Construct {
     stream: StreamViewType.NEW_IMAGE,
   });
 
-  public deadLetterQueue = new Queue(this, "deadLetterQueue");
-
   public eventSource = new DynamoEventSource(this.table, {
     startingPosition: StartingPosition.TRIM_HORIZON,
     maxBatchingWindow: Duration.seconds(2),
@@ -23,6 +20,5 @@ export class CrawlUrlsTable extends Construct {
     retryAttempts: 10,
     batchSize: 5,
     bisectBatchOnError: true,
-    onFailure: new SqsDlq(this.deadLetterQueue),
   });
 }
