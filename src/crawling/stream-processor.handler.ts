@@ -1,6 +1,7 @@
 import "reflect-metadata";
 
 import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
+import { plainToClass } from "class-transformer";
 
 import { DynamodbService } from "../core/dynamodb/dynamodb.service";
 import { BrowserService } from "../page-rendering/config/browser.service";
@@ -30,12 +31,11 @@ export class StreamProcessorHandler {
     await new UrlsProcessor(url).process();
   }
 
-  private getUrl(record: DynamoDBRecord): string {
-    const { NewImage, OldImage } = record.dynamodb!;
-    const image = NewImage || OldImage;
-    if (image) {
-      const { url } = <CrawlUrl>this.converter.unmarshall(image);
-      return url;
+  private getUrl(record: DynamoDBRecord): CrawlUrl {
+    const { OldImage } = record.dynamodb!;
+    if (OldImage) {
+      const { url } = <CrawlUrl>this.converter.unmarshall(OldImage);
+      return plainToClass(CrawlUrl, { url });
     }
     throw new Error(`Invalid DynamoDBRecord ${record}`);
   }

@@ -8,11 +8,11 @@ import { CrawlUrl } from "./crawl-url.model";
 
 export class UrlsProcessor {
   private dynamodb = DynamodbService.getInstance();
-  constructor(private url: string) {}
+  constructor(private crawlUrl: CrawlUrl) {}
 
   // tslint:disable-next-line: no-feature-envy
   public async process(): Promise<void> {
-    const renderer = new PageRenderService(this.url);
+    const renderer = new PageRenderService(this.crawlUrl.url);
     console.log("created renderer");
     const metrics = await renderer.getPageRenderMetrics();
     console.log("got metrics renderer");
@@ -22,6 +22,7 @@ export class UrlsProcessor {
     console.log("crawling next batch", metrics[MetricNames.InternalLinks]);
   }
 
+  // tslint:disable-next-line: no-feature-envy
   private async crawlNextBatch(links: string[]): Promise<void> {
     const toSave = links.map((url) => plainToClass(CrawlUrl, { url }));
     const writer = this.dynamodb.batchPut(toSave);
