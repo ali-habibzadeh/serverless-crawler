@@ -4,7 +4,7 @@ import { Browser } from "puppeteer-core";
 import { CatchAll } from "../../core/utils/catch-all";
 
 export class BrowserService {
-  private static browser: Browser;
+  private static browser?: Browser;
 
   @CatchAll
   public static async createBrowser(): Promise<void> {
@@ -20,10 +20,11 @@ export class BrowserService {
   }
 
   public static getBrowser(): Browser {
-    return this.browser;
+    return this.browser!;
   }
 
   public static async close(): Promise<void> {
-    return this.browser.close();
+    await this.browser!.close();
+    this.browser = undefined;
   }
 }
