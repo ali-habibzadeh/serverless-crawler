@@ -9,14 +9,7 @@ export const isNormalLink = (link: ILinkData): boolean => {
     const url = new URL(href);
     return url.protocol === "http:" || url.protocol === "https:";
   } catch (e) {
-    switch (true) {
-      case href.startsWith("#"):
-        return false;
-      case href === "":
-        return false;
-      default:
-        return true;
-    }
+    return href !== "";
   }
 };
 
