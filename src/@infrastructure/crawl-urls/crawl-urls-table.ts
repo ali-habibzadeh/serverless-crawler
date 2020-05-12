@@ -7,18 +7,17 @@ export class CrawlUrlsTable extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
   }
-
   public table = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
-    stream: StreamViewType.NEW_IMAGE,
+    replicationRegions: ["us-east-2"],
+    stream: StreamViewType.NEW_AND_OLD_IMAGES,
   });
 
   public eventSource = new DynamoEventSource(this.table, {
     startingPosition: StartingPosition.TRIM_HORIZON,
     maxBatchingWindow: Duration.seconds(2),
-    parallelizationFactor: 1,
-    retryAttempts: 10,
+    parallelizationFactor: 2,
+    retryAttempts: 4,
     batchSize: 30,
-    bisectBatchOnError: true,
   });
 }
