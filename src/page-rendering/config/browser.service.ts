@@ -12,7 +12,7 @@ export class BrowserService {
       return;
     }
     this.browser = await chromium.puppeteer.launch({
-      args: [...chromium.args, "--disable-features=AudioServiceOutOfProcess"],
+      args: [...chromium.args, "--single-process"],
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
       executablePath: await chromium.executablePath,

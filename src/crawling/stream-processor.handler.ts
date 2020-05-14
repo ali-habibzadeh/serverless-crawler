@@ -26,7 +26,6 @@ export class StreamProcessorHandler {
   @CatchAll
   private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
-    console.log(`Trying to process ${url.url}`);
     await new UrlsProcessor(url).process();
   }
 
