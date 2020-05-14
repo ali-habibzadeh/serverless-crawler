@@ -18,7 +18,10 @@ export class StreamProcessorHandler {
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
     const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    console.log("INSERTS", inserts);
+    console.log(
+      "INSERTS",
+      inserts.map((insert) => insert.dynamodb?.NewImage)
+    );
     await Promise.all(inserts.map(async (record) => this.processUrl(record)));
     await BrowserService.close();
     return `done.`;
