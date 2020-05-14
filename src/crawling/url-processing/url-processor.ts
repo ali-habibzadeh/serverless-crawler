@@ -18,7 +18,8 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    const toSave = links.map((url) => plainToClass(CrawlUrl, { url }));
+    const level = this.crawlUrl.level + 1;
+    const toSave = links.map((url) => plainToClass(CrawlUrl, { url, level }));
     const writer = this.dynamodb.batchPut(toSave);
     for await (const persisted of writer) {
       console.log(`Successfully wrote ${persisted.url}`);

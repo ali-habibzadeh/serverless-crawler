@@ -6,4 +6,5 @@ import { appConfig } from "../../config/config.service";
 export class CrawlUrl {
   @hashKey()
   public url!: string;
+  public level!: number;
 }
