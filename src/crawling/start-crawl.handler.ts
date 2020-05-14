@@ -13,7 +13,7 @@ export class StartCrawlHandler {
 
   public async handle(): Promise<string> {
     await this.bs.createBrowser();
-    // await new UrlsProcessor(this.getUrl()).process();
+    await new UrlsProcessor(this.getUrl()).process();
     await this.bs.close();
     return "started";
   }
