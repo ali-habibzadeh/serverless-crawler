@@ -59,6 +59,7 @@
     "catch-decorator": "^2.0.0",
     "chrome-aws-lambda": "^3.0.4",
     "class-transformer": "^0.2.3",
+    "class-validator": "^0.12.2",
     "convict": "^6.0.0",
     "lodash": "^4.17.15",
     "minimatch": "^3.0.4",

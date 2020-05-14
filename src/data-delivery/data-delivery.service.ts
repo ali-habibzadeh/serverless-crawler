@@ -10,7 +10,10 @@ export class DataDeliveryService {
   constructor(private metrics: Record<MetricNames, any>) {}
 
   public async deliver(): Promise<PutRecordOutput> {
-    return this.writeToS3(this.metrics);
+    if (this.metrics) {
+      return this.writeToS3(this.metrics);
+    }
+    throw new Error("Metrics can not be empty for s3 delivery");
   }
 
   @CatchAll
