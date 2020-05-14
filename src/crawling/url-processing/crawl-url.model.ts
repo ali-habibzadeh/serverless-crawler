@@ -1,4 +1,4 @@
-import { hashKey, table } from "@aws/dynamodb-data-mapper-annotations";
+import { attribute, hashKey, table } from "@aws/dynamodb-data-mapper-annotations";
 
 import { appConfig } from "../../config/config.service";
 
@@ -6,5 +6,6 @@ import { appConfig } from "../../config/config.service";
 export class CrawlUrl {
   @hashKey()
   public url!: string;
+  @attribute()
   public level!: number;
 }
