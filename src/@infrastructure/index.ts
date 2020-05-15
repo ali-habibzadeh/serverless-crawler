@@ -25,7 +25,7 @@ export class ServerlessCrawlerStack extends Stack {
 
   public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {
     environment: this.lambdaEnv,
-    reservedConcurrentExecutions: 30,
+    reservedConcurrentExecutions: 10,
   }).getLambda();
 
   public startCrawlHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
