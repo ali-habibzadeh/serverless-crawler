@@ -19,7 +19,7 @@ export class UrlsProcessor {
 
   private async crawlNextBatch(links: string[]): Promise<void> {
     const level = this.crawlUrl.level + 1;
-    const transactions = links.map((url) => new TransactPut(CrawlUrl, { url, level }).ifNotExists(true));
+    const transactions = links.map((url) => new TransactPut(CrawlUrl, { url, level }).ifNotExists());
     await new TransactWriteRequest(this.dynamodb).transact(...transactions).exec();
   }
 }
