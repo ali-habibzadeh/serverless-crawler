@@ -1,3 +1,4 @@
+import AWS from "aws-sdk";
 import convict from "convict";
 
 import { appConfigSchema } from "./schema";
@@ -20,3 +21,4 @@ class ConfigService {
 }
 
 export const appConfig = ConfigService.getInstance().environment;
+AWS.config.update({ region: appConfig.region });

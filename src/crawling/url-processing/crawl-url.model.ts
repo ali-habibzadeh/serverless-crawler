@@ -1,4 +1,4 @@
-import { Model, PartitionKey } from "@shiftcoders/dynamo-easy";
+import { DynamoStore, Model, PartitionKey } from "@shiftcoders/dynamo-easy";
 
 import { appConfig } from "../../config/config.service";
 
@@ -8,3 +8,5 @@ export class CrawlUrl {
   public url!: string;
   public level: number = 0;
 }
+
+export const crawlUrlStore = new DynamoStore(CrawlUrl);

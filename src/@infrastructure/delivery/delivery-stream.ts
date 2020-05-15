@@ -30,7 +30,7 @@ export class DeliveryStream extends Construct {
         outputFormatConfiguration: {
           serializer: {
             parquetSerDe: {
-              compression: "UNCOMPRESSED",
+              compression: "GZIP",
             },
           },
         },

@@ -1,13 +1,9 @@
-import { attribute, BatchWriteRequest, TransactPut, TransactWriteRequest } from "@shiftcoders/dynamo-easy";
-
-import { DynamodbService } from "../../core/dynamodb/dynamodb.service";
 import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 import { MetricNames } from "../../metrics/metrics-list";
 import { PageRenderService } from "../../page-rendering/page-render.service";
-import { CrawlUrl } from "./crawl-url.model";
+import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
 
 export class UrlsProcessor {
-  private dynamodb = DynamodbService.getInstance();
   constructor(private crawlUrl: CrawlUrl) {}
 
   public async process(): Promise<void> {
@@ -18,7 +14,12 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    const items = links.map((url) => ({ url, level: this.crawlUrl.level + 1 }));
-    await new BatchWriteRequest(this.dynamodb).put(CrawlUrl, items).exec();
+    const transactions = links.map(async (url) => {
+      await crawlUrlStore
+        .put({ url, level: this.crawlUrl.level + 1 })
+        .ifNotExists()
+        .exec();
+    });
+    await Promise.all(transactions);
   }
 }
