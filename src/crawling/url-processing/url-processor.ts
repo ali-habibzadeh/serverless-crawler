@@ -1,3 +1,5 @@
+import { attribute } from "@shiftcoders/dynamo-easy";
+
 import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 import { MetricNames } from "../../metrics/metrics-list";
 import { PageRenderService } from "../../page-rendering/page-render.service";
@@ -15,10 +17,8 @@ export class UrlsProcessor {
 
   private async crawlNextBatch(links: string[]): Promise<void> {
     const transactions = links.map(async (url) => {
-      await crawlUrlStore
-        .put({ url, level: this.crawlUrl.level + 1 })
-        .ifNotExists()
-        .exec();
+      const level = this.crawlUrl.level + 1;
+      await crawlUrlStore.put({ url, level }).onlyIf(attribute("level").gt(level)).exec();
     });
     await Promise.all(transactions);
   }
