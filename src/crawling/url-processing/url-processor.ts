@@ -20,7 +20,7 @@ export class UrlsProcessor {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
         .put({ url, level })
-        .onlyIf(or(attribute("level").gte(level)), attribute("url").attributeNotExists())
+        .onlyIf(or(attribute("url").attributeNotExists(), attribute("level").gte(level)))
         .exec();
     });
     await Promise.all(transactions);
