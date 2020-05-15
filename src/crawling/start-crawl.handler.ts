@@ -21,7 +21,7 @@ export class StartCrawlHandler {
   private getUrl(): CrawlUrl {
     if (this.event.body) {
       const { url } = JSON.parse(this.event.body);
-      return plainToClass(CrawlUrl, { url, level: 0 });
+      return plainToClass(CrawlUrl, { url });
     }
     throw new Error(`Invalid body: ${this.event.body}`);
   }

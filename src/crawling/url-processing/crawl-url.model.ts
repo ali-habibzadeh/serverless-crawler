@@ -1,11 +1,10 @@
-import { attribute, hashKey, table } from "@aws/dynamodb-data-mapper-annotations";
+import { Model, PartitionKey } from "@shiftcoders/dynamo-easy";
 
 import { appConfig } from "../../config/config.service";
 
-@table(appConfig.urlsTableName)
+@Model({ tableName: appConfig.urlsTableName })
 export class CrawlUrl {
-  @hashKey()
+  @PartitionKey()
   public url!: string;
-  @attribute()
-  public level!: number;
+  public level: number = 0;
 }
