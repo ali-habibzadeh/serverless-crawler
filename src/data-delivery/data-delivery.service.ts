@@ -1,12 +1,11 @@
-import { PutRecordOutput } from "aws-sdk/clients/firehose";
+import Firehose, { PutRecordOutput } from "aws-sdk/clients/firehose";
 
 import { appConfig } from "../config/config.service";
-import { FirehoseService } from "../core/firehose/firehose.service";
-import { CatchAll } from "../core/utils/catch-all";
 import { MetricNames } from "../metrics/metrics-list";
+import { CatchAll } from "../utils/catch-all";
 
 export class DataDeliveryService {
-  private firehose = FirehoseService.getInstance();
+  private firehose = new Firehose();
   constructor(private metrics: Record<MetricNames, any>) {}
 
   public async deliver(): Promise<PutRecordOutput> {

@@ -1,7 +1,7 @@
 import chromium from "chrome-aws-lambda";
 import { Browser } from "puppeteer-core";
 
-import { CatchAll } from "../../core/utils/catch-all";
+import { CatchAll } from "../../utils/catch-all";
 
 export class BrowserService {
   private static browser?: Browser;

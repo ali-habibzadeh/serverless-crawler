@@ -1,7 +1,7 @@
 import { Page, Response } from "puppeteer-core";
 
-import { CatchAll } from "../core/utils/catch-all";
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
+import { CatchAll } from "../utils/catch-all";
 import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
 

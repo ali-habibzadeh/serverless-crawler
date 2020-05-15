@@ -1,16 +1,16 @@
 import "reflect-metadata";
 
 import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
+import { DynamoDB } from "aws-sdk";
 import { plainToClass } from "class-transformer";
 
-import { DynamodbService } from "../core/dynamodb/dynamodb.service";
-import { CatchAll } from "../core/utils/catch-all";
 import { BrowserService } from "../page-rendering/config/browser.service";
+import { CatchAll } from "../utils/catch-all";
 import { CrawlUrl } from "./url-processing/crawl-url.model";
 import { UrlsProcessor } from "./url-processing/url-processor";
 
 export class StreamProcessorHandler {
-  private converter = DynamodbService.Converter;
+  private converter = DynamoDB.Converter;
 
   constructor(private event: DynamoDBStreamEvent) {}
 
