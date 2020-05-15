@@ -1,5 +1,6 @@
 import { attribute, or } from "@shiftcoders/dynamo-easy";
 
+import { CatchAll } from "../../core/utils/catch-all";
 import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 import { MetricNames } from "../../metrics/metrics-list";
 import { PageRenderService } from "../../page-rendering/page-render.service";
@@ -15,14 +16,14 @@ export class UrlsProcessor {
     return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
   }
 
+  @CatchAll
   private async crawlNextBatch(links: string[]): Promise<void> {
     const transactions = links.map(async (url) => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
         .put({ url, level })
         .onlyIf(or(attribute("level").attributeNotExists(), attribute("level").gte(level)))
-        .exec()
-        .catch((reason) => console.log("RULE_REASON", JSON.stringify(reason)));
+        .exec();
     });
     await Promise.all(transactions);
   }
