@@ -1,4 +1,4 @@
-import { attribute, TransactPut, TransactWriteRequest } from "@shiftcoders/dynamo-easy";
+import { attribute, BatchWriteRequest, TransactPut, TransactWriteRequest } from "@shiftcoders/dynamo-easy";
 
 import { DynamodbService } from "../../core/dynamodb/dynamodb.service";
 import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
@@ -18,10 +18,7 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    const level = this.crawlUrl.level + 1;
-    const transactions = links.map((url) =>
-      new TransactPut(CrawlUrl, { url, level }).onlyIf(attribute("url").attributeNotExists())
-    );
-    await new TransactWriteRequest(this.dynamodb).transact(...transactions).exec();
+    const items = links.map((url) => ({ url, level: this.crawlUrl.level + 1 }));
+    await new BatchWriteRequest(this.dynamodb).put(CrawlUrl, items).exec();
   }
 }
