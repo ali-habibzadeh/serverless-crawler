@@ -18,10 +18,7 @@ export class UrlsProcessor {
   private async crawlNextBatch(links: string[]): Promise<void> {
     const transactions = links.map(async (url) => {
       const level = this.crawlUrl.level + 1;
-      await crawlUrlStore
-        .put({ url, level })
-        .onlyIf(or(attribute("url").attributeNotExists(), attribute("level").gte(level)))
-        .exec();
+      await crawlUrlStore.put({ url, level }).ifNotExists().exec();
     });
     await Promise.all(transactions);
   }
