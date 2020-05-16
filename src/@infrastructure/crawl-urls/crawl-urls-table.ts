@@ -7,6 +7,7 @@ export class CrawlUrlsTable extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
   }
+
   public table = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
     replicationRegions: ["us-east-2"],
