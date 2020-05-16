@@ -4,6 +4,7 @@
   <a href="#" target="_blank">
     <img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-yellow.svg" />
   </a>
+  <img alt="Build" src="https://github.com/ali-habibzadeh/serverless-crawler/workflows/CI/badge.svg" />
 </p>
 
 > A serverless crawler with Lambda, Dynamodb and Kinesis Firehose
