@@ -11,7 +11,7 @@
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",
     "destroy": "cdk destroy",
     "synth": "cdk synth",
-    "format": "prettier"
+    "readme": "readme"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.38.0",
@@ -46,6 +46,7 @@
     "jest": "^24.9.0",
     "node-prune": "^1.0.2",
     "puppeteer": "^3.0.2",
+    "readme-md-generator": "^1.0.0",
     "ts-jest": "^25.5.1",
     "ts-node": "^8.9.1",
     "tslint": "^6.1.1",
