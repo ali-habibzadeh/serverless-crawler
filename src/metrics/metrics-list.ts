@@ -10,7 +10,7 @@ export enum MetricNames {
   Status = "status",
   InternalLinks = "internal_links",
   FCP = "first_contentful_paint",
-  PageResourcesCount = "page_resources_count",
+  PageResourcesCount = "page_resources_count"
 }
 
 export const metricsContainers = [PageUrl, InternalLinks, ResponseStatus, WebPerformance];

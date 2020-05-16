@@ -20,16 +20,16 @@ export class ServerlessCrawlerStack extends Stack {
   public lambdaEnv = {
     [envVars.crawlUrlsTableName]: this.crawlUrlsTable.table.tableName,
     [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
-    [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
+    [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName
   };
 
   public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {
     environment: this.lambdaEnv,
-    reservedConcurrentExecutions: 40,
+    reservedConcurrentExecutions: 40
   }).getLambda();
 
   public startCrawlHandler = new LambdaFactory(this, LambdaHandlers.StartCrawlHandler, {
-    environment: this.lambdaEnv,
+    environment: this.lambdaEnv
   }).getLambda();
 
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);

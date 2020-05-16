@@ -15,7 +15,7 @@ export class BrowserService {
       args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
-      executablePath: await chromium.executablePath,
+      executablePath: await chromium.executablePath
     });
   }
 

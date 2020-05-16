@@ -14,16 +14,16 @@ export class StartCrawlRestApi extends Construct {
 
   private validator = this.api.addRequestValidator("DefaultValidator", {
     validateRequestBody: true,
-    validateRequestParameters: false,
+    validateRequestParameters: false
   });
 
   private defineApiMethods(): void {
     const crawlResource = this.api.root.addResource("crawl");
     crawlResource.addMethod("POST", undefined, {
       requestModels: {
-        "application/json": this.crawlUrlModel,
+        "application/json": this.crawlUrlModel
       },
-      requestValidator: this.validator,
+      requestValidator: this.validator
     });
   }
 
@@ -34,10 +34,10 @@ export class StartCrawlRestApi extends Construct {
         url: {
           pattern:
             "(https?://(?:www.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|www.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9].[^s]{2,}|https?://(?:www.|(?!www))[a-zA-Z0-9]+.[^s]{2,}|www.[a-zA-Z0-9]+.[^s]{2,})",
-          type: JsonSchemaType.STRING,
-        },
+          type: JsonSchemaType.STRING
+        }
       },
-      required: ["url"],
-    },
+      required: ["url"]
+    }
   });
 }

@@ -20,8 +20,8 @@ export class DataDeliveryService {
     const input = {
       DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,
       Record: {
-        Data: JSON.stringify(data),
-      },
+        Data: JSON.stringify(data)
+      }
     };
     return this.firehose.putRecord(input).promise();
   }

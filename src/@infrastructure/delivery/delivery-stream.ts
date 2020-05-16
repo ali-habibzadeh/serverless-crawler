@@ -23,33 +23,33 @@ export class DeliveryStream extends Construct {
           deserializer: {
             openXJsonSerDe: {
               caseInsensitive: false,
-              convertDotsInJsonKeysToUnderscores: false,
-            },
-          },
+              convertDotsInJsonKeysToUnderscores: false
+            }
+          }
         },
         outputFormatConfiguration: {
           serializer: {
             parquetSerDe: {
-              compression: "GZIP",
-            },
-          },
-        },
+              compression: "GZIP"
+            }
+          }
+        }
       },
       bucketArn: this.crawlData.crawlDataBucket.bucketArn,
       compressionFormat: "UNCOMPRESSED",
       bufferingHints: {
         intervalInSeconds: 60,
-        sizeInMBs: 64,
+        sizeInMBs: 64
       },
       roleArn: this.crawlData.deliveryStreamS3Role.roleArn,
-      prefix: "crawl-data/",
-    },
+      prefix: "crawl-data/"
+    }
   });
 
   public getWritingPolicy(): PolicyStatement {
     return new PolicyStatement({
       resources: [this.crawlDatasDeliveryStream.attrArn],
-      actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"],
+      actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"]
     });
   }
 }

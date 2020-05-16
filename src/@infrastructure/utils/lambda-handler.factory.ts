@@ -7,14 +7,14 @@ export class LambdaHandlerFactory {
   constructor(private configs: ILambdaHandlerFactoryConfig) {}
   private defaultConfig = {
     statusCode: 200,
-    headers: { "Content-Type": "application/json" },
+    headers: { "Content-Type": "application/json" }
   };
 
   public getHandlers(): ILambdaHandlers {
     return this.entries.reduce((configs, [name, fn]) => {
       return {
         ...configs,
-        [name]: this.getHandler(fn),
+        [name]: this.getHandler(fn)
       };
     }, {});
   }
@@ -25,7 +25,7 @@ export class LambdaHandlerFactory {
       console.log("Function results", results);
       return {
         ...this.defaultConfig,
-        body: JSON.stringify(results),
+        body: JSON.stringify(results)
       };
     };
   }

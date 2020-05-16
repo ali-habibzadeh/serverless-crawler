@@ -43,15 +43,13 @@ export class CDPSessionClient {
 
   public async resolveNodeObjectId(nodeId: number): Promise<string | undefined> {
     const {
-      object: { objectId },
+      object: { objectId }
     } = <CDP.DOM.ResolveNodeResponse>await this.client.send("DOM.resolveNode", { nodeId });
     return objectId;
   }
 
   public async getAttribute(nodeId: number, attribute: string): Promise<string | null> {
-    const { attributes } = <CDP.DOM.GetAttributesResponse>(
-      await this.client.send("DOM.getAttributes", { nodeId })
-    );
+    const { attributes } = <CDP.DOM.GetAttributesResponse>await this.client.send("DOM.getAttributes", { nodeId });
     const attrIndex = attributes.indexOf(attribute);
     return attrIndex === -1 ? null : attributes[attrIndex + 1];
   }

@@ -16,8 +16,8 @@ export class InternalLinks extends MetricContainer {
   public async getMetrics(): Promise<Record<string, string[]>[]> {
     return [
       {
-        [this.columns[0].name]: await this.getAllInternalLinks(),
-      },
+        [this.columns[0].name]: await this.getAllInternalLinks()
+      }
     ];
   }
 
@@ -25,7 +25,7 @@ export class InternalLinks extends MetricContainer {
     const links = await this.page.evaluate(() =>
       [...document.querySelectorAll("a")].map((link) => ({
         attrHref: link.getAttribute("href"),
-        href: link.href,
+        href: link.href
       }))
     );
     return getNormalLinks(links).filter((href) => !this.isExternalLink(href));

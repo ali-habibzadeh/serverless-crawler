@@ -6,7 +6,7 @@ export class BucketFactory {
   public getBucket(): Bucket {
     return new Bucket(this.parent, this.id, {
       blockPublicAccess: BlockPublicAccess.BLOCK_ALL,
-      encryption: BucketEncryption.S3_MANAGED,
+      encryption: BucketEncryption.S3_MANAGED
     });
   }
 }

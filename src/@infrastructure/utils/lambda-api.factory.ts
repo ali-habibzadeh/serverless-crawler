@@ -11,8 +11,8 @@ export class LambdaApiFactory {
       proxy: false,
       defaultCorsPreflightOptions: {
         allowOrigins: Cors.ALL_ORIGINS,
-        allowMethods: Cors.ALL_METHODS,
-      },
+        allowMethods: Cors.ALL_METHODS
+      }
     });
   }
 }

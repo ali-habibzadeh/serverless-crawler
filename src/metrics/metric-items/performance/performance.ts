@@ -15,7 +15,7 @@ export class WebPerformance extends MetricContainer {
 
   public columns = [
     { name: MetricNames.FCP, type: Schema.INTEGER, isGlueColumn: true },
-    { name: MetricNames.PageResourcesCount, type: Schema.INTEGER, isGlueColumn: true },
+    { name: MetricNames.PageResourcesCount, type: Schema.INTEGER, isGlueColumn: true }
   ];
 
   private extractPaintMetrics = () => {
@@ -27,8 +27,8 @@ export class WebPerformance extends MetricContainer {
     return [
       {
         [this.columns[0].name]: await this.getFirstContentfulPaint(),
-        [this.columns[1].name]: await this.getResourceTreeCount(),
-      },
+        [this.columns[1].name]: await this.getResourceTreeCount()
+      }
     ];
   }
 

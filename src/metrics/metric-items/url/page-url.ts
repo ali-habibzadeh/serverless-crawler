@@ -15,8 +15,8 @@ export class PageUrl extends MetricContainer {
   public async getMetrics(): Promise<Record<string, any>[]> {
     return [
       {
-        [this.columns[0].name]: this.page.url(),
-      },
+        [this.columns[0].name]: this.page.url()
+      }
     ];
   }
 }

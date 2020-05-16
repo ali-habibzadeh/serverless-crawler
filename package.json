@@ -10,7 +10,8 @@
     "integration": "jest --config=jest.integration.config.js",
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",
     "destroy": "cdk destroy",
-    "synth": "cdk synth"
+    "synth": "cdk synth",
+    "format": "prettier"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.38.0",

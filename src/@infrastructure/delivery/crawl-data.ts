@@ -12,14 +12,14 @@ export class CrawlData extends Construct {
   public crawlDataBucket = new BucketFactory(this, "CrawlDataBucket").getBucket();
 
   public deliveryStreamS3Role = new Role(this, "DeliveryStreamS3Role", {
-    assumedBy: new ServicePrincipal("firehose.amazonaws.com"),
+    assumedBy: new ServicePrincipal("firehose.amazonaws.com")
   });
 
   private attachRole(): void {
     this.deliveryStreamS3Role.addToPolicy(
       new PolicyStatement({
         resources: [this.crawlDataBucket.bucketArn, `${this.crawlDataBucket.bucketArn}/*`],
-        actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"],
+        actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"]
       })
     );
   }

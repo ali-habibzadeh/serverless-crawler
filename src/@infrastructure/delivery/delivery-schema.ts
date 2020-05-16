@@ -16,11 +16,11 @@ export class DeliverySchema extends Construct {
     database: this.schemaDatabase,
     tableName: "metadata_table",
     columns: getGlueColumns(),
-    dataFormat: DataFormat.PARQUET,
+    dataFormat: DataFormat.PARQUET
   });
 
   private deliveryStreamGlueRole = new Role(this, "DeliveryStreamGlueRole", {
-    assumedBy: new ServicePrincipal("firehose.amazonaws.com"),
+    assumedBy: new ServicePrincipal("firehose.amazonaws.com")
   });
 
   public getSchemaConfiguration(): CfnDeliveryStream.SchemaConfigurationProperty {
@@ -30,7 +30,7 @@ export class DeliverySchema extends Construct {
       tableName: this.schemaTable.tableName,
       region: Stack.of(this).region,
       roleArn: this.deliveryStreamGlueRole.roleArn,
-      versionId: "LATEST",
+      versionId: "LATEST"
     };
   }
 
@@ -38,7 +38,7 @@ export class DeliverySchema extends Construct {
     this.deliveryStreamGlueRole.addToPolicy(
       new PolicyStatement({
         resources: ["*"],
-        actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase"],
+        actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase"]
       })
     );
   }

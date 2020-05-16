@@ -11,7 +11,7 @@ export class CrawlUrlsTable extends Construct {
   public table = new Table(this, "crawlUrlsTable", {
     partitionKey: { name: "url", type: AttributeType.STRING },
     replicationRegions: ["us-east-2"],
-    stream: StreamViewType.NEW_AND_OLD_IMAGES,
+    stream: StreamViewType.NEW_AND_OLD_IMAGES
   });
 
   public eventSource = new DynamoEventSource(this.table, {
@@ -19,6 +19,6 @@ export class CrawlUrlsTable extends Construct {
     maxBatchingWindow: Duration.seconds(2),
     parallelizationFactor: 4,
     retryAttempts: 4,
-    batchSize: 40,
+    batchSize: 40
   });
 }

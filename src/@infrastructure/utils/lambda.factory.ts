@@ -18,14 +18,10 @@ export class LambdaFactory {
     code: Code.fromAsset(path.join(__dirname.substring(0, __dirname.indexOf("dist") + 4))),
     memorySize: 2000,
     timeout: Duration.minutes(3),
-    tracing: Tracing.ACTIVE,
+    tracing: Tracing.ACTIVE
   };
 
-  constructor(
-    private parent: Construct,
-    private handler: LambdaHandlers,
-    private props: ILambdaFactoryProps
-  ) {}
+  constructor(private parent: Construct, private handler: LambdaHandlers, private props: ILambdaFactoryProps) {}
 
   public getLambda(): Fn {
     return new Fn(this.parent, `Id-${this.handler}`, {
@@ -36,10 +32,10 @@ export class LambdaFactory {
       environment: {
         region: Stack.of(this.parent).region,
         account: Stack.of(this.parent).account,
-        ...this.props.environment,
+        ...this.props.environment
       },
       onSuccess: this.props.onSuccess,
-      onFailure: this.props.onFailure,
+      onFailure: this.props.onFailure
     });
   }
 }
