@@ -6,13 +6,13 @@ import { appConfig } from "./config/config.service";
 import { StartCrawlHandler } from "./crawling/start-crawl.handler";
 import { StreamProcessorHandler } from "./crawling/stream-processor.handler";
 import { LambdaHandlers } from "./handlers-list";
+import { ListFunctionsResponse } from "aws-sdk/clients/lambda";
 
 AWS.config.update({ region: appConfig.region });
 
-async function listFunctions(_e: any): Promise<string> {
+async function listFunctions(_e: any): Promise<ListFunctionsResponse> {
   const lambda = new Lambda();
-  const functions = await lambda.listFunctions({}).promise();
-  return JSON.stringify(functions);
+  return lambda.listFunctions({}).promise();
 }
 
 const handlers: Record<LambdaHandlers, PublicFn> = {
