@@ -10,7 +10,7 @@ export interface IMetricColumn {
   isGlueColumn: boolean;
 }
 
-export abstract class MetricContainer {
+export abstract class BaseMetricContainer {
   public abstract columns: IMetricColumn[];
   constructor(protected page: Page, protected response: Response | null) {}
   public abstract getMetrics(): Promise<Record<MetricNames, any>[]>;

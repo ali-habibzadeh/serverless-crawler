@@ -1,9 +1,9 @@
 import { Column } from "@aws-cdk/aws-glue";
 
-import { InternalLinks } from "./metric-items/internal-links/internal-links";
-import { WebPerformance } from "./metric-items/performance/performance";
-import { ResponseStatus } from "./metric-items/status/status";
-import { PageUrl } from "./metric-items/url/page-url";
+import { InternalLinks } from "./metric-containers/internal-links/internal-links";
+import { WebPerformance } from "./metric-containers/performance/performance";
+import { ResponseStatus } from "./metric-containers/status/status";
+import { PageUrl } from "./metric-containers/url/page-url";
 
 export enum MetricNames {
   Url = "url",

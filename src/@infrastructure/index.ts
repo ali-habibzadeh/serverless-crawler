@@ -32,6 +32,8 @@ export class ServerlessCrawlerStack extends Stack {
     environment: this.lambdaEnv
   }).getLambda();
 
+  public listFunctionsHandler = new LambdaFactory(this, LambdaHandlers.ListFunctionsHandler, {}).getLambda();
+
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
 
   private configure(): void {

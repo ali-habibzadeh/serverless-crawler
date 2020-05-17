@@ -2,10 +2,10 @@ import { Page, Response } from "puppeteer-core";
 
 import { Schema } from "@aws-cdk/aws-glue";
 
-import { MetricContainer } from "../../base-types/metric-container";
+import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
-export class ResponseStatus extends MetricContainer {
+export class ResponseStatus extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -13,10 +13,6 @@ export class ResponseStatus extends MetricContainer {
   public columns = [{ name: MetricNames.Status, type: Schema.INTEGER, isGlueColumn: true }];
 
   public async getMetrics(): Promise<Record<string, number>[]> {
-    return [
-      {
-        [this.columns[0].name]: this.response!.status()
-      }
-    ];
+    return [{ [this.columns[0].name]: this.response!.status() }];
   }
 }

@@ -3,10 +3,10 @@ import { Page, Response } from "puppeteer-core";
 import { Schema } from "@aws-cdk/aws-glue";
 
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
-import { MetricContainer } from "../../base-types/metric-container";
+import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
-export class WebPerformance extends MetricContainer {
+export class WebPerformance extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }

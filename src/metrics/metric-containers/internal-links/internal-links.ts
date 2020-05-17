@@ -2,11 +2,11 @@ import { Page, Response } from "puppeteer-core";
 
 import { Schema } from "@aws-cdk/aws-glue";
 
-import { MetricContainer } from "../../base-types/metric-container";
+import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 import { getNormalLinks } from "./link-utils";
 
-export class InternalLinks extends MetricContainer {
+export class InternalLinks extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -14,11 +14,7 @@ export class InternalLinks extends MetricContainer {
   public columns = [{ name: MetricNames.InternalLinks, type: Schema.STRING, isGlueColumn: false }];
 
   public async getMetrics(): Promise<Record<string, string[]>[]> {
-    return [
-      {
-        [this.columns[0].name]: await this.getAllInternalLinks()
-      }
-    ];
+    return [{ [this.columns[0].name]: await this.getAllInternalLinks() }];
   }
 
   private async getAllInternalLinks(): Promise<string[]> {
