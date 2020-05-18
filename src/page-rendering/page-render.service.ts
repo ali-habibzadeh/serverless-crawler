@@ -18,11 +18,14 @@ export class PageRenderService {
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
-  @CatchAll
   private async getResponse(): Promise<Response | null> {
-    this.page = await BrowserService.getBrowser().newPage();
-    await this.setPageHandlers();
-    return this.page.goto(this.url);
+    try {
+      this.page = await BrowserService.getBrowser().newPage();
+      await this.setPageHandlers();
+      return this.page.goto(this.url);
+    } catch (e) {
+      throw new Error(`Failed on getResponse, ${JSON.stringify(e)}`);
+    }
   }
 
   private async setPageHandlers(): Promise<void> {
