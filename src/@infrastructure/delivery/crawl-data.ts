@@ -1,5 +1,5 @@
 import { PolicyStatement, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
-import { Construct } from "@aws-cdk/core";
+import { Construct, Tag } from "@aws-cdk/core";
 
 import { BucketFactory } from "../utils/bucket.factory";
 
@@ -7,6 +7,7 @@ export class CrawlData extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
     this.attachRole();
+    this.addTags();
   }
 
   public crawlDataBucket = new BucketFactory(this, "CrawlDataBucket").getBucket();
@@ -22,5 +23,9 @@ export class CrawlData extends Construct {
         actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"]
       })
     );
+  }
+
+  private addTags(): void {
+    Tag.add(this.crawlDataBucket, "description", "S3 Bucket for storing crawl data");
   }
 }

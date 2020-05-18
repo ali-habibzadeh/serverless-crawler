@@ -1,11 +1,12 @@
 import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
-import { Construct, Duration } from "@aws-cdk/core";
+import { Construct, Duration, Tag } from "@aws-cdk/core";
 
 export class CrawlUrlsTable extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
+    this.addTags();
   }
 
   public table = new Table(this, "crawlUrlsTable", {
@@ -21,4 +22,8 @@ export class CrawlUrlsTable extends Construct {
     retryAttempts: 4,
     batchSize: 40
   });
+
+  private addTags(): void {
+    Tag.add(this.table, "description", "Dynamodb table name for sotring crawl URLs and trigerring crawling lambdas");
+  }
 }

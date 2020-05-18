@@ -1,7 +1,7 @@
 import { Database, DataFormat, Table } from "@aws-cdk/aws-glue";
 import { PolicyStatement, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { CfnDeliveryStream } from "@aws-cdk/aws-kinesisfirehose";
-import { Construct, Stack } from "@aws-cdk/core";
+import { Construct, Stack, Tag } from "@aws-cdk/core";
 
 import { getGlueColumns } from "../../metrics/metrics-list";
 
@@ -9,6 +9,7 @@ export class DeliverySchema extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
     this.attachRoles();
+    this.addTags();
   }
 
   private schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
@@ -41,5 +42,10 @@ export class DeliverySchema extends Construct {
         actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase"]
       })
     );
+  }
+
+  private addTags(): void {
+    Tag.add(this.schemaDatabase, "description", "Glue database for crawl data schema");
+    Tag.add(this.schemaTable, "description", "Glue table holding column schema for crawl data");
   }
 }

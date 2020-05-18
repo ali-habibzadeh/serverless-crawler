@@ -1,4 +1,4 @@
-import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
+import { App, CfnOutput, Construct, Stack, StackProps, Tag } from "@aws-cdk/core";
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";
@@ -42,6 +42,11 @@ export class ServerlessCrawlerStack extends Stack {
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
+  }
+
+  private addTags(): void {
+    Tag.add(this.streamHandler, "description", "Function for processing dynamodb streams");
+    Tag.add(this.startCrawlHandler, "description", "Function triggering the very first dynamodb stream");
   }
 }
 
