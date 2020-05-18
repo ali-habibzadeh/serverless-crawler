@@ -9,10 +9,14 @@ export class UrlsProcessor {
   constructor(private crawlUrl: CrawlUrl) {}
 
   public async process(): Promise<void> {
-    const renderer = new PageRenderService(this.crawlUrl.url);
-    const metrics = await renderer.getPageRenderMetrics();
-    await new DataDeliveryService(metrics).deliver();
-    return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
+    try {
+      const renderer = new PageRenderService(this.crawlUrl.url);
+      const metrics = await renderer.getPageRenderMetrics();
+      await new DataDeliveryService(metrics).deliver();
+      return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
+    } catch (e) {
+      throw new Error(`Could't process URL: ${this.crawlUrl.url}: ${JSON.stringify(e)}`);
+    }
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
