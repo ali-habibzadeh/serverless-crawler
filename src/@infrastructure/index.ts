@@ -6,7 +6,6 @@ import { StartCrawlRestApi } from "./api/crawler-api";
 import { CrawlUrlsTable } from "./crawl-urls/crawl-urls-table";
 import { DeliveryStream } from "./delivery/delivery-stream";
 import { LambdaFactory } from "./utils/lambda.factory";
-import { PolicyStatement, Effect } from "@aws-cdk/aws-iam";
 
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -33,8 +32,6 @@ export class ServerlessCrawlerStack extends Stack {
     environment: this.lambdaEnv
   }).getLambda();
 
-  public listFunctionsHandler = new LambdaFactory(this, LambdaHandlers.ListFunctionsHandler, {}).getLambda();
-
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
 
   private configure(): void {
@@ -45,13 +42,6 @@ export class ServerlessCrawlerStack extends Stack {
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
-    this.listFunctionsHandler.addToRolePolicy(
-      new PolicyStatement({
-        resources: ["*"],
-        effect: Effect.ALLOW,
-        actions: ["lambda:ListFunctions"]
-      })
-    );
   }
 }
 

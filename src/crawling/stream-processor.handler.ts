@@ -32,7 +32,7 @@ export class StreamProcessorHandler {
   private getUrl(record: DynamoDBRecord): CrawlUrl {
     const { NewImage } = record.dynamodb!;
     if (NewImage) {
-      const unmarshalled = <CrawlUrl>this.converter.unmarshall(NewImage);
+      const unmarshalled = this.converter.unmarshall(NewImage);
       return plainToClass(CrawlUrl, unmarshalled);
     }
     throw new Error(`Invalid DynamoDBRecord ${record}`);

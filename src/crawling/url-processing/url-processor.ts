@@ -16,17 +16,13 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    try {
-      const transactions = links.map(async (url) => {
-        const level = this.crawlUrl.level + 1;
-        await crawlUrlStore
-          .put({ url, level })
-          .onlyIf(or(attribute("level").attributeNotExists(), attribute("level").gte(level)))
-          .exec();
-      });
-      await Promise.all(transactions);
-    } catch (e) {
-      console.log("WRITE_ERROR", JSON.stringify(e));
-    }
+    const transactions = links.map(async (url) => {
+      const level = this.crawlUrl.level + 1;
+      await crawlUrlStore
+        .put({ url, level })
+        .onlyIf(or(attribute("level").attributeNotExists(), attribute("level").gte(level)))
+        .exec();
+    });
+    await Promise.allSettled(transactions);
   }
 }
