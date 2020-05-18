@@ -21,6 +21,12 @@ yarn build
 
 ## Deploy
 
+Add AWS key and secret to github secrets (/settings/secrets):
+
+`AWS_ACCESS_KEY`
+
+`AWS_SECRET`
+
 ```sh
 yarn deploy
 ```
