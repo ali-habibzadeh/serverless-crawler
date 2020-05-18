@@ -11,6 +11,7 @@ export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     this.configure();
+    this.addTags();
   }
 
   public regionOutput = new CfnOutput(this, "region", { value: this.region });

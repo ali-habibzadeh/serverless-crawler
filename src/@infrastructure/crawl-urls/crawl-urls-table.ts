@@ -24,6 +24,6 @@ export class CrawlUrlsTable extends Construct {
   });
 
   private addTags(): void {
-    Tag.add(this.table, "description", "Dynamodb table name for sotring crawl URLs and trigerring crawling lambdas");
+    Tag.add(this.table, "description", "Dynamodb table name for storing crawl URLs and trigerring crawling lambdas");
   }
 }
