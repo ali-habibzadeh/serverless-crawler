@@ -1,22 +1,28 @@
 import { envVars } from "./envars.enum";
 
+const isStringAndNotEmpty = (v: any) => {
+  if (typeof v !== "string" || v.length < 1) {
+    throw new Error(`required and can not be empty string`);
+  }
+};
+
 export const appConfigSchema = {
   [envVars.region]: {
     doc: "AWS Region of the app",
-    format: String,
-    default: "us-east-1",
+    format: isStringAndNotEmpty,
+    default: "",
     env: "region"
   },
   [envVars.account]: {
     doc: "AWS accountId",
-    format: String,
-    default: "1234s",
+    format: isStringAndNotEmpty,
+    default: "",
     env: "account"
   },
   [envVars.crawlUrlsTableName]: {
     doc: "Dynamodb table name for sotring crawl URLs",
-    format: String,
-    default: "urlsTable",
+    format: isStringAndNotEmpty,
+    default: "",
     env: envVars.crawlUrlsTableName
   },
   [envVars.isLocal]: {
@@ -27,14 +33,14 @@ export const appConfigSchema = {
   },
   [envVars.crawlDataDeliveryStreamName]: {
     doc: "Stream name for delivering crawl data to s3",
-    format: String,
-    default: "123",
+    format: isStringAndNotEmpty,
+    default: "",
     env: envVars.crawlDataDeliveryStreamName
   },
   [envVars.crawlDataBucketName]: {
     doc: "S3 Bucket for Crawl data",
-    format: String,
-    default: "123",
+    format: isStringAndNotEmpty,
+    default: "",
     env: envVars.crawlDataBucketName
   }
 };
