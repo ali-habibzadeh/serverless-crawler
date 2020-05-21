@@ -1,4 +1,5 @@
 import { envVars } from "./envars.enum";
+import { SchemaObj } from "convict";
 
 const isStringAndNotEmpty = (v: any) => {
   if (typeof v !== "string" || v.length < 1) {
@@ -6,7 +7,7 @@ const isStringAndNotEmpty = (v: any) => {
   }
 };
 
-export const appConfigSchema = {
+export const appConfigSchema: Record<envVars, SchemaObj<any>> = {
   [envVars.region]: {
     doc: "AWS Region of the app",
     format: isStringAndNotEmpty,
