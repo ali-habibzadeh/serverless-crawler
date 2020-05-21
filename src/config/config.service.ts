@@ -20,5 +20,3 @@ class ConfigService {
 }
 
 export const appConfig = ConfigService.getInstance().environment;
-
-const a = appConfig.crawlDataDeliveryStreamName;
