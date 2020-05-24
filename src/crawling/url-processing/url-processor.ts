@@ -20,8 +20,11 @@ export class UrlsProcessor {
     }
   }
 
+  // tslint:disable-next-line: no-feature-envy
   private async crawlNextBatch(links: string[]): Promise<void> {
+    console.log("before qualifying", links);
     const hrefs = await new UrlsQualifierService(links).getQualifiedUrls();
+    console.log("after qualifying", hrefs);
     const transactions = hrefs.map(async (url) => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
