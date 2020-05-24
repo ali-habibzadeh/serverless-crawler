@@ -4,6 +4,7 @@ import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 import { MetricNames } from "../../metrics/metrics-list";
 import { PageRenderService } from "../../page-rendering/page-render.service";
 import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
+import { UrlsQualifierService } from "./url-qualifiers/qualifiers.service";
 
 export class UrlsProcessor {
   constructor(private crawlUrl: CrawlUrl) {}
@@ -20,7 +21,8 @@ export class UrlsProcessor {
   }
 
   private async crawlNextBatch(links: string[]): Promise<void> {
-    const transactions = links.map(async (url) => {
+    const hrefs = await new UrlsQualifierService(links).getQualifiedUrls();
+    const transactions = hrefs.map(async (url) => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
         .put({ url, level })
