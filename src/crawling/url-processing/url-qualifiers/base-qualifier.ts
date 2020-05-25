@@ -1,7 +1,8 @@
+import { filter } from "async";
+
 export abstract class BaseQualifier {
-  constructor(protected hrefs: string[]) {}
-  public async getQualifiedUrls(): Promise<string[]> {
-    return this.hrefs.filter(async (url) => this.isQualified(url));
+  public async getQualifiedUrls(hrefs: string[]): Promise<string[]> {
+    return filter(hrefs, async (url) => this.isQualified(url));
   }
   protected abstract async isQualified(url: string): Promise<boolean>;
 }
