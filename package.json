@@ -5,7 +5,8 @@
   "private": true,
   "scripts": {
     "build": "tsc",
-    "postbuild": "cp package.json dist/package.json && cp -a binary-assets/. dist/ && cd dist && npm install --only=production && node-prune",
+    "copyall": "cp package.json dist/package.json && cp -a binary-assets/. dist/",
+    "postbuild": "yarn copyall && cd dist && npm install --only=production && node-prune",
     "watch": "tsc -w",
     "integration": "jest --config=jest.integration.config.js",
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",

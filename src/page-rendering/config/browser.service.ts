@@ -12,11 +12,11 @@ export class BrowserService {
       return;
     }
     this.browser = await chromium.puppeteer.launch({
-      args: [...chromium.args, "--disable-software-rasterizer", "--disable-gpu", "--single-process"],
+      args: chromium.args,
       defaultViewport: chromium.defaultViewport,
       headless: chromium.headless,
       executablePath: await chromium.executablePath,
-      userDataDir: "/tmp/chrome" // TODO: delete it on close
+      userDataDir: "/tmp/user-data-dir" // TODO: delete it on close,
     });
   }
 
