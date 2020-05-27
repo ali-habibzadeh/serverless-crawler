@@ -16,11 +16,14 @@ export class RenderingCluster extends Construct {
     cluster: this.renderingCluster,
     cpu: 4096,
     desiredCount: 6,
-    maxHealthyPercent: 200,
+    maxHealthyPercent: 100,
     taskImageOptions: {
       image: ContainerImage.fromRegistry("browserless/chrome:latest"),
       containerPort: 3000,
-      enableLogging: true
+      enableLogging: true,
+      environment: {
+        MAX_CONCURRENT_SESSIONS: "10"
+      }
     },
     memoryLimitMiB: 8192,
     publicLoadBalancer: true,
