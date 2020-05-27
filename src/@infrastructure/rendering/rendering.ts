@@ -13,9 +13,9 @@ export class RenderingCluster extends Construct {
 
   public loadBalancedService = new ApplicationLoadBalancedFargateService(this, "LoadBalancedService", {
     cluster: this.renderingCluster,
-    cpu: 512,
+    cpu: 1024,
     desiredCount: 6,
-    maxHealthyPercent: 90,
+    maxHealthyPercent: 200,
     taskImageOptions: {
       image: ContainerImage.fromRegistry("browserless/chrome:latest"),
       containerPort: 3000,
