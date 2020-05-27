@@ -10,18 +10,35 @@ export class RobotsTxt {
 
   public async isAllowed(): Promise<boolean> {
     if (!(await this.alreadyExists())) {
-      await this.write();
+      const robotstxt = await this.getRobotsFile();
+      if (!robotstxt) {
+        return true;
+      }
+      await this.writeRobots(robotstxt);
     }
+    return this.getBinaryAllowedResults();
+  }
+
+  private async getBinaryAllowedResults(): Promise<boolean> {
     const { stdout } = await run(`robots ${this.robotsLocation} GoogleBot ${this.url.href}`);
     return !stdout.includes("DISALLOWED");
+  }
+
+  private async writeRobots(robotstxt: string): Promise<void> {
+    await makeDir(this.folderLocation, { recursive: true });
+    return write(this.robotsLocation, robotstxt);
   }
 
   private async alreadyExists(): Promise<boolean> {
     return has(this.robotsLocation);
   }
 
-  private async write(): Promise<void> {
-    await makeDir(`/tmp/${this.url.host}`, { recursive: true });
-    await write(this.robotsLocation, await axios.get(`${this.url.origin}/robots.txt`));
+  private async getRobotsFile(): Promise<string | null> {
+    try {
+      const { data } = await axios.get(`${this.url.origin}/robots.txt`);
+      return data;
+    } catch (e) {
+      return null;
+    }
   }
 }
