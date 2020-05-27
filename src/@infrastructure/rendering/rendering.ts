@@ -22,7 +22,7 @@ export class RenderingCluster extends Construct {
       containerPort: 3000,
       enableLogging: true
     },
-    memoryLimitMiB: 2048,
+    memoryLimitMiB: 8192,
     publicLoadBalancer: true,
     protocol: ApplicationProtocol.HTTP,
     listenerPort: 3000,
