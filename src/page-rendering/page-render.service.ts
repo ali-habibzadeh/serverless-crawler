@@ -1,7 +1,6 @@
 import { Page, Response } from "puppeteer-core";
 
 import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
-import { CatchAll } from "../utils/catch-all";
 import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
 
@@ -17,7 +16,6 @@ export class PageRenderService {
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
-  @CatchAll
   private async getResponse(): Promise<Response | null> {
     this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();
