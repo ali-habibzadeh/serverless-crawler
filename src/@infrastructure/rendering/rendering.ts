@@ -7,13 +7,14 @@ import { ApplicationProtocol } from "@aws-cdk/aws-elasticloadbalancingv2";
 export class RenderingCluster extends Construct {
   constructor(parent: Construct, id: string, private vpc: Vpc) {
     super(parent, id);
+    this.applyAutoScalingRules();
   }
 
   public renderingCluster = new Cluster(this, "RenderingCluster", { vpc: this.vpc });
 
   public loadBalancedService = new ApplicationLoadBalancedFargateService(this, "LoadBalancedService", {
     cluster: this.renderingCluster,
-    cpu: 1024,
+    cpu: 4096,
     desiredCount: 6,
     maxHealthyPercent: 200,
     taskImageOptions: {
@@ -28,8 +29,14 @@ export class RenderingCluster extends Construct {
     assignPublicIp: true
   });
 
-  private scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
-    minCapacity: 6,
-    maxCapacity: 200
-  });
+  public applyAutoScalingRules(): void {
+    const scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
+      minCapacity: 6,
+      maxCapacity: 200
+    });
+
+    scalableTarget.scaleOnCpuUtilization("CpuScaling", {
+      targetUtilizationPercent: 80
+    });
+  }
 }
