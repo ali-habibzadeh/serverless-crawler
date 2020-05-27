@@ -29,12 +29,11 @@ export class RenderingCluster extends Construct {
     assignPublicIp: true
   });
 
-  public applyAutoScalingRules(): void {
+  private applyAutoScalingRules(): void {
     const scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
       minCapacity: 6,
       maxCapacity: 200
     });
-
     scalableTarget.scaleOnCpuUtilization("CpuScaling", {
       targetUtilizationPercent: 80
     });
