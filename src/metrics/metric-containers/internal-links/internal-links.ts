@@ -29,10 +29,8 @@ export class InternalLinks extends BaseMetricContainer {
 
   private isExternalLink(href: string): boolean {
     const pageUrl = this.page.url();
-    try {
-      return new URL(href).hostname !== new URL(pageUrl).hostname;
-    } catch (e) {
-      return false;
-    }
+    const originalHost = new URL(pageUrl).hostname;
+    const thisHrefHost = new URL(href).hostname;
+    return thisHrefHost !== originalHost && !thisHrefHost.endsWith(`.${originalHost}`);
   }
 }
