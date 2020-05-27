@@ -65,7 +65,6 @@
     "async": "^3.2.0",
     "aws-sdk": "^2.684.0",
     "axios": "^0.19.2",
-    "catch-decorator": "^2.0.0",
     "class-transformer": "^0.2.3",
     "convict": "^6.0.0",
     "minimatch": "^3.0.4",

@@ -2,7 +2,6 @@ import Firehose, { PutRecordOutput } from "aws-sdk/clients/firehose";
 
 import { appConfig } from "../config/config.service";
 import { MetricNames } from "../metrics/metrics-list";
-import { CatchAll } from "../utils/catch-all";
 
 export class DataDeliveryService {
   private firehose = new Firehose();
@@ -15,7 +14,6 @@ export class DataDeliveryService {
     throw new Error("Metrics can not be empty for s3 delivery");
   }
 
-  @CatchAll
   private async writeToS3(data: Record<MetricNames, any>): Promise<PutRecordOutput> {
     const input = {
       DeliveryStreamName: appConfig.crawlDataDeliveryStreamName,
