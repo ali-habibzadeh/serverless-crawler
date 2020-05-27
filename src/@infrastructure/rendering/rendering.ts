@@ -15,6 +15,7 @@ export class RenderingCluster extends Construct {
     cluster: this.renderingCluster,
     cpu: 512,
     desiredCount: 6,
+    maxHealthyPercent: 90,
     taskImageOptions: {
       image: ContainerImage.fromRegistry("browserless/chrome:latest"),
       containerPort: 3000,
@@ -25,5 +26,10 @@ export class RenderingCluster extends Construct {
     protocol: ApplicationProtocol.HTTP,
     listenerPort: 3000,
     assignPublicIp: true
+  });
+
+  private scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
+    minCapacity: 6,
+    maxCapacity: 200
   });
 }
