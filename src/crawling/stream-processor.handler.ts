@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { DynamoDBRecord, DynamoDBStreamEvent } from "aws-lambda";
 import { DynamoDB } from "aws-sdk";
 import { plainToClass } from "class-transformer";

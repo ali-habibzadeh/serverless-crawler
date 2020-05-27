@@ -1,3 +1,4 @@
+import "reflect-metadata";
 import AWS from "aws-sdk";
 
 import { PublicFn } from "./@infrastructure/utils/interfaces/lambda-handler.interface";

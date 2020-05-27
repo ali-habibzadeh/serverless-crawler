@@ -1,23 +1,13 @@
-import chromium from "chrome-aws-lambda";
-import { Browser } from "puppeteer-core";
-
-import { CatchAll } from "../../utils/catch-all";
+import { connect, Browser } from "puppeteer-core";
+import { appConfig } from "../../config/config.service";
 
 export class BrowserService {
   private static browser?: Browser;
+  private static browserWSEndpoint = `http://${appConfig.chromeClusterDns}:3000`;
 
-  @CatchAll
   public static async createBrowser(): Promise<void> {
-    if (this.browser) {
-      return;
-    }
-    this.browser = await chromium.puppeteer.launch({
-      args: chromium.args,
-      defaultViewport: chromium.defaultViewport,
-      headless: chromium.headless,
-      executablePath: await chromium.executablePath,
-      userDataDir: "/tmp/user-data-dir" // TODO: delete it on close,
-    });
+    if (this.browser) return;
+    this.browser = await connect({ browserWSEndpoint: this.browserWSEndpoint });
   }
 
   public static getBrowser(): Browser {

@@ -43,5 +43,11 @@ export const appConfigSchema: Record<envVars, SchemaObj<any>> = {
     format: isStringAndNotEmpty,
     default: "",
     env: envVars.crawlDataBucketName
+  },
+  [envVars.chromeClusterDns]: {
+    doc: "Websocket endpoint for chrome cluster",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.chromeClusterDns
   }
 };

@@ -2,6 +2,7 @@ import * as path from "path";
 
 import { Code, Function as Fn, IDestination, Runtime, Tracing } from "@aws-cdk/aws-lambda";
 import { Construct, Duration, Stack } from "@aws-cdk/core";
+import { Vpc } from "@aws-cdk/aws-ec2";
 
 import { LambdaHandlers } from "../../handlers-list";
 
@@ -10,6 +11,7 @@ interface ILambdaFactoryProps {
   onSuccess?: IDestination;
   onFailure?: IDestination;
   reservedConcurrentExecutions?: number;
+  vpc?: Vpc;
 }
 
 export class LambdaFactory {

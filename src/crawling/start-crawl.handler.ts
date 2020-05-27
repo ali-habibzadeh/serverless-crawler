@@ -1,5 +1,3 @@
-import "reflect-metadata";
-
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 import { crawlUrlStore } from "./url-processing/crawl-url.model";

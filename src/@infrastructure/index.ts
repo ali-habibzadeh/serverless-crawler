@@ -6,6 +6,8 @@ import { StartCrawlRestApi } from "./api/crawler-api";
 import { CrawlUrlsTable } from "./crawl-urls/crawl-urls-table";
 import { DeliveryStream } from "./delivery/delivery-stream";
 import { LambdaFactory } from "./utils/lambda.factory";
+import { RenderingCluster } from "./rendering/rendering";
+import { Vpc } from "@aws-cdk/aws-ec2";
 
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -14,14 +16,17 @@ export class ServerlessCrawlerStack extends Stack {
     this.addTags();
   }
 
+  public vpc = new Vpc(this, "ServerlessCrawlerVpc");
   public regionOutput = new CfnOutput(this, "region", { value: this.region });
   public crawlUrlsTable = new CrawlUrlsTable(this, "CrawlUrlsDynamodb");
   public deliveryStream = new DeliveryStream(this, "DeliveryStream");
+  public renderingCluster = new RenderingCluster(this, "RenderingClusterContainer", this.vpc);
 
   public lambdaEnv = {
     [envVars.crawlUrlsTableName]: this.crawlUrlsTable.table.tableName,
     [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
-    [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName
+    [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
+    [envVars.chromeClusterDns]: this.renderingCluster.loadBalancedService.loadBalancer.loadBalancerDnsName
   };
 
   public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {

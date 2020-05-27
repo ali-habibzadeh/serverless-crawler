@@ -11,8 +11,7 @@
     "integration": "jest --config=jest.integration.config.js",
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",
     "destroy": "cdk destroy",
-    "synth": "cdk synth",
-    "readme": "readme"
+    "synth": "cdk synth"
   },
   "devDependencies": {
     "@aws-cdk/assert": "1.41.0",
@@ -23,6 +22,9 @@
     "@aws-cdk/aws-codepipeline-actions": "^1.41.0",
     "@aws-cdk/aws-dynamodb": "^1.41.0",
     "@aws-cdk/aws-ecr-assets": "^1.41.0",
+    "@aws-cdk/aws-ecs": "^1.41.0",
+    "@aws-cdk/aws-ecs-patterns": "^1.41.0",
+    "@aws-cdk/aws-elasticloadbalancingv2": "^1.41.0",
     "@aws-cdk/aws-events": "^1.41.0",
     "@aws-cdk/aws-events-targets": "^1.41.0",
     "@aws-cdk/aws-iam": "^1.41.0",
@@ -71,6 +73,7 @@
     "minimatch": "^3.0.4",
     "puppeteer-core": "^3.1.0",
     "reflect-metadata": "^0.1.13",
-    "source-map-support": "^0.5.16"
+    "source-map-support": "^0.5.16",
+    "tslib": "^2.0.0"
   }
 }
