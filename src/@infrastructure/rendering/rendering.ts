@@ -33,7 +33,7 @@ export class RenderingCluster extends Construct {
     protocol: ApplicationProtocol.HTTP,
     listenerPort: this.port,
     assignPublicIp: true,
-    platformVersion: FargatePlatformVersion.LATEST
+    platformVersion: FargatePlatformVersion.VERSION1_4
   });
 
   private applyAutoScalingRules(): void {
