@@ -1,4 +1,4 @@
-import { BaseQualifier } from "../base-qualifier";
+import { BaseQualifier } from "../base-types/base-qualifier";
 import { RobotsTxt } from "./robots.model";
 
 export class RobotsQualifier extends BaseQualifier {
