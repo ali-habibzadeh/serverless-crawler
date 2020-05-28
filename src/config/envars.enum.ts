@@ -5,5 +5,6 @@ export enum envVars {
   crawlUrlsTableName = "urlsTableName",
   crawlDataDeliveryStreamName = "crawlDataDeliveryStreamName",
   crawlDataBucketName = "crawlDataBucketName",
-  chromeClusterDns = "chromeClusterDns"
+  chromeClusterDns = "chromeClusterDns",
+  chromeClusterPort = "chromeClusterPort"
 }

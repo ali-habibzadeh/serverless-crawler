@@ -3,14 +3,14 @@ import { appConfig } from "../../config/config.service";
 
 export class BrowserService {
   private static browser?: Browser;
-  private static browserWSEndpoint = `http://${appConfig.chromeClusterDns}:3000`;
+  private static endpoint = `http://${appConfig.chromeClusterDns}:${appConfig.chromeClusterPort}`;
 
   public static async createBrowser(): Promise<void> {
     if (this.browser) return;
     try {
-      this.browser = await connect({ browserWSEndpoint: this.browserWSEndpoint });
+      this.browser = await connect({ browserWSEndpoint: this.endpoint });
     } catch (e) {
-      console.log(`browserWSEndpoint: ${this.browserWSEndpoint}`);
+      console.log(`browserWSEndpoint: ${this.endpoint}`);
       console.log(e);
     }
   }
