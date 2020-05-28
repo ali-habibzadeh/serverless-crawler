@@ -8,7 +8,7 @@ export class CrawlUrl {
   @PartitionKey()
   public url!: string;
   public level: number = 0;
-  public ttl?: string = moment().add(2, "minutes").unix().toString();
+  public ttl? = moment().add(1, "days").unix().toString(); // FIXME
 }
 
 export const crawlUrlStore = new DynamoStore(CrawlUrl);
