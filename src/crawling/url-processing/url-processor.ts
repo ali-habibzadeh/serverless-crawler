@@ -22,7 +22,7 @@ export class UrlsProcessor {
     const transactions = hrefs.map(async (url) => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
-        .put({ url, level, ttl: moment().add(2, "min").unix().toString() })
+        .put({ url, level, ttl: moment().add(2, "minutes").unix().toString() })
         .onlyIf(or(attribute("level").attributeNotExists(), attribute("level").gte(level)))
         .exec();
     });
