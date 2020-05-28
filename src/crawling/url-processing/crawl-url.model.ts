@@ -7,6 +7,7 @@ export class CrawlUrl {
   @PartitionKey()
   public url!: string;
   public level: number = 0;
+  public ttl!: string;
 }
 
 export const crawlUrlStore = new DynamoStore(CrawlUrl);

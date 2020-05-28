@@ -11,8 +11,8 @@ export class PageHtml extends BaseMetricContainer {
   }
 
   public columns = [
-    { name: MetricNames.PreRenderDom, type: Schema.STRING, isGlueColumn: true },
-    { name: MetricNames.PostRenderDom, type: Schema.STRING, isGlueColumn: true }
+    { name: MetricNames.PreRenderDom, type: Schema.STRING, isGlueColumn: false },
+    { name: MetricNames.PostRenderDom, type: Schema.STRING, isGlueColumn: false }
   ];
 
   public async getMetrics(): Promise<Record<string, any>[]> {

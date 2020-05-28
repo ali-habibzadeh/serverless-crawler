@@ -5,6 +5,7 @@ import { MetricNames } from "../../metrics/metrics-list";
 import { PageRenderService } from "../../page-rendering/page-render.service";
 import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
 import { UrlsQualifierService } from "./url-qualifiers/qualifiers.service";
+import moment from "moment";
 
 export class UrlsProcessor {
   constructor(private crawlUrl: CrawlUrl) {}
@@ -21,7 +22,7 @@ export class UrlsProcessor {
     const transactions = hrefs.map(async (url) => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
-        .put({ url, level })
+        .put({ url, level, ttl: moment().add(2, "min").unix().toString() })
         .onlyIf(or(attribute("level").attributeNotExists(), attribute("level").gte(level)))
         .exec();
     });
