@@ -1,6 +1,6 @@
-import { write, makeDir, has } from "../../../../utils/file-system";
-import { run } from "../../../../utils/child-process";
 import axios from "axios";
+import { run } from "../../../utils/child-process";
+import { makeDir, has, write } from "../../../utils/file-system";
 
 export class RobotsTxt {
   private url = new URL(this.href);

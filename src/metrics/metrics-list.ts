@@ -5,6 +5,8 @@ import { WebPerformance } from "./metric-containers/performance/performance";
 import { ResponseStatus } from "./metric-containers/status/status";
 import { PageUrl } from "./metric-containers/url/page-url";
 import { PageHtml } from "./metric-containers/html/page-html";
+import { Indexation } from "./metric-containers/indexation/indexation";
+import { Responsive } from "./metric-containers/responsive/responsive";
 
 export enum MetricNames {
   Url = "url",
@@ -13,10 +15,21 @@ export enum MetricNames {
   FCP = "first_contentful_paint",
   PageResourcesCount = "page_resources_count",
   PreRenderDom = "pre_render_dom",
-  PostRenderDom = "post_redner_dom"
+  PostRenderDom = "post_redner_dom",
+  NoIndex = "noindex",
+  IsResponsive = "is_responsive",
+  IsAllowedByRobots = "is_allowed_by_robots"
 }
 
-export const metricsContainers = [PageUrl, InternalLinks, ResponseStatus, WebPerformance, PageHtml];
+export const metricsContainers = [
+  PageUrl,
+  InternalLinks,
+  ResponseStatus,
+  WebPerformance,
+  PageHtml,
+  Indexation,
+  Responsive
+];
 
 export function getGlueColumns(): Column[] {
   return metricsContainers
