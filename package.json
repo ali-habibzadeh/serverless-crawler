@@ -8,7 +8,7 @@
     "copyall": "cp package.json dist/package.json && cp -a binary-assets/. dist/",
     "postbuild": "yarn copyall && cd dist && npm install --only=production && node-prune",
     "watch": "tsc -w",
-    "integration": "jest --config=jest.integration.config.js",
+    "integration": "jest --config=jest-config/jest.integration.config.js",
     "deploy": "yarn build && cdk deploy --require-approval never --outputs-file outputs.json",
     "destroy": "cdk destroy -f",
     "synth": "cdk synth"
