@@ -7,12 +7,7 @@ export class BrowserService {
 
   public static async createBrowser(): Promise<void> {
     if (this.browser) return;
-    try {
-      this.browser = await connect({ browserWSEndpoint: this.endpoint });
-    } catch (e) {
-      console.log(`browserWSEndpoint: ${this.endpoint}`);
-      console.log(e);
-    }
+    this.browser = await connect({ browserWSEndpoint: this.endpoint });
   }
 
   public static getBrowser(): Browser {
