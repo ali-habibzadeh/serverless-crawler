@@ -33,12 +33,12 @@ export class RobotsTxt {
     return has(this.robotsLocation);
   }
 
-  private async getRobotsFile(): Promise<string | null> {
+  private async getRobotsFile(): Promise<string | undefined> {
     try {
       const { data } = await axios.get(`${this.url.origin}/robots.txt`);
       return data;
     } catch (e) {
-      return null;
+      return;
     }
   }
 }
