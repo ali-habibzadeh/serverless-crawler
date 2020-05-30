@@ -6,9 +6,6 @@ import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class Responsive extends BaseMetricContainer {
-  private selector = `meta[name="viewport"][content*="width=device-width`;
-  private viewPortAssertion = () => document.querySelector(this.selector) !== undefined;
-
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -16,6 +13,12 @@ export class Responsive extends BaseMetricContainer {
   public columns = [{ name: MetricNames.IsResponsive, type: Schema.BOOLEAN, isGlueColumn: true }];
 
   public async getMetrics(): Promise<Record<string, any>[]> {
-    return [{ [this.columns[0].name]: await this.page.evaluate(this.viewPortAssertion) }];
+    return [{ [this.columns[0].name]: await this.isResponsive() }];
+  }
+
+  private isResponsive(): Promise<boolean> {
+    const selector = `meta[name="viewport"][content*="width=device-width`;
+    const assertion = () => document.querySelector(selector) !== undefined;
+    return this.page.evaluate(assertion);
   }
 }

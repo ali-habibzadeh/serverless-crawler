@@ -6,8 +6,6 @@ import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class Indexation extends BaseMetricContainer {
-  private noindexAssertion = () => document.querySelector(`meta[content="noindex"]`) !== null;
-
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -19,7 +17,8 @@ export class Indexation extends BaseMetricContainer {
   }
 
   private async hasMetaNoIndex(): Promise<boolean> {
-    return this.page.evaluate(this.noindexAssertion);
+    const assertion = () => document.querySelector(`meta[content="noindex"]`) !== null;
+    return this.page.evaluate(assertion);
   }
 
   private hasNoIndexHeahder(): boolean {
