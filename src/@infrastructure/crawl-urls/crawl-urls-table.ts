@@ -25,7 +25,7 @@ export class CrawlUrlsTable extends Construct {
     batchSize: 40
   });
 
-  public grantNecessaryWrites(grantee: IGrantable): void {
+  public grantNecessaryRights(grantee: IGrantable): void {
     this.table.grantWriteData(grantee);
     this.table.grantStreamRead(grantee);
   }
