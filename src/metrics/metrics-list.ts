@@ -8,6 +8,7 @@ import { PageHtml } from "./metric-containers/html/page-html";
 import { Indexation } from "./metric-containers/indexation/indexation";
 import { Responsive } from "./metric-containers/responsive/responsive";
 import { Robots } from "./metric-containers/robots/robots";
+import { RedirectChain } from "./metric-containers/redirect-chain/redirect-chain";
 
 export enum MetricNames {
   Url = "url",
@@ -19,7 +20,8 @@ export enum MetricNames {
   PostRenderDom = "post_redner_dom",
   NoIndex = "noindex",
   IsResponsive = "is_responsive",
-  IsAllowedByRobots = "is_allowed_by_robots"
+  IsAllowedByRobots = "is_allowed_by_robots",
+  RedirectChain = "redirect_chain"
 }
 
 export const metricsContainers = [
@@ -30,7 +32,8 @@ export const metricsContainers = [
   PageHtml,
   Indexation,
   Responsive,
-  Robots
+  Robots,
+  RedirectChain
 ];
 
 export function getGlueColumns(): Column[] {
