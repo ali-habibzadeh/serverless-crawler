@@ -7,6 +7,7 @@ import { PageUrl } from "./metric-containers/url/page-url";
 import { PageHtml } from "./metric-containers/html/page-html";
 import { Indexation } from "./metric-containers/indexation/indexation";
 import { Responsive } from "./metric-containers/responsive/responsive";
+import { Robots } from "./metric-containers/robots/robots";
 
 export enum MetricNames {
   Url = "url",
@@ -28,7 +29,8 @@ export const metricsContainers = [
   WebPerformance,
   PageHtml,
   Indexation,
-  Responsive
+  Responsive,
+  Robots
 ];
 
 export function getGlueColumns(): Column[] {
