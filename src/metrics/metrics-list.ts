@@ -18,7 +18,7 @@ export enum MetricNames {
   PageResourcesCount = "page_resources_count",
   PreRenderDom = "pre_render_dom",
   PostRenderDom = "post_redner_dom",
-  NoIndex = "noindex",
+  NoIndex = "no_index",
   IsResponsive = "is_responsive",
   IsAllowedByRobots = "is_allowed_by_robots",
   RedirectChain = "redirect_chain"
