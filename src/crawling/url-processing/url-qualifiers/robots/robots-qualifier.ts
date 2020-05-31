@@ -4,7 +4,6 @@ import { RobotsTxt } from "../../../../metrics/metric-containers/robots/robots.m
 export class RobotsQualifier extends BaseQualifier {
   constructor() {
     super();
-    process.env.PATH = `${process.env.PATH}:${process.env.LAMBDA_TASK_ROOT}`;
   }
 
   protected async isQualified(href: string): Promise<boolean> {

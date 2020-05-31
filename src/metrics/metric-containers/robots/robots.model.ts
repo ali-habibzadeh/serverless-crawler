@@ -6,7 +6,9 @@ export class RobotsTxt {
   private url = new URL(this.href);
   private folderLocation = `/tmp/${this.url.host}`;
   private robotsLocation = `${this.folderLocation}/robots.txt`;
-  constructor(private href: string) {}
+  constructor(private href: string) {
+    process.env.PATH = `${process.env.PATH}:${process.env.LAMBDA_TASK_ROOT}`;
+  }
 
   public async isAllowed(): Promise<boolean> {
     if (!(await this.alreadyExists())) {
