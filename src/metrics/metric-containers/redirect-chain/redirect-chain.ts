@@ -7,8 +7,6 @@ import { MetricNames } from "../../metrics-list";
 import { IRedirectChainItem } from "./redirect-chain.interface";
 
 export class RedirectChain extends BaseMetricContainer {
-  private redirects = this.response!.request().redirectChain();
-
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
@@ -32,7 +30,8 @@ export class RedirectChain extends BaseMetricContainer {
   }
 
   private getRedirectChain(): IRedirectChainItem[] {
-    const chain = this.redirects.map((request) => ({
+    const redirects = this.response!.request().redirectChain();
+    const chain = redirects.map((request) => ({
       url: request.url(),
       status: request.response()!.status(),
       is_redirect: true
