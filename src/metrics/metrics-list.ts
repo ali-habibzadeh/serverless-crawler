@@ -33,6 +33,7 @@ export const metricsContainers = [
   PageHtml,
   Indexation,
   Responsive,
+  Robots,
   RedirectChain
 ];
 
