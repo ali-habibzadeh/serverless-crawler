@@ -21,7 +21,8 @@ export enum MetricNames {
   NoIndex = "no_index",
   IsResponsive = "is_responsive",
   IsAllowedByRobots = "is_allowed_by_robots",
-  RedirectChain = "redirect_chain"
+  RedirectChain = "redirect_chain",
+  HasPopup = "has_popup"
 }
 
 export const metricsContainers = [
