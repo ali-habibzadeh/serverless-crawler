@@ -9,6 +9,7 @@ import { Indexation } from "./metric-containers/indexation/indexation";
 import { Responsive } from "./metric-containers/responsive/responsive";
 import { Robots } from "./metric-containers/robots/robots";
 import { RedirectChain } from "./metric-containers/redirect-chain/redirect-chain";
+import { Popups } from "./metric-containers/popups/popups";
 
 export enum MetricNames {
   Url = "url",
@@ -34,6 +35,7 @@ export const metricsContainers = [
   Indexation,
   Responsive,
   Robots,
+  Popups,
   RedirectChain
 ];
 

@@ -4,6 +4,7 @@ import { Request } from "puppeteer-core";
 import { adRejections } from "./constants/ad-rejections";
 import { analyticsRejections } from "./constants/analytics-rejections";
 import { blockedResourceTypes } from "./constants/blocked-resource-types";
+import Axios from "axios";
 
 export class PageRequestHandler {
   private resourceType = this.request.resourceType();
@@ -11,7 +12,15 @@ export class PageRequestHandler {
   constructor(private request: Request) {}
 
   public async handle(): Promise<void> {
-    return this.isBlocked() ? this.request.abort("aborted") : this.request.continue();
+    if (this.isBlocked()) {
+      return this.request.abort();
+    }
+    try {
+      const { data, headers, status } = await Axios.get(this.request.url(), { timeout: 2000 });
+      return this.request.respond({ headers, status, body: data });
+    } catch (e) {
+      return this.request.abort();
+    }
   }
 
   private isBlocked(): boolean {
