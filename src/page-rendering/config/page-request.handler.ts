@@ -7,8 +7,6 @@ import { blockedResourceTypes } from "./constants/blocked-resource-types";
 import Axios from "axios";
 
 export class PageRequestHandler {
-  private resourceType = this.request.resourceType();
-
   constructor(private request: Request) {}
 
   public async handle(): Promise<void> {
@@ -24,7 +22,8 @@ export class PageRequestHandler {
   }
 
   private isBlocked(): boolean {
-    const isBlockedType = blockedResourceTypes.includes(this.resourceType);
+    const resourceType = this.request.resourceType();
+    const isBlockedType = blockedResourceTypes.includes(resourceType);
     const isAdvert = adRejections.some((token) => this.globMatchesUrl(token));
     const isAnalytics = analyticsRejections.some((token) => this.globMatchesUrl(token));
     return isBlockedType || isAdvert || isAnalytics;
