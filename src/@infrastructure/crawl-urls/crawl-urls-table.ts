@@ -1,4 +1,4 @@
-import { AttributeType, StreamViewType, Table } from "@aws-cdk/aws-dynamodb";
+import { AttributeType, StreamViewType, Table, BillingMode } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
 import { Construct, Duration, Tag } from "@aws-cdk/core";
@@ -14,7 +14,8 @@ export class CrawlUrlsTable extends Construct {
     partitionKey: { name: "url", type: AttributeType.STRING },
     replicationRegions: ["us-east-2"],
     stream: StreamViewType.NEW_AND_OLD_IMAGES,
-    timeToLiveAttribute: "ttl"
+    timeToLiveAttribute: "ttl",
+    billingMode: BillingMode.PAY_PER_REQUEST
   });
 
   public eventSource = new DynamoEventSource(this.table, {

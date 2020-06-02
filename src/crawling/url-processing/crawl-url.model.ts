@@ -7,8 +7,8 @@ import moment from "moment";
 export class CrawlUrl {
   @PartitionKey()
   public url!: string;
-  public level: number = 0;
-  public ttl? = moment().add(1, "days").unix().toString(); // FIXME
+  public level!: number;
+  public ttl?: string = moment().add(12, "hours").unix().toString();
 }
 
 export const crawlUrlStore = new DynamoStore(CrawlUrl);
