@@ -17,8 +17,7 @@ export class Responsive extends BaseMetricContainer {
   }
 
   private isResponsive(): Promise<boolean> {
-    const selector = `meta[name="viewport"][content*="width=device-width`;
-    const assertion = () => document.querySelector(selector) !== undefined;
+    const assertion = () => document.querySelector(`meta[name="viewport"][content*="width=device-width`) !== undefined;
     return this.page.evaluate(assertion);
   }
 }
