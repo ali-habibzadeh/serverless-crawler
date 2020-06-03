@@ -1,4 +1,4 @@
-const output = require("/outputs.json");
+const output = require("./outputs.json");
 
 process.env = Object.assign(process.env, Object.values(output)[0]);
 
