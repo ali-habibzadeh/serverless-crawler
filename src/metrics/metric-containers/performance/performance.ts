@@ -8,11 +8,11 @@ import { MetricNames } from "../../metrics-list";
 import { getLargestContentfulPaint } from "./largest-contentful-paint";
 
 export class WebPerformance extends BaseMetricContainer {
+  private cdpSession = new CDPSessionClient(this.page);
+
   constructor(protected page: Page, response: Response | null) {
     super(page, response);
   }
-
-  private cdpSession = new CDPSessionClient(this.page);
 
   public columns = [
     { name: MetricNames.FirstContentfulPaint, type: Schema.INTEGER, isGlueColumn: true },
