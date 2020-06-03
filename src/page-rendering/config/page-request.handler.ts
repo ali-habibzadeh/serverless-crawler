@@ -22,11 +22,9 @@ export class PageRequestHandler {
   }
 
   private isBlocked(): boolean {
-    const resourceType = this.request.resourceType();
-    const isBlockedType = blockedResourceTypes.includes(resourceType);
-    const isAdvert = adRejections.some((token) => this.globMatchesUrl(token));
-    const isAnalytics = analyticsRejections.some((token) => this.globMatchesUrl(token));
-    return isBlockedType || isAdvert || isAnalytics;
+    const isBlockedType = blockedResourceTypes.includes(this.request.resourceType());
+    const adOrAnalytics = [...adRejections, ...analyticsRejections].some((token) => this.globMatchesUrl(token));
+    return isBlockedType || adOrAnalytics;
   }
 
   private globMatchesUrl(glob: string): boolean {
