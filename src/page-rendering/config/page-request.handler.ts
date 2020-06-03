@@ -1,12 +1,13 @@
 import { Minimatch } from "minimatch";
 import { Request } from "puppeteer-core";
 
-import { adRejections } from "./constants/ad-rejections";
-import { analyticsRejections } from "./constants/analytics-rejections";
+import { adGlobs } from "./constants/ad-rejections";
+import { analyticsGlobs } from "./constants/analytics-rejections";
 import { blockedResourceTypes } from "./constants/blocked-resource-types";
 import Axios from "axios";
 
 export class PageRequestHandler {
+  private url = this.request.url();
   constructor(private request: Request) {}
 
   public async handle(): Promise<void> {
@@ -14,7 +15,7 @@ export class PageRequestHandler {
       return this.request.abort();
     }
     try {
-      const { data, headers, status } = await Axios.get(this.request.url(), { timeout: 2000 });
+      const { data, headers, status } = await Axios.get(this.url, { timeout: 4000 });
       return this.request.respond({ headers, status, body: data });
     } catch (e) {
       return this.request.abort();
@@ -23,12 +24,11 @@ export class PageRequestHandler {
 
   private isBlocked(): boolean {
     const isBlockedType = blockedResourceTypes.includes(this.request.resourceType());
-    const adOrAnalytics = [...adRejections, ...analyticsRejections].some((token) => this.globMatchesUrl(token));
-    return isBlockedType || adOrAnalytics;
+    const isAdOrAnalytics = [...adGlobs, ...analyticsGlobs].some((token) => this.matches(token));
+    return isBlockedType || isAdOrAnalytics;
   }
 
-  private globMatchesUrl(glob: string): boolean {
-    const url = this.request.url();
-    return new Minimatch(glob).match(url);
+  private matches(glob: string): boolean {
+    return new Minimatch(glob).match(this.url);
   }
 }

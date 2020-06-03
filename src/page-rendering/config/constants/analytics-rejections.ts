@@ -1,4 +1,4 @@
-export const analyticsRejections = [
+export const analyticsGlobs = [
   "*//*.google-analytics.com/**",
   "*//*.googletagmanager.com/**",
   "*//*doubleclick.net/**",

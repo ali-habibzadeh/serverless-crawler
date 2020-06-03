@@ -1,4 +1,4 @@
-export const adRejections = [
+export const adGlobs = [
   "*//*.googlesyndication.com/**",
   "*//*.2mdn.net/**",
   "*//*.criteo.net/**",
