@@ -5,6 +5,7 @@ import { Schema } from "@aws-cdk/aws-glue";
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
+import { getLargestContentfulPaint } from "./largest-contentful-paint";
 
 export class WebPerformance extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
@@ -14,8 +15,9 @@ export class WebPerformance extends BaseMetricContainer {
   private cdpSession = new CDPSessionClient(this.page);
 
   public columns = [
-    { name: MetricNames.FCP, type: Schema.INTEGER, isGlueColumn: true },
-    { name: MetricNames.PageResourcesCount, type: Schema.INTEGER, isGlueColumn: true }
+    { name: MetricNames.FirstContentfulPaint, type: Schema.INTEGER, isGlueColumn: true },
+    { name: MetricNames.PageResourcesCount, type: Schema.INTEGER, isGlueColumn: true },
+    { name: MetricNames.LargestContentfulPaint, type: Schema.INTEGER, isGlueColumn: true }
   ];
 
   private extractPaintMetrics = () => {
@@ -27,7 +29,8 @@ export class WebPerformance extends BaseMetricContainer {
     return [
       {
         [this.columns[0].name]: await this.getFirstContentfulPaint(),
-        [this.columns[1].name]: await this.getResourceTreeCount()
+        [this.columns[1].name]: await this.getResourceTreeCount(),
+        [this.columns[2].name]: await this.getLargestContentfulPaint()
       }
     ];
   }
@@ -42,5 +45,9 @@ export class WebPerformance extends BaseMetricContainer {
     await this.cdpSession.startSession();
     const resourceTree = await this.cdpSession.getPageResourceTree();
     return resourceTree.frameTree.resources.length;
+  }
+
+  private async getLargestContentfulPaint(): Promise<number> {
+    return this.page.evaluate(getLargestContentfulPaint);
   }
 }
