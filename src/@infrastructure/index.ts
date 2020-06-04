@@ -42,7 +42,7 @@ export class ServerlessCrawlerStack extends Stack {
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
 
   private configure(): void {
-    [this.streamHandler, this.startCrawlHandler].forEach((lambda) => {
+    [this.streamHandler, this.startCrawlHandler].forEach(lambda => {
       this.crawlUrlsTable.grantNecessaryRights(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
     });

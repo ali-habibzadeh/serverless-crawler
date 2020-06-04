@@ -14,6 +14,6 @@ export const isNormalLink = (link: ILinkData): boolean => {
 };
 
 export const getNormalLinks = (linksData: ILinkData[]): string[] => {
-  const normalLinks = linksData.filter(isNormalLink).map((link) => link.href);
+  const normalLinks = linksData.filter(isNormalLink).map(link => link.href);
   return [...new Set(normalLinks)];
 };

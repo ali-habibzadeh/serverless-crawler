@@ -11,8 +11,8 @@ import { LambdaHandlers } from "./handlers-list";
 AWS.config.update({ region: appConfig.region });
 
 const handlers: Record<LambdaHandlers, PublicFn> = {
-  [LambdaHandlers.StreamProcessorHandler]: (e) => new StreamProcessorHandler(e).handle(),
-  [LambdaHandlers.StartCrawlHandler]: (e) => new StartCrawlHandler(e).handle()
+  [LambdaHandlers.StreamProcessorHandler]: e => new StreamProcessorHandler(e).handle(),
+  [LambdaHandlers.StartCrawlHandler]: e => new StartCrawlHandler(e).handle()
 };
 
 module.exports = new LambdaHandlerFactory(handlers).getHandlers();

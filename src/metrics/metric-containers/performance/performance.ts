@@ -21,7 +21,7 @@ export class WebPerformance extends BaseMetricContainer {
   ];
 
   private extractPaintMetrics = () => {
-    const perf = performance.getEntries().filter((entry) => entry.entryType === "paint");
+    const perf = performance.getEntries().filter(entry => entry.entryType === "paint");
     return JSON.stringify(perf);
   };
 
@@ -37,7 +37,7 @@ export class WebPerformance extends BaseMetricContainer {
 
   private async getFirstContentfulPaint(): Promise<number> {
     const paintEntries: PerformanceEntry[] = JSON.parse(await this.page.evaluate(this.extractPaintMetrics));
-    const fcp = paintEntries.find((entry) => entry.name === "first-contentful-paint")?.startTime || 0;
+    const fcp = paintEntries.find(entry => entry.name === "first-contentful-paint")?.startTime || 0;
     return Math.round(fcp);
   }
 

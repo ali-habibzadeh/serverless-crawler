@@ -11,7 +11,7 @@ export class PageRenderService {
 
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
-    const results = await Promise.all(metrics.map((metric) => new metric(this.page, response).getMetrics()));
+    const results = await Promise.all(metrics.map(metric => new metric(this.page, response).getMetrics()));
     await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
@@ -24,6 +24,6 @@ export class PageRenderService {
 
   private async setPageHandlers(): Promise<void> {
     await this.page.setRequestInterception(true);
-    this.page.on("request", async (request) => new PageRequestHandler(request).handle());
+    this.page.on("request", async request => new PageRequestHandler(request).handle());
   }
 }

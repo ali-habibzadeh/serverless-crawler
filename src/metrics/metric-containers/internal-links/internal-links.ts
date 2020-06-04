@@ -19,12 +19,12 @@ export class InternalLinks extends BaseMetricContainer {
 
   private async getAllInternalLinks(): Promise<string[]> {
     const links = await this.page.evaluate(() =>
-      [...document.querySelectorAll("a")].map((link) => ({
+      [...document.querySelectorAll("a")].map(link => ({
         attrHref: link.getAttribute("href"),
         href: link.href
       }))
     );
-    return getNormalLinks(links).filter((href) => !this.isExternalLink(href));
+    return getNormalLinks(links).filter(href => !this.isExternalLink(href));
   }
 
   private isExternalLink(href: string): boolean {

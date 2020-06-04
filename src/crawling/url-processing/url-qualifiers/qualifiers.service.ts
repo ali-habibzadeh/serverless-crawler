@@ -6,7 +6,7 @@ export class UrlsQualifierService {
   private qualifiers = [RobotsQualifier];
 
   public async getQualifiedUrls(): Promise<string[]> {
-    const fns = this.qualifiers.map((qualifier) => {
+    const fns = this.qualifiers.map(qualifier => {
       const q = new qualifier();
       return q.getQualifiedUrls.bind(q);
     });

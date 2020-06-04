@@ -31,7 +31,7 @@ export class RedirectChain extends BaseMetricContainer {
 
   private getRedirectChain(): IRedirectChainItem[] {
     const redirects = this.response!.request().redirectChain();
-    const chain = redirects.map((request) => ({
+    const chain = redirects.map(request => ({
       url: request.url(),
       status: request.response()!.status(),
       is_redirect: true

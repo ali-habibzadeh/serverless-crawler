@@ -13,8 +13,8 @@ export class StreamProcessorHandler {
 
   public async handle(): Promise<string> {
     await BrowserService.createBrowser();
-    const inserts = this.event.Records.filter((record) => record.eventName === "INSERT");
-    await Promise.all(inserts.map(async (record) => this.processUrl(record)));
+    const inserts = this.event.Records.filter(record => record.eventName === "INSERT");
+    await Promise.all(inserts.map(async record => this.processUrl(record)));
     await BrowserService.close();
     return `done.`;
   }

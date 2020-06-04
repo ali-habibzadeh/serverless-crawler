@@ -24,7 +24,7 @@ export class PageRequestHandler {
 
   private isBlocked(): boolean {
     const isBlockedType = blockedResourceTypes.includes(this.request.resourceType());
-    const isAdOrAnalytics = [...adGlobs, ...analyticsGlobs].some((token) => this.matches(token));
+    const isAdOrAnalytics = [...adGlobs, ...analyticsGlobs].some(token => this.matches(token));
     return isBlockedType || isAdOrAnalytics;
   }
 

@@ -18,7 +18,7 @@ export class UrlsProcessor {
 
   private async crawlNextBatch(links: string[]): Promise<void> {
     const hrefs = await new UrlsQualifierService(links).getQualifiedUrls();
-    const transactions = hrefs.map(async (url) => {
+    const transactions = hrefs.map(async url => {
       const level = this.crawlUrl.level + 1;
       await crawlUrlStore
         .put({ url, level })

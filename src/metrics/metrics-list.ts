@@ -42,8 +42,8 @@ export const metricsContainers = [
 
 export function getGlueColumns(): Column[] {
   return metricsContainers
-    .map((metric) => Reflect.construct(metric, []).columns)
+    .map(metric => Reflect.construct(metric, []).columns)
     .flat()
-    .filter((col) => col.isGlueColumn)
-    .map((col) => ({ name: col.name, type: col.type }));
+    .filter(col => col.isGlueColumn)
+    .map(col => ({ name: col.name, type: col.type }));
 }
