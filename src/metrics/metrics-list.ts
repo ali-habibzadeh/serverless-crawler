@@ -16,7 +16,7 @@ export enum MetricNames {
   Status = "status",
   InternalLinks = "internal_links",
   FirstContentfulPaint = "first_contentful_paint",
-  LargestContentfulPaint = "largest_contetnful_pain",
+  LargestContentfulPaint = "largest_contetnful_paint",
   PageResourcesCount = "page_resources_count",
   PreRenderDom = "pre_render_dom",
   PostRenderDom = "post_redner_dom",
