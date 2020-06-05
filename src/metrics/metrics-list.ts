@@ -31,7 +31,7 @@ export const metricsContainers = [
   PageUrl,
   InternalLinks,
   ResponseStatus,
-  //WebPerformance,
+  WebPerformance,
   PageHtml,
   Indexation,
   Responsive,
