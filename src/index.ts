@@ -7,6 +7,7 @@ import { appConfig } from "./config/config.service";
 import { StartCrawlHandler } from "./crawling/start-crawl.handler";
 import { StreamProcessorHandler } from "./crawling/stream-processor.handler";
 import { LambdaHandlers } from "./handlers-list";
+import "./utils/axios-cache";
 
 AWS.config.update({ region: appConfig.region });
 

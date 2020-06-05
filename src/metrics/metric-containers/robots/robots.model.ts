@@ -1,11 +1,9 @@
 import axios from "axios";
 import { run } from "../../../utils/child-process";
 import { makeDir, has, write } from "../../../utils/file-system";
-import flatCache from "flat-cache";
 
 export class RobotsTxt {
   private url = new URL(this.href);
-  private cache = flatCache.load("robotsRequestCache", "/tmp");
   private folderLocation = `/tmp/${this.url.host}`;
   private robotsLocation = `${this.folderLocation}/robots.txt`;
   constructor(private href: string, private bot = "GoogleBot") {
@@ -34,20 +32,11 @@ export class RobotsTxt {
   }
 
   private async getRobots(): Promise<string | undefined> {
-    if (this.hasNoRobots()) {
-      return;
-    }
     try {
-      const { data } = await axios.get(`${this.url.origin}/robots.txt`);
+      const { data } = await axios.get(`${this.url.origin}/robots.txt`, { headers: { cache: true } });
       return data;
     } catch (e) {
-      this.cache.setKey(this.url.host, "no-robots");
-      this.cache.save();
       return;
     }
-  }
-
-  private hasNoRobots(): boolean {
-    return this.cache.getKey(this.url.host) === "no-robots";
   }
 }
