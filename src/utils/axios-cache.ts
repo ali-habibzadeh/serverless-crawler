@@ -9,41 +9,41 @@ interface ICachedResponse {
   statusText: string;
 }
 
-function getResponseAdapter(request: AxiosRequestConfig, cachedResponse: ICachedResponse): AxiosAdapter {
+function getResponseAdapter(req: AxiosRequestConfig, res: ICachedResponse): AxiosAdapter {
   return () => {
     return Promise.resolve({
-      request,
-      data: cachedResponse.data,
-      status: cachedResponse.status,
-      statusText: cachedResponse.statusText,
-      headers: request.headers,
-      config: request
+      request: req,
+      data: res.data,
+      status: res.status,
+      statusText: res.statusText,
+      headers: req.headers,
+      config: req
     });
   };
 }
 
-axios.interceptors.request.use(request => {
-  const url = request.url;
-  const shouldCache = request.headers.cache;
-  if (request.method === "get" && url && shouldCache) {
+axios.interceptors.request.use(req => {
+  const url = req.url;
+  const shouldCache = req.headers.cache;
+  if (req.method === "get" && url && shouldCache) {
     const cachedResponse = <ICachedResponse>axiosDisCache.getKey(url);
     if (cachedResponse) {
-      request.adapter = getResponseAdapter(request, cachedResponse);
+      req.adapter = getResponseAdapter(req, cachedResponse);
     }
   }
-  return request;
+  return req;
 });
 
-axios.interceptors.response.use(response => {
-  const shouldCache = response.config.headers.cache;
-  const url = response.config.url;
-  if (response.config.method === "get" && url && shouldCache) {
+axios.interceptors.response.use(res => {
+  const shouldCache = res.config.headers.cache;
+  const url = res.config.url;
+  if (res.config.method === "get" && url && shouldCache) {
     axiosDisCache.setKey(url, {
-      data: response.data,
-      status: response.status,
-      statusText: response.statusText
+      data: res.data,
+      status: res.status,
+      statusText: res.statusText
     });
     axiosDisCache.save();
   }
-  return response;
+  return res;
 });
