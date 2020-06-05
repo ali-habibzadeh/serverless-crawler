@@ -5,7 +5,6 @@ import { Schema } from "@aws-cdk/aws-glue";
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
-import { getLargestContentfulPaint } from "./largest-contentful-paint";
 
 export class WebPerformance extends BaseMetricContainer {
   private cdpSession = new CDPSessionClient(this.page);
@@ -48,6 +47,17 @@ export class WebPerformance extends BaseMetricContainer {
   }
 
   private async getLargestContentfulPaint(): Promise<number> {
-    return this.page.evaluate(async () => getLargestContentfulPaint());
+    return this.page.evaluate(async () => this.getLcp());
+  }
+
+  // tslint:disable-next-line: no-feature-envy
+  private async getLcp(): Promise<number> {
+    return new Promise(resolve => {
+      const po = new PerformanceObserver(list => {
+        const lcpEntry = list.getEntries().find(e => e.entryType === "largest-contentful-paint");
+        lcpEntry ? resolve(Math.round(lcpEntry.startTime)) : resolve(0);
+      });
+      po.observe({ type: "largest-contentful-paint", buffered: true });
+    });
   }
 }
