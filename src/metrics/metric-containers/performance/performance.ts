@@ -48,6 +48,6 @@ export class WebPerformance extends BaseMetricContainer {
   }
 
   private async getLargestContentfulPaint(): Promise<number> {
-    return this.page.evaluate(getLargestContentfulPaint);
+    return this.page.evaluate(async () => getLargestContentfulPaint());
   }
 }
