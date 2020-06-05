@@ -47,17 +47,14 @@ export class WebPerformance extends BaseMetricContainer {
   }
 
   private async getLargestContentfulPaint(): Promise<number> {
-    return this.page.evaluate(async () => this.getLcp());
-  }
-
-  // tslint:disable-next-line: no-feature-envy
-  private async getLcp(): Promise<number> {
-    return new Promise(resolve => {
-      const po = new PerformanceObserver(list => {
-        const lcpEntry = list.getEntries().find(e => e.entryType === "largest-contentful-paint");
-        lcpEntry ? resolve(Math.round(lcpEntry.startTime)) : resolve(0);
+    return this.page.evaluate(async () => {
+      return new Promise<number>(resolve => {
+        const po = new PerformanceObserver(list => {
+          const lcpEntry = list.getEntries().find(e => e.entryType === "largest-contentful-paint");
+          lcpEntry ? resolve(Math.round(lcpEntry.startTime)) : resolve(0);
+        });
+        po.observe({ type: "largest-contentful-paint", buffered: true });
       });
-      po.observe({ type: "largest-contentful-paint", buffered: true });
     });
   }
 }
