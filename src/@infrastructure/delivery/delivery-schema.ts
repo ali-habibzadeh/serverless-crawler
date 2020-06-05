@@ -16,7 +16,7 @@ export class DeliverySchema extends Construct {
   private schemaTable = new Table(this, "SchemaTable", {
     database: this.schemaDatabase,
     tableName: "metadata_table",
-    columns: getGlueColumns(),
+    columns: getGlueColumns(), // in reality will be a multi tenant SDK call to update table
     dataFormat: DataFormat.PARQUET
   });
 

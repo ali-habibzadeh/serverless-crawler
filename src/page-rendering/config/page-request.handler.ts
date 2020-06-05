@@ -15,7 +15,7 @@ export class PageRequestHandler {
       return this.request.abort();
     }
     try {
-      const { data, headers, status } = await Axios.get(this.url, { timeout: 4000 });
+      const { data, headers, status } = await Axios.get(this.url, { timeout: 10000 });
       return this.request.respond({ headers, status, body: data });
     } catch (e) {
       return this.request.abort();
