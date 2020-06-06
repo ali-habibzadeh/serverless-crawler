@@ -57,7 +57,8 @@ export class UpdateMetricsHandler {
 
   private getColumnEntries(): ICustomMetricEntry[] {
     if (this.event.body) {
-      return <ICustomMetricEntry[]>JSON.parse(this.event.body);
+      const { columns } = JSON.parse(this.event.body);
+      return columns;
     }
     throw new Error(`Invalid body: ${this.event.body}`);
   }
