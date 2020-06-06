@@ -1,6 +1,8 @@
 import "reflect-metadata";
 import "./utils/axios-cache";
 import AWS from "aws-sdk";
+import sourceMapSupport from "source-map-support";
+sourceMapSupport.install();
 
 import { PublicFn } from "./@infrastructure/utils/interfaces/lambda-handler.interface";
 import { LambdaHandlerFactory } from "./@infrastructure/utils/lambda-handler.factory";

@@ -10,7 +10,6 @@ import { Responsive } from "./core-metrics/responsive/responsive";
 import { Robots } from "./core-metrics/robots/robots";
 import { RedirectChain } from "./core-metrics/redirect-chain/redirect-chain";
 import { Popups } from "./core-metrics/popups/popups";
-import { CustomMetricsContainer } from "./custom-metrics/custom-metric.container";
 
 export enum MetricNames {
   Url = "url",
@@ -38,8 +37,7 @@ export const metricsContainers = [
   Responsive,
   Robots,
   Popups,
-  RedirectChain,
-  CustomMetricsContainer
+  RedirectChain
 ];
 
 export function getGlueColumns(): Column[] {

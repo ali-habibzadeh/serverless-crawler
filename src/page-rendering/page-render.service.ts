@@ -1,8 +1,9 @@
 import { Page, Response } from "puppeteer-core";
 
-import { MetricNames, metricsContainers as metrics } from "../metrics/metrics-list";
+import { MetricNames, metricsContainers } from "../metrics/metrics-list";
 import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
+import { CustomMetricsContainer } from "../metrics/custom-metrics/custom-metric.container";
 
 export class PageRenderService {
   private page!: Page;
@@ -11,7 +12,8 @@ export class PageRenderService {
 
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
-    const results = await Promise.all(metrics.map(metric => new metric(this.page, response).getMetrics()));
+    const containers = [...metricsContainers, CustomMetricsContainer];
+    const results = await Promise.all(containers.map(metric => new metric(this.page, response).getMetrics()));
     await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }

@@ -14,7 +14,6 @@ export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
     this.configure();
-    this.addTags();
   }
 
   public vpc = new Vpc(this, "ServerlessCrawlerVpc");
@@ -60,11 +59,6 @@ export class ServerlessCrawlerStack extends Stack {
       this.deliveryStream.deliverySchema.schemaTable.grantReadWrite(lambda);
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
-  }
-
-  private addTags(): void {
-    Tag.add(this.streamHandler, "description", "Function for processing dynamodb streams");
-    Tag.add(this.startCrawlHandler, "description", "Function triggering the very first dynamodb stream");
   }
 }
 
