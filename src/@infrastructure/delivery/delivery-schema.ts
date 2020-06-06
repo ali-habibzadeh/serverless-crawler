@@ -36,7 +36,7 @@ export class DeliverySchema extends Construct {
 
   public getCatalogPolicy(): PolicyStatement {
     return new PolicyStatement({
-      resources: [this.schemaDatabase.catalogArn, this.schemaDatabase.databaseArn],
+      resources: [this.schemaDatabase.catalogArn, this.schemaDatabase.databaseArn, this.schemaTable.tableArn],
       actions: ["glue:GetTable", "glue:UpdateTable"]
     });
   }
