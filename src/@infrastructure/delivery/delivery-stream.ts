@@ -12,13 +12,14 @@ export class DeliveryStream extends Construct {
   }
 
   public crawlData = new CrawlData(this, "CrawlDataBucket");
+  public deliverySchema = new DeliverySchema(this, "DeliverySchema");
 
   public crawlDatasDeliveryStream = new CfnDeliveryStream(this, "CrawlDataDeliveryStream", {
     deliveryStreamName: "crawlDataDeliveryStream",
     deliveryStreamType: "DirectPut",
     extendedS3DestinationConfiguration: {
       dataFormatConversionConfiguration: {
-        schemaConfiguration: new DeliverySchema(this, "DeliverySchema").getSchemaConfiguration(),
+        schemaConfiguration: this.deliverySchema.getSchemaConfiguration(),
         enabled: true,
         inputFormatConfiguration: {
           deserializer: {

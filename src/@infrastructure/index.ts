@@ -27,7 +27,10 @@ export class ServerlessCrawlerStack extends Stack {
     [envVars.crawlDataBucketName]: this.deliveryStream.crawlData.crawlDataBucket.bucketName,
     [envVars.crawlDataDeliveryStreamName]: this.deliveryStream.crawlDatasDeliveryStream.deliveryStreamName,
     [envVars.chromeClusterDns]: this.renderingCluster.loadBalancedService.loadBalancer.loadBalancerDnsName,
-    [envVars.chromeClusterPort]: this.renderingCluster.port.toString()
+    [envVars.chromeClusterPort]: this.renderingCluster.port.toString(),
+    [envVars.deliveryStreamDbName]: this.deliveryStream.deliverySchema.schemaDatabase.databaseName,
+    [envVars.deliveryStreamCatalogId]: this.deliveryStream.deliverySchema.schemaDatabase.catalogId,
+    [envVars.deliveryStreamMetricsTableName]: this.deliveryStream.deliverySchema.schemaTable.tableName
   };
 
   public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {

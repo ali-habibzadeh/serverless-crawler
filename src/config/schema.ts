@@ -54,5 +54,23 @@ export const appConfigSchema = {
     format: isStringAndNotEmpty,
     default: "",
     env: envVars.chromeClusterPort
+  },
+  [envVars.deliveryStreamDbName]: {
+    doc: "Glue database name for deliverying metrics",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.deliveryStreamDbName
+  },
+  [envVars.deliveryStreamCatalogId]: {
+    doc: "Glue database catalog id for deliverying metrics",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.deliveryStreamCatalogId
+  },
+  [envVars.deliveryStreamMetricsTableName]: {
+    doc: "Glue database table for storing metrics schema",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.deliveryStreamMetricsTableName
   }
 };

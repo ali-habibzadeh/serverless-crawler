@@ -12,11 +12,11 @@ export class DeliverySchema extends Construct {
     this.addTags();
   }
 
-  private schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
-  private schemaTable = new Table(this, "SchemaTable", {
+  public schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
+  public schemaTable = new Table(this, "SchemaTable", {
     database: this.schemaDatabase,
-    tableName: "metadata_table",
-    columns: getGlueColumns(), // in reality will be a multi tenant SDK call to update table
+    tableName: "crawl_metrics_metadata_table",
+    columns: getGlueColumns(),
     dataFormat: DataFormat.PARQUET
   });
 
