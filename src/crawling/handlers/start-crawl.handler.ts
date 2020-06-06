@@ -1,6 +1,6 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 
-import { crawlUrlStore } from "./url-processing/crawl-url.model";
+import { crawlUrlStore } from "../url-processing/crawl-url.model";
 
 export class StartCrawlHandler {
   constructor(private event: APIGatewayProxyEvent) {}

@@ -8,6 +8,7 @@ import { DeliveryStream } from "./delivery/delivery-stream";
 import { LambdaFactory } from "./utils/lambda.factory";
 import { RenderingCluster } from "./rendering/rendering";
 import { Vpc } from "@aws-cdk/aws-ec2";
+import { CustomMetricsTable } from "./custom-metrics/custom-metrics";
 
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -21,6 +22,7 @@ export class ServerlessCrawlerStack extends Stack {
   public crawlUrlsTable = new CrawlUrlsTable(this, "CrawlUrlsDynamodb");
   public deliveryStream = new DeliveryStream(this, "DeliveryStream");
   public renderingCluster = new RenderingCluster(this, "RenderingClusterContainer", this.vpc);
+  public customMetricsTable = new CustomMetricsTable(this);
 
   public lambdaEnv = {
     [envVars.crawlUrlsTableName]: this.crawlUrlsTable.table.tableName,
@@ -30,7 +32,8 @@ export class ServerlessCrawlerStack extends Stack {
     [envVars.chromeClusterPort]: this.renderingCluster.port.toString(),
     [envVars.deliveryStreamDbName]: this.deliveryStream.deliverySchema.schemaDatabase.databaseName,
     [envVars.deliveryStreamCatalogId]: this.deliveryStream.deliverySchema.schemaDatabase.catalogId,
-    [envVars.deliveryStreamMetricsTableName]: this.deliveryStream.deliverySchema.schemaTable.tableName
+    [envVars.deliveryStreamMetricsTableName]: this.deliveryStream.deliverySchema.schemaTable.tableName,
+    [envVars.customMetricsTableName]: this.customMetricsTable.table.tableName
   };
 
   public streamHandler = new LambdaFactory(this, LambdaHandlers.StreamProcessorHandler, {
@@ -51,6 +54,7 @@ export class ServerlessCrawlerStack extends Stack {
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.updateMetricsHandler].forEach(lambda => {
       this.crawlUrlsTable.grantAll(lambda);
+      this.customMetricsTable.grantAll(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
       lambda.addToRolePolicy(this.deliveryStream.deliverySchema.getCatalogPolicy());
       this.deliveryStream.deliverySchema.schemaTable.grantReadWrite(lambda);

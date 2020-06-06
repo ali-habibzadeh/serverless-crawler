@@ -9,5 +9,6 @@ export enum envVars {
   deliveryStreamMetricsTableName = "deliveryStreamMetricsTableName",
   crawlDataBucketName = "crawlDataBucketName",
   chromeClusterDns = "chromeClusterDns",
-  chromeClusterPort = "chromeClusterPort"
+  chromeClusterPort = "chromeClusterPort",
+  customMetricsTableName = "customMetricsTableName"
 }

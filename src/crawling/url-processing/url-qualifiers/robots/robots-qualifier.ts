@@ -1,5 +1,5 @@
 import { BaseQualifier } from "../base-types/base-qualifier";
-import { RobotsTxt } from "../../../../metrics/metric-containers/robots/robots.model";
+import { RobotsTxt } from "../../../../metrics/core-metrics/robots/robots.model";
 
 export class RobotsQualifier extends BaseQualifier {
   constructor() {

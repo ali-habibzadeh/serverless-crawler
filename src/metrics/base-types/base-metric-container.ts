@@ -11,7 +11,7 @@ export interface IMetricColumn {
 }
 
 export abstract class BaseMetricContainer {
-  public abstract columns: IMetricColumn[];
+  public abstract columns?: IMetricColumn[];
   constructor(protected page: Page, protected response: Response | null) {}
   public abstract getMetrics(): Promise<Record<MetricNames, any>[]>;
 }

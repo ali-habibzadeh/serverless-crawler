@@ -72,5 +72,11 @@ export const appConfigSchema = {
     format: isStringAndNotEmpty,
     default: "",
     env: envVars.deliveryStreamMetricsTableName
+  },
+  [envVars.customMetricsTableName]: {
+    doc: "DynamoDb table for storing custom metrics",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.customMetricsTableName
   }
 };
