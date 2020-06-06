@@ -45,7 +45,7 @@ export class DeliverySchema extends Construct {
     this.deliveryStreamGlueRole.addToPolicy(
       new PolicyStatement({
         resources: ["*"],
-        actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase"]
+        actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase", "glue:UpdateTable"]
       })
     );
   }
