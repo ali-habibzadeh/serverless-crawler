@@ -53,6 +53,7 @@ export class ServerlessCrawlerStack extends Stack {
       this.crawlUrlsTable.grantAll(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
       lambda.addToRolePolicy(this.deliveryStream.deliverySchema.getCatalogPolicy());
+      this.deliveryStream.deliverySchema.schemaTable.grantReadWrite(lambda);
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
   }
