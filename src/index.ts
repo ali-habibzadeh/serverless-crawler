@@ -8,12 +8,14 @@ import { StartCrawlHandler } from "./crawling/start-crawl.handler";
 import { StreamProcessorHandler } from "./crawling/stream-processor.handler";
 import { LambdaHandlers } from "./handlers-list";
 import "./utils/axios-cache";
+import { UpdateMetricsHandler } from "./metrics/update-metrics.handler";
 
 AWS.config.update({ region: appConfig.region });
 
 const handlers: Record<LambdaHandlers, PublicFn> = {
   [LambdaHandlers.StreamProcessorHandler]: e => new StreamProcessorHandler(e).handle(),
-  [LambdaHandlers.StartCrawlHandler]: e => new StartCrawlHandler(e).handle()
+  [LambdaHandlers.StartCrawlHandler]: e => new StartCrawlHandler(e).handle(),
+  [LambdaHandlers.UpdateMetricsHandler]: e => new UpdateMetricsHandler(e).handle()
 };
 
 module.exports = new LambdaHandlerFactory(handlers).getHandlers();
