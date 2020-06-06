@@ -7,7 +7,6 @@ import { IGrantable } from "@aws-cdk/aws-iam";
 export class CrawlUrlsTable extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
-    this.addTags();
   }
 
   public table = new Table(this, "crawlUrlsTable", {
@@ -29,9 +28,5 @@ export class CrawlUrlsTable extends Construct {
   public grantNecessaryRights(grantee: IGrantable): void {
     this.table.grantWriteData(grantee);
     this.table.grantStreamRead(grantee);
-  }
-
-  private addTags(): void {
-    Tag.add(this.table, "description", "Dynamodb table name for storing crawl URLs and trigerring crawling lambdas");
   }
 }

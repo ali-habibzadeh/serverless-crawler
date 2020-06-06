@@ -9,7 +9,6 @@ export class DeliverySchema extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
     this.attachRoles();
-    this.addTags();
   }
 
   public schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
@@ -42,10 +41,5 @@ export class DeliverySchema extends Construct {
         actions: ["glue:GetTableVersions", "glue:GetTable", "glue:CreateDatabase"]
       })
     );
-  }
-
-  private addTags(): void {
-    Tag.add(this.schemaDatabase, "description", "Glue database for crawl data schema");
-    Tag.add(this.schemaTable, "description", "Glue table holding column schema for crawl data");
   }
 }

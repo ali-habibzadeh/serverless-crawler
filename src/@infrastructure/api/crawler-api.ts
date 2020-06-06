@@ -1,6 +1,6 @@
 import { JsonSchemaType } from "@aws-cdk/aws-apigateway";
 import { Function as Fn } from "@aws-cdk/aws-lambda";
-import { Construct, Tag } from "@aws-cdk/core";
+import { Construct } from "@aws-cdk/core";
 
 import { LambdaApiFactory } from "../utils/lambda-api.factory";
 
@@ -8,7 +8,6 @@ export class StartCrawlRestApi extends Construct {
   constructor(parent: Construct, id: string, private startHandler: Fn) {
     super(parent, id);
     this.defineApiMethods();
-    this.addTags();
   }
 
   public api = new LambdaApiFactory(this, this.startHandler).getApi();
@@ -41,8 +40,4 @@ export class StartCrawlRestApi extends Construct {
       required: ["url"]
     }
   });
-
-  private addTags(): void {
-    Tag.add(this.api, "description", "Api POST method for starting a crawl");
-  }
 }

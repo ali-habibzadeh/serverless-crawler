@@ -8,7 +8,6 @@ import { DeliverySchema } from "./delivery-schema";
 export class DeliveryStream extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
-    this.addTags();
   }
 
   public crawlData = new CrawlData(this, "CrawlDataBucket");
@@ -53,13 +52,5 @@ export class DeliveryStream extends Construct {
       resources: [this.crawlDatasDeliveryStream.attrArn],
       actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"]
     });
-  }
-
-  private addTags(): void {
-    Tag.add(
-      this.crawlDatasDeliveryStream,
-      "description",
-      "Kenisis Firehose steam for deliverying crawl data from lambda to s3"
-    );
   }
 }

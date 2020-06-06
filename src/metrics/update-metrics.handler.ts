@@ -14,8 +14,7 @@ export class UpdateMetricsHandler {
     return this.glue
       .getTable({
         DatabaseName: deliveryStreamDbName,
-        Name: deliveryStreamMetricsTableName,
-        CatalogId: deliveryStreamCatalogId
+        Name: deliveryStreamMetricsTableName
       })
       .promise();
   }

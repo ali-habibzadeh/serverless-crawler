@@ -7,7 +7,6 @@ export class CrawlData extends Construct {
   constructor(parent: Construct, id: string) {
     super(parent, id);
     this.attachRole();
-    this.addTags();
   }
 
   public crawlDataBucket = new BucketFactory(this, "CrawlDataBucket").getBucket();
@@ -23,9 +22,5 @@ export class CrawlData extends Construct {
         actions: ["s3:GetBucketLocation", "s3:GetObject", "s3:ListBucket", "s3:PutObject"]
       })
     );
-  }
-
-  private addTags(): void {
-    Tag.add(this.crawlDataBucket, "description", "S3 Bucket for storing crawl data");
   }
 }
