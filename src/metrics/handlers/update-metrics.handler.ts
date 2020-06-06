@@ -56,6 +56,7 @@ export class UpdateMetricsHandler {
   }
 
   private getColumnEntries(): ICustomMetricEntry[] {
+    console.log(this.event);
     if (this.event.body) {
       const { columns } = JSON.parse(this.event.body);
       return columns;
