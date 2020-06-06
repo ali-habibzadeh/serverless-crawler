@@ -1,6 +1,6 @@
 import { PolicyStatement } from "@aws-cdk/aws-iam";
 import { CfnDeliveryStream } from "@aws-cdk/aws-kinesisfirehose";
-import { Construct, Tag } from "@aws-cdk/core";
+import { Construct } from "@aws-cdk/core";
 
 import { CrawlData } from "./crawl-data";
 import { DeliverySchema } from "./delivery-schema";

@@ -1,5 +1,5 @@
 import { PolicyStatement, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
-import { Construct, Tag } from "@aws-cdk/core";
+import { Construct } from "@aws-cdk/core";
 
 import { BucketFactory } from "../utils/bucket.factory";
 

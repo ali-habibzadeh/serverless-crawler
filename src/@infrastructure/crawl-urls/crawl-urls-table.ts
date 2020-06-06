@@ -1,7 +1,7 @@
 import { AttributeType, StreamViewType, Table, BillingMode } from "@aws-cdk/aws-dynamodb";
 import { StartingPosition } from "@aws-cdk/aws-lambda";
 import { DynamoEventSource } from "@aws-cdk/aws-lambda-event-sources";
-import { Construct, Duration, Tag } from "@aws-cdk/core";
+import { Construct, Duration } from "@aws-cdk/core";
 import { IGrantable } from "@aws-cdk/aws-iam";
 
 export class CrawlUrlsTable extends Construct {
@@ -25,7 +25,7 @@ export class CrawlUrlsTable extends Construct {
     batchSize: 40
   });
 
-  public grantNecessaryRights(grantee: IGrantable): void {
+  public grantAll(grantee: IGrantable): void {
     this.table.grantWriteData(grantee);
     this.table.grantStreamRead(grantee);
   }

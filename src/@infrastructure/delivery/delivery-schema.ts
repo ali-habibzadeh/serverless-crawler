@@ -1,7 +1,7 @@
 import { Database, DataFormat, Table } from "@aws-cdk/aws-glue";
 import { PolicyStatement, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 import { CfnDeliveryStream } from "@aws-cdk/aws-kinesisfirehose";
-import { Construct, Stack, Tag } from "@aws-cdk/core";
+import { Construct, Stack } from "@aws-cdk/core";
 
 import { getGlueColumns } from "../../metrics/metrics-list";
 
@@ -32,6 +32,13 @@ export class DeliverySchema extends Construct {
       roleArn: this.deliveryStreamGlueRole.roleArn,
       versionId: "LATEST"
     };
+  }
+
+  public getCatalogPolicy(): PolicyStatement {
+    return new PolicyStatement({
+      resources: [this.schemaDatabase.catalogArn],
+      actions: ["glue:GetTable", "glue:UpdateTable"]
+    });
   }
 
   private attachRoles(): void {

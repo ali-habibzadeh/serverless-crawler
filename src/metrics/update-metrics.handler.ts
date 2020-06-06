@@ -10,7 +10,7 @@ export class UpdateMetricsHandler {
   constructor(private event: APIGatewayProxyEvent) {}
 
   public async handle(): Promise<any> {
-    const { deliveryStreamDbName, deliveryStreamMetricsTableName, deliveryStreamCatalogId } = appConfig;
+    const { deliveryStreamDbName, deliveryStreamMetricsTableName } = appConfig;
     return this.glue
       .getTable({
         DatabaseName: deliveryStreamDbName,
