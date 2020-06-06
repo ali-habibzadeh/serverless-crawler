@@ -1,4 +1,5 @@
 import "reflect-metadata";
+import "./utils/axios-cache";
 import AWS from "aws-sdk";
 
 import { PublicFn } from "./@infrastructure/utils/interfaces/lambda-handler.interface";
@@ -7,7 +8,6 @@ import { appConfig } from "./config/config.service";
 import { StartCrawlHandler } from "./crawling/start-crawl.handler";
 import { StreamProcessorHandler } from "./crawling/stream-processor.handler";
 import { LambdaHandlers } from "./handlers-list";
-import "./utils/axios-cache";
 import { UpdateMetricsHandler } from "./metrics/update-metrics.handler";
 
 AWS.config.update({ region: appConfig.region });
