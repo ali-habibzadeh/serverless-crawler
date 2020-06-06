@@ -42,10 +42,14 @@ export class ServerlessCrawlerStack extends Stack {
     environment: this.lambdaEnv
   }).getLambda();
 
+  public updateMetricsHandler = new LambdaFactory(this, LambdaHandlers.UpdateMetricsHandler, {
+    environment: this.lambdaEnv
+  }).getLambda();
+
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
 
   private configure(): void {
-    [this.streamHandler, this.startCrawlHandler].forEach(lambda => {
+    [this.streamHandler, this.startCrawlHandler, this.updateMetricsHandler].forEach(lambda => {
       this.crawlUrlsTable.grantNecessaryRights(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
     });

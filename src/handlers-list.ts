@@ -1,4 +1,5 @@
 export enum LambdaHandlers {
   StreamProcessorHandler = "StreamProcessorHandler",
-  StartCrawlHandler = "StartCrawlHandler"
+  StartCrawlHandler = "StartCrawlHandler",
+  UpdateMetricsHandler = "UpdateMetricsHandler"
 }
