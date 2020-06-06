@@ -14,7 +14,7 @@ export class UpdateMetricsHandler {
   private glue = new Glue();
   private dbName = appConfig.deliveryStreamDbName;
   private tableName = appConfig.deliveryStreamMetricsTableName;
-  constructor(private event: APIGatewayProxyEvent) {}
+  constructor(private event: any) {}
 
   public async handle(): Promise<any> {
     const entries = this.getColumnEntries();
@@ -58,7 +58,7 @@ export class UpdateMetricsHandler {
   private getColumnEntries(): ICustomMetricEntry[] {
     console.log(this.event);
     if (this.event.body) {
-      const { columns } = JSON.parse(this.event.body);
+      const { columns } = this.event.body;
       return columns;
     }
     throw new Error(`Invalid body: ${this.event.body}`);
