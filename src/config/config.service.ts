@@ -8,7 +8,7 @@ class ConfigService {
   public environment = this.config.getProperties();
 
   private constructor() {
-    this.config.validate({ allowed: "strict" });
+    this.config.validate({ allowed: "warn" });
   }
 
   public static getInstance(): ConfigService {
