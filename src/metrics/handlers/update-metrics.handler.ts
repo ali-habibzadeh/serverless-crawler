@@ -31,14 +31,14 @@ export class UpdateMetricsHandler {
   }
 
   private async updateGlueColumns(additionalCols: ColumnList): Promise<any> {
-    // - const existingColumns = (await this.getExistingColumns()) || [];
+    const existingColumns = (await this.getExistingColumns()) || [];
     return this.glue
       .updateTable({
         DatabaseName: this.dbName,
         TableInput: {
           Name: this.tableName,
           StorageDescriptor: {
-            Columns: [...additionalCols]
+            Columns: [...additionalCols, ...existingColumns]
           }
         }
       })
