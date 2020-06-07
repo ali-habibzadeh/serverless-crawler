@@ -5,7 +5,7 @@ class CustomMetricsService {
   public store = new DynamoStore(CustomMetric);
   private static instance: CustomMetricsService;
   private metrics!: CustomMetric[];
-  private isWarmedUp = false;
+  private isCacheWarmedUp = false;
 
   private constructor() {}
 
@@ -17,18 +17,14 @@ class CustomMetricsService {
   }
 
   public async warmUpCache(): Promise<void> {
-    if (this.isWarmedUp) {
-      return;
-    }
+    if (this.isCacheWarmedUp) return;
     const items = await this.store.scan().exec();
     this.metrics = items;
-    this.isWarmedUp = true;
+    this.isCacheWarmedUp = true;
   }
 
   public getCustomMetrics(): CustomMetric[] {
-    if (this.isWarmedUp) {
-      return this.metrics;
-    }
+    if (this.isCacheWarmedUp) return this.metrics;
     throw new Error('First warm up the cache by calling "warmUpCache()"');
   }
 }
