@@ -13,6 +13,7 @@ export class CustomMetricsContainer extends BaseMetricContainer {
     return Promise.all(
       metrics.map(async metric => {
         const { id, fn } = metric;
+        console.log(id, fn);
         return { [id]: await this.page.evaluate(fn) };
       })
     );

@@ -12,9 +12,8 @@ export class PageRenderService {
 
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
-    const containers = [...metricsContainers, CustomMetricsContainer];
-    const results = await Promise.all(containers.map(metric => new metric(this.page, response).getMetrics()));
-    console.log("RESULTS", results);
+    const list = [...metricsContainers, CustomMetricsContainer];
+    const results = await Promise.all(list.map(metric => new metric(this.page, response).getMetrics()));
     await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
