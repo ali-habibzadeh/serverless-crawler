@@ -1,12 +1,14 @@
 import { BaseQualifier } from "../base-types/base-qualifier";
-import { RobotsTxt } from "../../../../metrics/core-metrics/robots/robots.model";
+import { RobotsChecker } from "../../../../metrics/core-metrics/robots/robots.model";
 
 export class RobotsQualifier extends BaseQualifier {
   constructor() {
     super();
   }
 
+  private checker = (href: string) => RobotsChecker.getInstance().isAllowed(href);
+
   protected async isQualified(href: string): Promise<boolean> {
-    return new RobotsTxt(href).isAllowed();
+    return this.checker(href);
   }
 }

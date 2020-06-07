@@ -18,7 +18,7 @@ export class UpdateMetricsRestApi extends Construct {
   });
 
   private defineApiMethods(): void {
-    const crawlResource = this.api.root.addResource("crawl");
+    const crawlResource = this.api.root.addResource("metric");
     crawlResource.addMethod("POST", undefined, {
       requestModels: {
         "application/json": this.crawlUrlModel

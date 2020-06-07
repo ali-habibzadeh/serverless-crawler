@@ -4,7 +4,7 @@ import { Schema } from "@aws-cdk/aws-glue";
 
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
-import { RobotsTxt } from "./robots.model";
+import { RobotsChecker } from "./robots.model";
 
 export class Robots extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
@@ -18,6 +18,6 @@ export class Robots extends BaseMetricContainer {
   }
 
   private async isAlloed(): Promise<boolean> {
-    return new RobotsTxt(this.page.url()).isAllowed();
+    return RobotsChecker.getInstance().isAllowed(this.page.url());
   }
 }

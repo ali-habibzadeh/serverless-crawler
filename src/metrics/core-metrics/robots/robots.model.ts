@@ -1,42 +1,60 @@
 import axios from "axios";
 import { run } from "../../../utils/child-process";
-import { makeDir, has, write } from "../../../utils/file-system";
+import { makeDir, write } from "../../../utils/file-system";
 
-export class RobotsTxt {
-  private url = new URL(this.href);
-  private folderLocation = `/tmp/${this.url.host}`;
-  private robotsLocation = `${this.folderLocation}/robots.txt`;
-  constructor(private href: string, private bot = "GoogleBot") {
-    process.env.PATH = `${process.env.PATH}:${process.env.LAMBDA_TASK_ROOT}`;
-  }
+interface IWebsiteItem {
+  hasRobots: boolean;
+  alreadyStored?: boolean;
+  data?: string;
+}
 
-  public async isAllowed(): Promise<boolean> {
-    if (!(await has(this.robotsLocation))) {
-      const robotstxt = await this.getRobots();
-      if (!robotstxt) {
-        return true;
-      }
-      await this.writeRobots(robotstxt);
+export class RobotsChecker {
+  private static instance: RobotsChecker;
+  private static robotsMap = new Map<string, IWebsiteItem>();
+
+  private constructor() {}
+
+  public static getInstance(): RobotsChecker {
+    if (!RobotsChecker.instance) {
+      process.env.PATH = `${process.env.PATH}:${process.env.LAMBDA_TASK_ROOT}`;
+      RobotsChecker.instance = new RobotsChecker();
     }
-    return this.getBinaryIsAllowed();
+    return RobotsChecker.instance;
   }
 
-  private async getBinaryIsAllowed(): Promise<boolean> {
-    const { stdout } = await run(`robots ${this.robotsLocation} ${this.bot} ${this.url.href}`);
-    return !stdout.includes("DISALLOWED");
+  public async isAllowed(href: string, bot = "GoogleBot"): Promise<boolean> {
+    const url = new URL(href);
+    const match = RobotsChecker.robotsMap.get(url.host);
+    if (match && !match.hasRobots) {
+      console.log("exists - site has no robots");
+      return true;
+    }
+    if (match && match.alreadyStored) {
+      console.log("exists - already stored");
+      return RobotsChecker.getBinaryIsAllowed(url, bot);
+    }
+    console.log("doesn't exists - will store");
+    await RobotsChecker.addToMap(url);
+    return RobotsChecker.getBinaryIsAllowed(url, bot);
   }
 
-  private async writeRobots(robotstxt: string): Promise<void> {
-    await makeDir(this.folderLocation, { recursive: true });
-    return write(this.robotsLocation, robotstxt);
-  }
-
-  private async getRobots(): Promise<string | undefined> {
+  private static async addToMap(url: URL): Promise<void> {
     try {
-      const { data } = await axios.get(`${this.url.origin}/robots.txt`, { headers: { cache: true } });
-      return data;
-    } catch (e) {
-      return;
+      const { data } = await axios.get(`${url.origin}/robots.txt`);
+      await this.writeRobots(url, data);
+      this.robotsMap.set(url.host, { data, hasRobots: true, alreadyStored: true });
+    } catch {
+      this.robotsMap.set(url.host, { hasRobots: false });
     }
+  }
+
+  private static async writeRobots(url: URL, robotstxt: string): Promise<void> {
+    await makeDir(`/tmp/${url.host}`, { recursive: true });
+    return write(`/tmp/${url.host}/robots.txt`, robotstxt);
+  }
+
+  private static async getBinaryIsAllowed(url: URL, bot = "GoogleBot"): Promise<boolean> {
+    const { stdout } = await run(`robots /tmp/${url.host}/robots.txt ${bot} ${url.href}`);
+    return !stdout.includes("DISALLOWED");
   }
 }
