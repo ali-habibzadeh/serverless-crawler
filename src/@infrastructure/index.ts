@@ -9,6 +9,7 @@ import { LambdaFactory } from "./utils/lambda.factory";
 import { RenderingCluster } from "./rendering/rendering";
 import { Vpc } from "@aws-cdk/aws-ec2";
 import { CustomMetricsTable } from "./custom-metrics/custom-metrics";
+import { UpdateMetricsRestApi } from "./api/update-metrics.api";
 
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -49,6 +50,7 @@ export class ServerlessCrawlerStack extends Stack {
   }).getLambda();
 
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
+  public updateMetricsRestApi = new UpdateMetricsRestApi(this, "updateMetricsRestApi", this.updateMetricsHandler);
 
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.updateMetricsHandler].forEach(lambda => {
