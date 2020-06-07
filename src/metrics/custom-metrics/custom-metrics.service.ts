@@ -18,11 +18,9 @@ class CustomMetricsService {
 
   public async warmUpCache(): Promise<void> {
     if (this.isWarmedUp) {
-      console.log("warmUpCache: Already warm");
       return;
     }
     const items = await this.store.scan().exec();
-    console.log("warmUpCache: Warmed up");
     this.metrics = items;
     this.isWarmedUp = true;
   }

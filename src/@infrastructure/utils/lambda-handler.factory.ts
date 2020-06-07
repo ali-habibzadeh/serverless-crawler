@@ -22,7 +22,6 @@ export class LambdaHandlerFactory {
   private getHandler(fn: PublicFn): AWSLambda.Handler {
     return async (event, context): Promise<APIGatewayProxyResult> => {
       const results = await fn(event, context);
-      console.log("Function results", results);
       return {
         ...this.defaultConfig,
         body: JSON.stringify(results)
