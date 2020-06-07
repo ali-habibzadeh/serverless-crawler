@@ -4,7 +4,7 @@ import { Schema } from "@aws-cdk/aws-glue";
 
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
-import { RobotsChecker } from "./robots.model";
+import { RobotsChecker } from "./robots-checker";
 
 export class Robots extends BaseMetricContainer {
   constructor(protected page: Page, response: Response | null) {
