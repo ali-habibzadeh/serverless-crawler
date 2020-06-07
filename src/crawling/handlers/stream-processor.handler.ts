@@ -4,7 +4,7 @@ import { plainToClass } from "class-transformer";
 
 import { BrowserService } from "../../page-rendering/config/browser.service";
 import { CrawlUrl } from "../crawl-url.model";
-import { UrlsProcessor } from "../url-processing.service";
+import { CrawlingService } from "../crawling.service";
 
 export class StreamProcessorHandler {
   private converter = DynamoDB.Converter;
@@ -21,7 +21,7 @@ export class StreamProcessorHandler {
 
   private async processUrl(record: DynamoDBRecord): Promise<void> {
     const url = this.getUrl(record);
-    await new UrlsProcessor(url).process();
+    await new CrawlingService(url).crawl();
   }
 
   private getUrl(record: DynamoDBRecord): CrawlUrl {

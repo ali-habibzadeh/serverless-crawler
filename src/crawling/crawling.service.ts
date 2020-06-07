@@ -6,10 +6,10 @@ import { PageRenderService } from "../page-rendering/page-rendering.service";
 import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
 import { UrlsQualifierService } from "./url-qualifiers/url-qualifier.service";
 
-export class UrlsProcessor {
+export class CrawlingService {
   constructor(private crawlUrl: CrawlUrl) {}
 
-  public async process(): Promise<void> {
+  public async crawl(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
     await new DataDeliveryService(metrics).deliver();
