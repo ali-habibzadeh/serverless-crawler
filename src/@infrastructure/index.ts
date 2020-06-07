@@ -1,4 +1,4 @@
-import { App, CfnOutput, Construct, Stack, StackProps, Tag } from "@aws-cdk/core";
+import { App, CfnOutput, Construct, Stack, StackProps } from "@aws-cdk/core";
 
 import { envVars } from "../config/envars.enum";
 import { LambdaHandlers } from "../handlers-list";

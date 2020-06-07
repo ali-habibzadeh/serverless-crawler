@@ -41,7 +41,7 @@ export class UpdateMetricsRestApi extends Construct {
           type: JsonSchemaType.STRING
         }
       },
-      required: ["url", "id", "fn"]
+      required: ["type", "id", "fn"]
     }
   });
 }
