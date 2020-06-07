@@ -14,6 +14,7 @@ export class PageRenderService {
     const response = await this.getResponse();
     const containers = [...metricsContainers, CustomMetricsContainer];
     const results = await Promise.all(containers.map(metric => new metric(this.page, response).getMetrics()));
+    console.log("RESULTS", results);
     await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
