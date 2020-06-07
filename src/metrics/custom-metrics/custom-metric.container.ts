@@ -9,7 +9,7 @@ export class CustomMetricsContainer extends BaseMetricContainer {
   public columns = [];
 
   public async getMetrics(): Promise<Record<string, any>[]> {
-    const metrics = await customMetricStore.query().exec();
+    const metrics = await customMetricStore.scan().exec();
     return Promise.all(
       metrics.map(async metric => {
         const { id, fn } = metric;
