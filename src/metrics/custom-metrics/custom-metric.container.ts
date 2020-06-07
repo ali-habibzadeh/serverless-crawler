@@ -8,8 +8,10 @@ export class CustomMetricsContainer extends BaseMetricContainer {
   }
   public columns = [];
 
+  // tslint:disable-next-line: no-feature-envy
   public async getMetrics(): Promise<Record<string, any>[]> {
     const items = customMetricsService.getCustomMetrics();
+    console.log("CustomMetricsContainer", items);
     return Promise.all(
       items.map(async metric => {
         const { id, fn } = metric;
