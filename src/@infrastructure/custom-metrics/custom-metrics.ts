@@ -16,7 +16,6 @@ export class CustomMetricsTable extends Construct {
   });
 
   public grantAll(grantee: IGrantable): void {
-    this.table.grantWriteData(grantee);
-    this.table.grantStreamRead(grantee);
+    this.table.grantReadWriteData(grantee);
   }
 }
