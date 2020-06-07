@@ -14,7 +14,7 @@ export class DeliverySchema extends Construct {
   public schemaDatabase = new Database(this, "SchemaDatabase", { databaseName: "schema_database" });
   public schemaTable = new Table(this, "SchemaTable", {
     database: this.schemaDatabase,
-    tableName: "crawl_metrics_metadata_table",
+    tableName: "crawl_metrics_table",
     columns: getGlueColumns(),
     dataFormat: DataFormat.PARQUET
   });
