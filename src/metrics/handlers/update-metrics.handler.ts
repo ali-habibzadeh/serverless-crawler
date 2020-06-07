@@ -1,4 +1,4 @@
-import { APIGatewayProxyEvent } from "aws-lambda";
+// - import { APIGatewayProxyEvent } from "aws-lambda";
 import { Glue } from "aws-sdk";
 import { appConfig } from "../../config/config.service";
 import { ColumnList } from "aws-sdk/clients/glue";
@@ -31,14 +31,14 @@ export class UpdateMetricsHandler {
   }
 
   private async updateGlueColumns(additionalCols: ColumnList): Promise<any> {
-    const existingColumns = (await this.getExistingColumns()) || [];
+    // - const existingColumns = (await this.getExistingColumns()) || [];
     return this.glue
       .updateTable({
         DatabaseName: this.dbName,
         TableInput: {
           Name: this.tableName,
           StorageDescriptor: {
-            Columns: [...existingColumns, ...additionalCols]
+            Columns: [...additionalCols]
           }
         }
       })
@@ -56,7 +56,6 @@ export class UpdateMetricsHandler {
   }
 
   private getColumnEntries(): ICustomMetricEntry[] {
-    console.log(this.event);
     if (this.event.body) {
       const { columns } = this.event.body;
       return columns;
