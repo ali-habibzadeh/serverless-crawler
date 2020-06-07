@@ -26,14 +26,11 @@ export class RobotsChecker {
     const url = new URL(href);
     const match = RobotsChecker.robotsMap.get(url.host);
     if (match && !match.hasRobots) {
-      console.log("exists - site has no robots");
       return true;
     }
     if (match && match.alreadyStored) {
-      console.log("exists - already stored");
       return RobotsChecker.getBinaryIsAllowed(url, bot);
     }
-    console.log("doesn't exists - will store");
     await RobotsChecker.addToMap(url);
     return RobotsChecker.getBinaryIsAllowed(url, bot);
   }
