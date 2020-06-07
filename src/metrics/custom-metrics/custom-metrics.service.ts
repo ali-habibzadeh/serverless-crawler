@@ -2,8 +2,8 @@ import { CustomMetric } from "./custom-metric.model";
 import { DynamoStore } from "@shiftcoders/dynamo-easy";
 
 class CustomMetricsService {
+  public store = new DynamoStore(CustomMetric);
   private static instance: CustomMetricsService;
-  private store = new DynamoStore(CustomMetric);
   private metrics!: CustomMetric[];
   private isWarmedUp = false;
 

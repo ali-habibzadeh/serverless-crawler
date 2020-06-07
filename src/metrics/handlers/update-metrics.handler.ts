@@ -2,7 +2,7 @@
 import { Glue } from "aws-sdk";
 import { appConfig } from "../../config/config.service";
 import { ColumnList } from "aws-sdk/clients/glue";
-import { customMetricStore } from "../custom-metrics/custom-metric.model";
+import { customMetricsService } from "../custom-metrics/custom-metrics.service";
 
 interface ICustomMetricEntry {
   id: string;
@@ -19,7 +19,7 @@ export class UpdateMetricsHandler {
   public async handle(): Promise<any> {
     const entries = this.getColumnEntries();
     await this.updateGlueColumns(entries.map(entry => ({ Name: entry.id, Type: entry.type })));
-    await customMetricStore
+    await customMetricsService.store
       .batchWrite()
       .put(
         entries.map(entry => {
