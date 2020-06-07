@@ -4,7 +4,7 @@ import { DataDeliveryService } from "../data-delivery/data-delivery.service";
 import { MetricNames } from "../metrics/metrics-list";
 import { PageRenderService } from "../page-rendering/page-rendering.service";
 import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
-import { UrlsQualifierService } from "./url-qualifiers/qualifiers.service";
+import { UrlsQualifierService } from "./url-qualifiers/url-qualifier.service";
 
 export class UrlsProcessor {
   constructor(private crawlUrl: CrawlUrl) {}
