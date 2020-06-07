@@ -1,4 +1,5 @@
 import { DynamoStore, Model, PartitionKey } from "@shiftcoders/dynamo-easy";
+import flatCache from "flat-cache";
 
 import { appConfig } from "../../config/config.service";
 
@@ -10,3 +11,4 @@ export class CustomMetric {
 }
 
 export const customMetricStore = new DynamoStore(CustomMetric);
+export const customMetricsCache = flatCache.load("AxiosDiskCache", "/tmp/axios-cache");

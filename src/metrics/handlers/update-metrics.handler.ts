@@ -2,7 +2,7 @@ import { APIGatewayProxyEvent } from "aws-lambda";
 import { Glue } from "aws-sdk";
 import { appConfig } from "../../config/config.service";
 import { ColumnList } from "aws-sdk/clients/glue";
-import { customMetricStore } from "../custom-metrics/custom-metric.model";
+import { customMetricStore, customMetricsCache } from "../custom-metrics/custom-metric.model";
 
 interface ICustomMetricEntry {
   id: string;
@@ -28,6 +28,7 @@ export class UpdateMetricsHandler {
         })
       )
       .exec();
+    customMetricsCache.setKey("custom-metrics", await customMetricStore.scan().exec());
   }
 
   private async updateGlueColumns(additionalCols: ColumnList): Promise<any> {
