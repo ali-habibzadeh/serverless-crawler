@@ -1,4 +1,4 @@
-import { Model, PartitionKey, DynamoStore } from "@shiftcoders/dynamo-easy";
+import { Model, PartitionKey } from "@shiftcoders/dynamo-easy";
 
 import { appConfig } from "../../config/config.service";
 
@@ -8,5 +8,3 @@ export class CustomMetric {
   public id!: string;
   public fn!: string;
 }
-
-export const customMetricStore = new DynamoStore(CustomMetric);

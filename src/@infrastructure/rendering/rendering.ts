@@ -39,7 +39,7 @@ export class RenderingCluster extends Construct {
   private applyAutoScalingRules(): void {
     const scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
       minCapacity: 6,
-      maxCapacity: 200
+      maxCapacity: 10
     });
     scalableTarget.scaleOnCpuUtilization("CpuScaling", {
       targetUtilizationPercent: 80
