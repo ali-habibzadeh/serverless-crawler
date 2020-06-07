@@ -21,8 +21,8 @@ export class WebPerformance extends BaseMetricContainer {
   public async getMetrics(): Promise<Record<string, number>[]> {
     return [
       {
-        [this.columns[1].name]: await this.getResourceTreeCount(),
-        [this.columns[2].name]: await this.getLargestContentfulPaint()
+        [this.columns[0].name]: await this.getResourceTreeCount(),
+        [this.columns[1].name]: await this.getLargestContentfulPaint()
       }
     ];
   }
