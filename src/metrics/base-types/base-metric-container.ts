@@ -4,7 +4,7 @@ import { Type } from "@aws-cdk/aws-glue";
 
 import { MetricNames } from "../metrics-list";
 
-export interface IMetricColumn {
+interface IMetricColumn {
   name: MetricNames;
   type: Type;
   isGlueColumn: boolean;
