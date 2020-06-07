@@ -5,7 +5,6 @@ import { makeDir, write } from "../../../utils/file-system";
 interface IWebsiteItem {
   hasRobots: boolean;
   alreadyStored?: boolean;
-  data?: string;
 }
 
 export class RobotsChecker {
@@ -39,7 +38,7 @@ export class RobotsChecker {
     try {
       const { data } = await axios.get(`${url.origin}/robots.txt`);
       await this.writeRobots(url, data);
-      this.robotsMap.set(url.host, { data, hasRobots: true, alreadyStored: true });
+      this.robotsMap.set(url.host, { hasRobots: true, alreadyStored: true });
     } catch {
       this.robotsMap.set(url.host, { hasRobots: false });
     }
