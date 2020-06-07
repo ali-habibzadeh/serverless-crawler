@@ -241,6 +241,14 @@
     "@aws-cdk/custom-resources" "1.44.0"
     constructs "^3.0.2"
 
+"@aws-cdk/aws-dax@^1.44.0":
+  version "1.44.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-dax/-/aws-dax-1.44.0.tgz#145c3a5fee633e3b85ac6999a6c91a9209427e2b"
+  integrity sha512-j9CckNAoUzO8z0d2oL9zupwkpc/EkC46GBCiBEAmrXpTgyLhOvPOdvxkT3cOF9dYUHmZ0kqOsvmvmcxp7Z6E4g==
+  dependencies:
+    "@aws-cdk/core" "1.44.0"
+    constructs "^3.0.2"
+
 "@aws-cdk/aws-dynamodb@1.44.0", "@aws-cdk/aws-dynamodb@^1.44.0":
   version "1.44.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-dynamodb/-/aws-dynamodb-1.44.0.tgz#9986dd9ee7ec487ea21365496fc7efef91e173fe"
