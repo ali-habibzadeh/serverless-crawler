@@ -4,6 +4,7 @@ import { MetricNames, metricsContainers } from "../metrics/metrics-list";
 import { BrowserService } from "./config/browser.service";
 import { PageRequestHandler } from "./config/page-request.handler";
 import { CustomMetricsContainer } from "../metrics/custom-metrics/custom-metric.container";
+import { customMetricsService } from "../metrics/custom-metrics/custom-metrics.service";
 
 export class PageRenderService {
   private page!: Page;
@@ -12,6 +13,7 @@ export class PageRenderService {
 
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
     const response = await this.getResponse();
+    await customMetricsService.warmUpCache();
     const list = [...metricsContainers, CustomMetricsContainer];
     const results = await Promise.all(list.map(metric => new metric(this.page, response).getMetrics()));
     await this.page.close();
@@ -19,6 +21,7 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
+    await BrowserService.createBrowser();
     this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);

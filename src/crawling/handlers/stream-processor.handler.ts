@@ -5,7 +5,6 @@ import { plainToClass } from "class-transformer";
 import { BrowserService } from "../../page-rendering/config/browser.service";
 import { CrawlUrl } from "../url-processing/crawl-url.model";
 import { UrlsProcessor } from "../url-processing/url-processor.service";
-import { customMetricsService } from "../../metrics/custom-metrics/custom-metrics.service";
 
 export class StreamProcessorHandler {
   private converter = DynamoDB.Converter;
@@ -13,8 +12,6 @@ export class StreamProcessorHandler {
   constructor(private event: DynamoDBStreamEvent) {}
 
   public async handle(): Promise<string> {
-    await customMetricsService.warmUpCache();
-    await BrowserService.createBrowser();
     const inserts = this.event.Records.filter(record => record.eventName === "INSERT");
     await Promise.all(inserts.map(async record => this.processUrl(record)));
     await BrowserService.close();
