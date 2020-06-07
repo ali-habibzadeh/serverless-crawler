@@ -3,8 +3,8 @@ import { DynamoDB } from "aws-sdk";
 import { plainToClass } from "class-transformer";
 
 import { BrowserService } from "../../page-rendering/config/browser.service";
-import { CrawlUrl } from "../url-processing/crawl-url.model";
-import { UrlsProcessor } from "../url-processing/url-processor.service";
+import { CrawlUrl } from "../crawl-url.model";
+import { UrlsProcessor } from "../url-processing.service";
 
 export class StreamProcessorHandler {
   private converter = DynamoDB.Converter;

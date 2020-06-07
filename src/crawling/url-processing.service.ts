@@ -1,8 +1,8 @@
 import { attribute, or } from "@shiftcoders/dynamo-easy";
 
-import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
-import { MetricNames } from "../../metrics/metrics-list";
-import { PageRenderService } from "../../page-rendering/page-render.service";
+import { DataDeliveryService } from "../data-delivery/data-delivery.service";
+import { MetricNames } from "../metrics/metrics-list";
+import { PageRenderService } from "../page-rendering/page-rendering.service";
 import { CrawlUrl, crawlUrlStore } from "./crawl-url.model";
 import { UrlsQualifierService } from "./url-qualifiers/qualifiers.service";
 

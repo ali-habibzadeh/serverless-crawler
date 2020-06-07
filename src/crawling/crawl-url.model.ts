@@ -1,6 +1,6 @@
 import { DynamoStore, Model, PartitionKey } from "@shiftcoders/dynamo-easy";
 
-import { appConfig } from "../../config/config.service";
+import { appConfig } from "../config/config.service";
 import moment from "moment";
 
 @Model({ tableName: appConfig.urlsTableName })
