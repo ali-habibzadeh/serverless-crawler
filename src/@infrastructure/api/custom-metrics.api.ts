@@ -5,17 +5,28 @@ import { Construct } from "@aws-cdk/core";
 import { LambdaApiFactory } from "../utils/lambda-api.factory";
 
 export class CustomMetricsRestApi extends Construct {
-  constructor(parent: Construct, id: string, private updateMetricsHandler: Fn) {
+  constructor(parent: Construct, id: string, private customMetricsRestApi: Fn) {
     super(parent, id);
     this.defineApiMethods();
   }
 
-  public api = new LambdaApiFactory(this, this.updateMetricsHandler).getApi();
+  public api = new LambdaApiFactory(this, this.customMetricsRestApi).getApi();
 
   private validator = this.api.addRequestValidator("DefaultValidator", {
     validateRequestBody: true,
     validateRequestParameters: false
   });
+
+  private methodResponses = [
+    {
+      statusCode: "200",
+      responseParameters: {
+        "method.response.header.Content-Type": true,
+        "method.response.header.Access-Control-Allow-Origin": true,
+        "method.response.header.Access-Control-Allow-Credentials": true
+      }
+    }
+  ];
 
   private defineApiMethods(): void {
     const crawlResource = this.api.root.addResource("metrics");
@@ -23,9 +34,12 @@ export class CustomMetricsRestApi extends Construct {
       requestModels: {
         "application/json": this.crawlUrlModel
       },
-      requestValidator: this.validator
+      requestValidator: this.validator,
+      methodResponses: this.methodResponses
     });
-    crawlResource.addMethod("GET", undefined, {});
+    crawlResource.addMethod("GET", undefined, {
+      methodResponses: this.methodResponses
+    });
   }
 
   private crawlUrlModel = this.api.addModel("CustomMetrics", {
