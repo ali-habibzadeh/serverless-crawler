@@ -18,13 +18,14 @@ export class CustomMetricsRestApi extends Construct {
   });
 
   private defineApiMethods(): void {
-    const crawlResource = this.api.root.addResource("metric");
+    const crawlResource = this.api.root.addResource("metrics");
     crawlResource.addMethod("POST", undefined, {
       requestModels: {
         "application/json": this.crawlUrlModel
       },
       requestValidator: this.validator
     });
+    crawlResource.addMethod("GET", undefined, {});
   }
 
   private crawlUrlModel = this.api.addModel("CustomMetrics", {
