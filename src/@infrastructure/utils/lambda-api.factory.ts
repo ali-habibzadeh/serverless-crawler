@@ -8,7 +8,7 @@ export class LambdaApiFactory {
   public getApi(): LambdaRestApi {
     return new LambdaRestApi(this.parent, `RestApi-${this.fn.node.uniqueId}`, {
       handler: this.fn,
-      proxy: false,
+      proxy: true,
       defaultCorsPreflightOptions: {
         allowOrigins: Cors.ALL_ORIGINS,
         allowMethods: Cors.ALL_METHODS

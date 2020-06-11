@@ -4,7 +4,7 @@ import { Construct } from "@aws-cdk/core";
 
 import { LambdaApiFactory } from "../utils/lambda-api.factory";
 
-export class UpdateMetricsRestApi extends Construct {
+export class CustomMetricsRestApi extends Construct {
   constructor(parent: Construct, id: string, private updateMetricsHandler: Fn) {
     super(parent, id);
     this.defineApiMethods();

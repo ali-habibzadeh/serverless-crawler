@@ -7,4 +7,5 @@ export class CustomMetric {
   @PartitionKey()
   public id!: string;
   public fn!: string;
+  public type!: string;
 }
