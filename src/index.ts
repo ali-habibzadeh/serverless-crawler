@@ -1,5 +1,4 @@
 import "reflect-metadata";
-import "./utils/axios-cache";
 import AWS from "aws-sdk";
 import sourceMapSupport from "source-map-support";
 sourceMapSupport.install();
