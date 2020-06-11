@@ -17,7 +17,7 @@ AWS.config.update({ region: appConfig.region });
 const handlers: Record<LambdaHandlers, PublicFn> = {
   [LambdaHandlers.StreamProcessorHandler]: e => new StreamProcessorHandler(e).handle(),
   [LambdaHandlers.StartCrawlHandler]: e => new StartCrawlHandler(e).handle(),
-  [LambdaHandlers.UpdateMetricsHandler]: e => new CustomMetricsHandler(e).handle()
+  [LambdaHandlers.CustomMetricsHandler]: e => new CustomMetricsHandler(e).handle()
 };
 
 module.exports = new LambdaHandlerFactory(handlers).getHandlers();
