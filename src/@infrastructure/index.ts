@@ -50,7 +50,7 @@ export class ServerlessCrawlerStack extends Stack {
   }).getLambda();
 
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
-  public updateMetricsRestApi = new CustomMetricsRestApi(this, "updateMetricsRestApi", this.customMetricsHandler);
+  public customMetricsRestApi = new CustomMetricsRestApi(this, "customMetricsRestApi", this.customMetricsHandler);
 
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler].forEach(lambda => {

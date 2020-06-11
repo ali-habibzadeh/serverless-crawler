@@ -7,7 +7,12 @@ export class LambdaHandlerFactory {
   constructor(private configs: ILambdaHandlerFactoryConfig) {}
   private defaultConfig = {
     statusCode: 200,
-    headers: { "Content-Type": "application/json" }
+    headers: {
+      "Content-Type": "application/json",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "*"
+    }
   };
 
   public getHandlers(): ILambdaHandlers {

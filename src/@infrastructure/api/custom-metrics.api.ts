@@ -17,29 +17,15 @@ export class CustomMetricsRestApi extends Construct {
     validateRequestParameters: false
   });
 
-  private methodResponses = [
-    {
-      statusCode: "200",
-      responseParameters: {
-        "method.response.header.Content-Type": true,
-        "method.response.header.Access-Control-Allow-Origin": true,
-        "method.response.header.Access-Control-Allow-Credentials": true
-      }
-    }
-  ];
-
   private defineApiMethods(): void {
     const crawlResource = this.api.root.addResource("metrics");
     crawlResource.addMethod("POST", undefined, {
       requestModels: {
         "application/json": this.crawlUrlModel
       },
-      requestValidator: this.validator,
-      methodResponses: this.methodResponses
+      requestValidator: this.validator
     });
-    crawlResource.addMethod("GET", undefined, {
-      methodResponses: this.methodResponses
-    });
+    crawlResource.addMethod("GET", undefined, {});
   }
 
   private crawlUrlModel = this.api.addModel("CustomMetrics", {
