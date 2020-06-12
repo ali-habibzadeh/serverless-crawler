@@ -54,7 +54,6 @@ export class DeliveryStream extends Construct {
         "firehose:PutRecord",
         "firehose:PutRecordBatch",
         "firehose:UpdateDestination",
-        "firehose:UpdateDestination",
         "firehose:DescribeDeliveryStream"
       ]
     });
