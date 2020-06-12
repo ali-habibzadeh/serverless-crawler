@@ -8,17 +8,30 @@ export class QueryTesterHandler {
   constructor(private event: APIGatewayProxyEvent) {}
 
   public async handle(): Promise<any> {
-    const manager = new ApiGatewayManagementApi({ endpoint: this.event.path });
-    try {
-      return manager
-        .postToConnection({
-          ConnectionId: this.event.requestContext.connectionId || "",
-          Data: "Hello from lambda"
-        })
-        .promise();
-    } catch (e) {
-      console.log(e);
+    const {
+      requestContext: { routeKey }
+    } = this.event;
+    switch (routeKey) {
+      case "$connect":
+        return this.postToConnection("Hello from lambda $connect");
+      case "$disconnect":
+        return this.postToConnection("Hello from lambda $disconnect");
+      case "$default":
+        return this.postToConnection("Hello from lambda $default");
+      default:
+        throw new Error(`invalid route ${routeKey}`);
     }
+  }
+
+  private postToConnection(data: Buffer | string): Promise<any> {
+    const endpoint = "pse27qqusf.execute-api.us-east-1.amazonaws.com/prod";
+    const manager = new ApiGatewayManagementApi({ endpoint });
+    return manager
+      .postToConnection({
+        ConnectionId: this.event.requestContext.connectionId || "",
+        Data: data
+      })
+      .promise();
   }
 
   private queryObject(object: S3Object): Promise<SelectObjectContentOutput> {
