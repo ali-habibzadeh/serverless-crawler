@@ -59,7 +59,7 @@ export class ServerlessCrawlerStack extends Stack {
   public queryTesterRestApi = new QueryTesterRestApi(this, "queryTesterRestApi", this.queryTesterHandler);
 
   private configure(): void {
-    [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler].forEach(lambda => {
+    [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler, this.queryTesterHandler].forEach(lambda => {
       this.crawlUrlsTable.grantAll(lambda);
       this.customMetricsTable.grantAll(lambda);
       this.deliveryStream.crawlData.crawlDataBucket.grantReadWrite(lambda);
