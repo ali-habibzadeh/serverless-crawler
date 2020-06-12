@@ -1,5 +1,5 @@
 import { Function as Fn } from "@aws-cdk/aws-lambda";
-import { Construct, Stack, ConcreteDependable } from "@aws-cdk/core";
+import { Construct, Stack } from "@aws-cdk/core";
 import {
   CfnApiV2,
   CfnRouteV2,
@@ -13,7 +13,6 @@ export class QueryTesterSocketsApi extends Construct {
   constructor(parent: Construct, id: string, private queryTesterHandler: Fn) {
     super(parent, id);
     this.configurePermissions();
-    this.configureRoutes();
   }
 
   public api = new CfnApiV2(this, "queryTesterSocketsApi", {
@@ -80,13 +79,5 @@ export class QueryTesterSocketsApi extends Construct {
       actions: ["lambda:InvokeFunction"]
     });
     this.role.addToPolicy(policy);
-  }
-
-  private configureRoutes(): void {
-    const routes = new ConcreteDependable();
-    routes.add(this.connectRoute);
-    routes.add(this.messageRoute);
-    routes.add(this.disconnectRoute);
-    this.api.node.addDependency(routes);
   }
 }
