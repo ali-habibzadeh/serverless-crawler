@@ -78,6 +78,7 @@ export class QueryTesterSocketsApi extends Construct {
       actions: ["lambda:InvokeFunction"]
     });
     this.role.addToPolicy(policy);
+    this.deployoment.addDependsOn(this.connectRoute);
   }
 
   public getConnectionsPolicy(): PolicyStatement {
