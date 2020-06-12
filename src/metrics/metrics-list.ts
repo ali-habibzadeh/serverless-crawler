@@ -40,7 +40,7 @@ export const metricsContainers = [
   RedirectChain
 ];
 
-export function getGlueColumns(): Column[] {
+export function getCoreGlueColumns(): Column[] {
   return metricsContainers
     .map(metric => Reflect.construct(metric, []).columns)
     .flat()

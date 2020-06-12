@@ -1,12 +1,15 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
 
 import { crawlUrlStore } from "../crawl-url.model";
+import { DataDeliveryService } from "../../data-delivery/data-delivery.service";
 
 export class StartCrawlHandler {
   constructor(private event: APIGatewayProxyEvent) {}
 
   public async handle(): Promise<string> {
-    await crawlUrlStore.put({ url: this.getUrl(), level: 0 }).exec();
+    const { host, href } = new URL(this.getUrl());
+    await new DataDeliveryService().updateDestination({ Prefix: `/crawl-data/${host}` });
+    await crawlUrlStore.put({ url: href, level: 0 }).exec();
     return "started";
   }
 

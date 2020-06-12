@@ -24,13 +24,15 @@ export class CustomMetricsHandler {
         await this.addNewMetric();
       case "GET":
         return customMetricsService.store.scan().exec();
+      default:
+        throw new Error(`Invalid method: ${this.event.httpMethod}`);
     }
   }
 
   private async addNewMetric(): Promise<void> {
     const { id, type, fn } = this.getColumnEntry();
     await this.updateGlueColumns({ Name: id, Type: type });
-    return customMetricsService.store.put({ id, fn, type }).exec();
+    await customMetricsService.store.put({ id, fn, type }).exec();
   }
 
   private async updateGlueColumns(newColumn: Column): Promise<any> {

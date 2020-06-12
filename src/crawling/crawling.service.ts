@@ -12,7 +12,7 @@ export class CrawlingService {
   public async crawl(): Promise<void> {
     const renderer = new PageRenderService(this.crawlUrl.url);
     const metrics = await renderer.getPageRenderMetrics();
-    await new DataDeliveryService(metrics).deliver();
+    await new DataDeliveryService().deliver(metrics);
     return this.crawlNextBatch(metrics[MetricNames.InternalLinks]);
   }
 

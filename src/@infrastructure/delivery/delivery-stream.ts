@@ -50,7 +50,13 @@ export class DeliveryStream extends Construct {
   public getWritingPolicy(): PolicyStatement {
     return new PolicyStatement({
       resources: [this.crawlDatasDeliveryStream.attrArn],
-      actions: ["firehose:PutRecord", "firehose:PutRecordBatch", "firehose:UpdateDestination"]
+      actions: [
+        "firehose:PutRecord",
+        "firehose:PutRecordBatch",
+        "firehose:UpdateDestination",
+        "firehose:UpdateDestination",
+        "firehose:DescribeDeliveryStream"
+      ]
     });
   }
 }
