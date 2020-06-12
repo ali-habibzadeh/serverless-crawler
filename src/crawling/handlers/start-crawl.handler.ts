@@ -8,7 +8,7 @@ export class StartCrawlHandler {
 
   public async handle(): Promise<string> {
     const { host, href } = new URL(this.getUrl());
-    await new DataDeliveryService().updateDestination({ Prefix: `/crawl-data/${host}/` });
+    await new DataDeliveryService().updateDestination({ Prefix: `crawl-data/${host}/` });
     await crawlUrlStore.put({ url: href, level: 0 }).exec();
     return "started";
   }
