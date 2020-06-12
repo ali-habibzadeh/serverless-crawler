@@ -7,13 +7,15 @@ export class QueryTesterHandler {
   private s3 = new S3();
   constructor(private event: APIGatewayProxyEvent) {}
 
-  public async handle(): Promise<void> {
+  public async handle(): Promise<any> {
     const manager = new ApiGatewayManagementApi({ endpoint: this.event.path });
     try {
-      manager.postToConnection({
-        ConnectionId: this.event.requestContext.connectionId || "",
-        Data: "Hello from lambda"
-      });
+      return manager
+        .postToConnection({
+          ConnectionId: this.event.requestContext.connectionId || "",
+          Data: "Hello from lambda"
+        })
+        .promise();
     } catch (e) {
       console.log(e);
     }
