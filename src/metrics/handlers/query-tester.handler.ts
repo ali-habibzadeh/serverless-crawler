@@ -21,8 +21,8 @@ export class QueryTesterHandler {
         Bucket: appConfig.crawlDataBucketName,
         ExpressionType: "SQL",
         Expression: this.getQuery(),
-        InputSerialization: {},
-        OutputSerialization: {},
+        InputSerialization: { Parquet: {} },
+        OutputSerialization: { JSON: {} },
         Key: object.Key || ""
       })
       .promise();
