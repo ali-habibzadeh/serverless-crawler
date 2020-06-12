@@ -14,6 +14,7 @@ export class QueryTesterSocketsApi extends Construct {
   constructor(parent: Construct, id: string, private queryTesterHandler: Fn) {
     super(parent, id);
     this.configurePermissions();
+    this.configureRoutes();
   }
 
   public api = new CfnApiV2(this, "queryTesterSocketsApi", {
@@ -78,7 +79,12 @@ export class QueryTesterSocketsApi extends Construct {
       actions: ["lambda:InvokeFunction"]
     });
     this.role.addToPolicy(policy);
+  }
+
+  private configureRoutes(): void {
     this.deployoment.addDependsOn(this.connectRoute);
+    this.deployoment.addDependsOn(this.disconnectRoute);
+    this.deployoment.addDependsOn(this.messageRoute);
   }
 
   public getConnectionsPolicy(): PolicyStatement {
