@@ -40,6 +40,16 @@
     "@aws-cdk/cx-api" "1.45.0"
     constructs "^3.0.2"
 
+"@aws-cdk/aws-apigatewayv2@^1.45.0":
+  version "1.45.0"
+  resolved "https://registry.yarnpkg.com/@aws-cdk/aws-apigatewayv2/-/aws-apigatewayv2-1.45.0.tgz#5d051a64bbb9cea6a680fb4f8db452c537c893e6"
+  integrity sha512-Yopbrz1V5+5ATS+zI0xuTsL2jx7TfhnjJo4YJ2/BUvMucCnrrKeeRBGUFK0F6xi0+Uaypa35elkGWwXToL7wOA==
+  dependencies:
+    "@aws-cdk/aws-iam" "1.45.0"
+    "@aws-cdk/aws-lambda" "1.45.0"
+    "@aws-cdk/core" "1.45.0"
+    constructs "^3.0.2"
+
 "@aws-cdk/aws-applicationautoscaling@1.45.0":
   version "1.45.0"
   resolved "https://registry.yarnpkg.com/@aws-cdk/aws-applicationautoscaling/-/aws-applicationautoscaling-1.45.0.tgz#f2f16bc3bcba49be360667c837e7a15aa2291aa0"

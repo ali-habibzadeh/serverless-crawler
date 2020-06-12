@@ -10,7 +10,7 @@ import { RenderingCluster } from "./rendering/rendering";
 import { Vpc } from "@aws-cdk/aws-ec2";
 import { CustomMetricsTable } from "./custom-metrics/custom-metrics";
 import { CustomMetricsRestApi } from "./api/custom-metrics.api";
-import { QueryTesterRestApi } from "./api/query-tester.api";
+import { QueryTesterSocketsApi } from "./api/query-tester.api";
 
 export class ServerlessCrawlerStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
@@ -56,7 +56,7 @@ export class ServerlessCrawlerStack extends Stack {
 
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
   public customMetricsRestApi = new CustomMetricsRestApi(this, "customMetricsRestApi", this.customMetricsHandler);
-  public queryTesterRestApi = new QueryTesterRestApi(this, "queryTesterRestApi", this.queryTesterHandler);
+  public queryTesterRestApi = new QueryTesterSocketsApi(this, "queryTesterRestApi", this.queryTesterHandler);
 
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler, this.queryTesterHandler].forEach(lambda => {
