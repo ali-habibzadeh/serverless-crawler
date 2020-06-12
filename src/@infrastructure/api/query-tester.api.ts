@@ -22,11 +22,9 @@ export class QueryTesterSocketsApi extends Construct {
   private integration = new CfnIntegrationV2(this, "apigatewayintegrationsocketconnect", {
     apiId: this.api.ref,
     integrationType: "AWS_PROXY",
-    integrationUri: `arn:aws:apigateway:
-      ${Stack.of(this).region}
-      :lambda:path/2015-03-31/functions/
-      ${this.queryTesterHandler.functionArn}
-      /invocations`,
+    integrationUri: `arn:aws:apigateway:${Stack.of(this).region}:lambda:path/2015-03-31/functions/${
+      this.queryTesterHandler.functionArn
+    }/invocations`,
     credentialsArn: this.role.roleArn
   });
 
