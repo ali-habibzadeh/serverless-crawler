@@ -6,5 +6,7 @@ export class QueryTesterHandler {
   private s3 = new S3();
   constructor(private event: APIGatewayProxyEvent) {}
 
-  public async handle(): Promise<any> {}
+  public async handle(): Promise<any> {
+    return this.s3.listObjects({ Bucket: appConfig.crawlDataBucketName }).promise();
+  }
 }
