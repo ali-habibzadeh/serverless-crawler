@@ -10,6 +10,7 @@ import {
 import { PolicyStatement, Effect, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 
 export class QueryTesterSocketsApi extends Construct {
+  private region = Stack.of(this).region;
   constructor(parent: Construct, id: string, private queryTesterHandler: Fn) {
     super(parent, id);
     this.configurePermissions();
@@ -28,9 +29,7 @@ export class QueryTesterSocketsApi extends Construct {
   private integration = new CfnIntegrationV2(this, "apigatewayintegrationsocketconnect", {
     apiId: this.api.ref,
     integrationType: "AWS_PROXY",
-    integrationUri: `arn:aws:apigateway:${Stack.of(this).region}:lambda:path/2015-03-31/functions/${
-      this.queryTesterHandler.functionArn
-    }/invocations`,
+    integrationUri: `arn:aws:apigateway:${this.region}:lambda:path/2015-03-31/functions/${this.queryTesterHandler.functionArn}/invocations`,
     credentialsArn: this.role.roleArn
   });
 
@@ -79,5 +78,13 @@ export class QueryTesterSocketsApi extends Construct {
       actions: ["lambda:InvokeFunction"]
     });
     this.role.addToPolicy(policy);
+  }
+
+  public getConnectionsPolicy(): PolicyStatement {
+    return new PolicyStatement({
+      effect: Effect.ALLOW,
+      resources: [`arn:aws:execute-api:${this.region}:*:**/@connections/*`],
+      actions: ["execute-api:ManageConnections"]
+    });
   }
 }

@@ -56,7 +56,7 @@ export class ServerlessCrawlerStack extends Stack {
 
   public startCrawlRestApi = new StartCrawlRestApi(this, "startCrawlRestApi", this.startCrawlHandler);
   public customMetricsRestApi = new CustomMetricsRestApi(this, "customMetricsRestApi", this.customMetricsHandler);
-  public queryTesterRestApi = new QueryTesterSocketsApi(this, "queryTesterRestApi", this.queryTesterHandler);
+  public queryTesterSocketsApi = new QueryTesterSocketsApi(this, "queryTesterSocketsApi", this.queryTesterHandler);
 
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler, this.queryTesterHandler].forEach(lambda => {
@@ -65,6 +65,7 @@ export class ServerlessCrawlerStack extends Stack {
       this.deliveryStream.crawlData.crawlDataBucket.grantReadWrite(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
       lambda.addToRolePolicy(this.deliveryStream.deliverySchema.getCatalogPolicy());
+      lambda.addToRolePolicy(this.queryTesterSocketsApi.getConnectionsPolicy());
       this.deliveryStream.deliverySchema.schemaTable.grantReadWrite(lambda);
     });
     this.streamHandler.addEventSource(this.crawlUrlsTable.eventSource);
