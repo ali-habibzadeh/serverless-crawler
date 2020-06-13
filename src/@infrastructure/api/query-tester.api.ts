@@ -5,7 +5,8 @@ import {
   CfnRouteV2,
   CfnIntegrationV2,
   CfnDeploymentV2,
-  CfnStageV2
+  CfnStageV2,
+  CfnRouteResponseV2
 } from "@aws-cdk/aws-apigateway/lib/apigatewayv2";
 import { PolicyStatement, Effect, Role, ServicePrincipal } from "@aws-cdk/aws-iam";
 
@@ -20,7 +21,7 @@ export class QueryTesterSocketsApi extends Construct {
   public api = new CfnApiV2(this, "queryTesterSocketsApi", {
     name: "QueryTesterSocketsApi",
     protocolType: "WEBSOCKET",
-    routeSelectionExpression: "$request.body.message"
+    routeSelectionExpression: "$request.body.action"
   });
 
   private role = new Role(this, "roleapigatewaysocketapi", {
@@ -34,6 +35,7 @@ export class QueryTesterSocketsApi extends Construct {
     credentialsArn: this.role.roleArn
   });
 
+  // Connect
   private connectRoute = new CfnRouteV2(this, "QueryTesterSocketsApiConnectRoute", {
     apiId: this.api.ref,
     routeKey: "$connect",
@@ -42,6 +44,7 @@ export class QueryTesterSocketsApi extends Construct {
     target: `integrations/${this.integration.ref}`
   });
 
+  // Disconnect
   private disconnectRoute = new CfnRouteV2(this, "QueryTesterSocketsApiDisconnectRoute", {
     apiId: this.api.ref,
     routeKey: "$disconnect",
@@ -50,19 +53,26 @@ export class QueryTesterSocketsApi extends Construct {
     target: `integrations/${this.integration.ref}`
   });
 
+  // Messaging
   private messageRoute = new CfnRouteV2(this, "QueryTesterSocketsApiMessageRoute", {
     apiId: this.api.ref,
     routeKey: "$default",
     authorizationType: "NONE",
-    operationName: "SendRoute",
-    target: `integrations/${this.integration.ref}`
+    operationName: "default",
+    target: `integrations/${this.integration.ref}`,
+    routeResponseSelectionExpression: "$default"
+  });
+  private messageResponseRoute = new CfnRouteResponseV2(this, "QueryTesterSocketsApiMessageResRoute", {
+    apiId: this.api.ref,
+    routeResponseKey: "$default",
+    routeId: this.messageRoute.ref
   });
 
   private deployoment = new CfnDeploymentV2(this, "QueryTesterSocketsApiDeployment", {
     apiId: this.api.ref
   });
 
-  private prodStage = new CfnStageV2(this, "QueryTesterSocketsApiProdStage", {
+  private stage = new CfnStageV2(this, "QueryTesterSocketsApiProdStage", {
     apiId: this.api.ref,
     deploymentId: this.deployoment.ref,
     stageName: "prod",
@@ -85,13 +95,14 @@ export class QueryTesterSocketsApi extends Construct {
     this.deployoment.addDependsOn(this.connectRoute);
     this.deployoment.addDependsOn(this.disconnectRoute);
     this.deployoment.addDependsOn(this.messageRoute);
+    this.deployoment.addDependsOn(this.messageResponseRoute);
   }
 
   public getConnectionsPolicy(): PolicyStatement {
     return new PolicyStatement({
       effect: Effect.ALLOW,
       resources: [`arn:aws:execute-api:${this.region}:*:**/@connections/*`],
-      actions: ["execute-api:ManageConnections"]
+      actions: ["execute-api:ManageConnections", "execute-api:Invoke"]
     });
   }
 }

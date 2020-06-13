@@ -16,8 +16,8 @@ export class RenderingCluster extends Construct {
 
   public loadBalancedService = new ApplicationLoadBalancedFargateService(this, "LoadBalancedService", {
     cluster: this.renderingCluster,
-    cpu: 4096,
-    memoryLimitMiB: 8192,
+    // cpu: 4096,
+    // memoryLimitMiB: 8192,
     desiredCount: 1,
     maxHealthyPercent: 100,
     taskImageOptions: {
@@ -38,7 +38,7 @@ export class RenderingCluster extends Construct {
 
   private applyAutoScalingRules(): void {
     const scalableTarget = this.loadBalancedService.service.autoScaleTaskCount({
-      minCapacity: 6,
+      minCapacity: 1,
       maxCapacity: 10
     });
     scalableTarget.scaleOnCpuUtilization("CpuScaling", {
