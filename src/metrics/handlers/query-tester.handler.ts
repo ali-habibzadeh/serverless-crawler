@@ -15,42 +15,43 @@ export class QueryTesterHandler {
   }
 
   public async handle(): Promise<any> {
-    const { routeKey } = this.event.requestContext;
-    if (routeKey !== "$default") return;
-    const list = await this.s3.listObjects({ Bucket: this.bucket }).promise();
-    if (!list.Contents) {
-      return;
-    }
-    const stream = await this.queryObject(list.Contents[0]);
-    stream.on("data", async (event: any) => {
-      const records = event.Records;
-      if (records) {
-        await this.postToConnection(records.Payload.toString());
+    if (this.event.requestContext.routeKey !== "$default") return;
+    const latest = await this.getLatestObject();
+    const events = await this.queryObject(latest, this.getQuery());
+    for await (const event of events) {
+      if (event.Records) {
+        await this.postToConnection(event.Records.Payload.toString("utf8"));
       }
-    });
+    }
+  }
+
+  private async getLatestObject(): Promise<S3Object> {
+    const { Contents } = await this.s3.listObjectsV2({ Bucket: this.bucket }).promise();
+    if (Contents) {
+      return Contents.sort(
+        (a, b) => new Date(a.LastModified || -1).getDate() - new Date(b.LastModified || -1).getDate()
+      )[0];
+    }
+    throw new Error("No Crawl data found in bucket");
   }
 
   private async postToConnection(data: Buffer | string): Promise<void> {
-    await this.manager
-      .postToConnection({
-        ConnectionId: this.event.requestContext.connectionId || "",
-        Data: data
-      })
-      .promise();
+    const connectionId = this.event.requestContext.connectionId || "";
+    await this.manager.postToConnection({ ConnectionId: connectionId, Data: data }).promise();
   }
 
-  private async queryObject(object: S3Object): Promise<any> {
-    const { Payload: eventStream } = await this.s3
+  private async queryObject(object: S3Object, query: string): Promise<any> {
+    const { Payload: streamEvents } = await this.s3
       .selectObjectContent({
         Bucket: this.bucket,
         ExpressionType: "SQL",
-        Expression: this.getQuery(),
+        Expression: query,
         InputSerialization: { Parquet: {} },
         OutputSerialization: { JSON: {} },
         Key: object.Key || ""
       })
       .promise();
-    return eventStream;
+    return streamEvents;
   }
 
   private getQuery(): string {
