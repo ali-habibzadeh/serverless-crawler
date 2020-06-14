@@ -35,7 +35,6 @@ export class QueryTesterSocketsApi extends Construct {
     credentialsArn: this.role.roleArn
   });
 
-  // Connect
   private connectRoute = new CfnRouteV2(this, "QueryTesterSocketsApiConnectRoute", {
     apiId: this.api.ref,
     routeKey: "$connect",
@@ -44,7 +43,6 @@ export class QueryTesterSocketsApi extends Construct {
     target: `integrations/${this.integration.ref}`
   });
 
-  // Disconnect
   private disconnectRoute = new CfnRouteV2(this, "QueryTesterSocketsApiDisconnectRoute", {
     apiId: this.api.ref,
     routeKey: "$disconnect",
@@ -53,7 +51,6 @@ export class QueryTesterSocketsApi extends Construct {
     target: `integrations/${this.integration.ref}`
   });
 
-  // Messaging
   private messageRoute = new CfnRouteV2(this, "QueryTesterSocketsApiMessageRoute", {
     apiId: this.api.ref,
     routeKey: "$default",
