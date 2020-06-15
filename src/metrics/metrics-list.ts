@@ -27,7 +27,7 @@ export enum MetricNames {
   HasPopup = "has_popup"
 }
 
-export const metricsContainers = [
+export const coreMetrics = [
   PageUrl,
   InternalLinks,
   ResponseStatus,
@@ -41,7 +41,7 @@ export const metricsContainers = [
 ];
 
 export function getCoreGlueColumns(): Column[] {
-  return metricsContainers
+  return coreMetrics
     .map(metric => Reflect.construct(metric, []).columns)
     .flat()
     .filter(col => col.isGlueColumn)
