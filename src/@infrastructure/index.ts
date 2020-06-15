@@ -60,8 +60,8 @@ export class ServerlessCrawlerStack extends Stack {
 
   private configure(): void {
     [this.streamHandler, this.startCrawlHandler, this.customMetricsHandler, this.queryTesterHandler].forEach(lambda => {
-      this.crawlUrlsTable.grantAll(lambda);
-      this.customMetricsTable.grantAll(lambda);
+      this.crawlUrlsTable.applyGrants(lambda);
+      this.customMetricsTable.applyGrants(lambda);
       this.deliveryStream.crawlData.crawlDataBucket.grantReadWrite(lambda);
       lambda.addToRolePolicy(this.deliveryStream.getWritingPolicy());
       lambda.addToRolePolicy(this.deliveryStream.deliverySchema.getCatalogPolicy());

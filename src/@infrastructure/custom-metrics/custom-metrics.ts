@@ -15,7 +15,7 @@ export class CustomMetricsTable extends Construct {
     billingMode: BillingMode.PAY_PER_REQUEST
   });
 
-  public grantAll(grantee: IGrantable): void {
+  public applyGrants(grantee: IGrantable): void {
     this.table.grantReadWriteData(grantee);
   }
 }
