@@ -39,12 +39,8 @@ export class CustomMetricsHandler {
     const columns = (await this.getGlueColumns()) || [];
     const index = columns.findIndex(c => c.Name === newColumn.Name);
     index === -1 ? columns.push(newColumn) : (columns[index] = newColumn);
-    return this.glue
-      .updateTable({
-        DatabaseName: this.dbName,
-        TableInput: { Name: this.tableName, StorageDescriptor: { Columns: columns } }
-      })
-      .promise();
+    const input = { Name: this.tableName, StorageDescriptor: { Columns: columns } };
+    return this.glue.updateTable({ DatabaseName: this.dbName, TableInput: input }).promise();
   }
 
   private async getGlueColumns(): Promise<ColumnList | undefined> {
@@ -53,9 +49,7 @@ export class CustomMetricsHandler {
   }
 
   private getColumnEntry(): ICustomMetricEntry {
-    if (this.event.body) {
-      return JSON.parse(this.event.body);
-    }
+    if (this.event.body) return JSON.parse(this.event.body);
     throw new Error(`Invalid body: ${this.event.body}`);
   }
 }
