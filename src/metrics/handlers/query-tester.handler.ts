@@ -28,9 +28,7 @@ export class QueryTesterHandler {
   private async getLatestObject(): Promise<S3Object> {
     const { Contents } = await this.s3.listObjectsV2({ Bucket: this.bucket }).promise();
     if (Contents) {
-      return Contents.sort(
-        (a, b) => new Date(a.LastModified || -1).getDate() - new Date(b.LastModified || -1).getDate()
-      )[0];
+      return Contents.sort((a, b) => b.LastModified!.getDate() - a.LastModified!.getDate())[0];
     }
     throw new Error("No Crawl data found in bucket");
   }
