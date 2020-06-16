@@ -27,6 +27,7 @@ export class QueryTesterHandler {
 
   private async getLatestObject(): Promise<S3Object> {
     const { Contents } = await this.s3.listObjectsV2({ Bucket: this.bucket }).promise();
+    console.log("Contents", Contents);
     if (Contents) {
       return Contents.sort((a, b) => a.LastModified!.getDate() - b.LastModified!.getDate())[0];
     }
