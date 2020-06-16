@@ -19,8 +19,9 @@ export class QueryTesterHandler {
     const latest = await this.getLatestObject();
     const events = await this.queryObject(latest, this.getQuery());
     for await (const event of events) {
-      const payload = event.Records ? event.Records.Payload.toString("utf8") : "No records.";
-      await this.postToConnection(payload);
+      if (event.Records) {
+        await this.postToConnection(event.Records.Payload.toString("utf8"));
+      }
     }
   }
 
