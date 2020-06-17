@@ -13,6 +13,7 @@ const chromiumSwitches = [
   "--disable-default-apps",
   "--mute-audio",
   "--no-first-run",
+  "--no-zygote",
   "--disable-http2",
   "--disable-gesture-requirement-for-media-playback",
   "--disable-setuid-sandbox",
