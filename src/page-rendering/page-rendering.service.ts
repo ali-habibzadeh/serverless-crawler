@@ -23,7 +23,7 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    this.page = await (await BrowserService.getBrowser(this.url)).newPage();
+    this.page = await BrowserService.getBrowser().newPage();
     await this.configureCdpSession();
     await this.setPageHandlers();
     return this.page.goto(this.url, { waitUntil: "networkidle0", timeout: 15000 });
