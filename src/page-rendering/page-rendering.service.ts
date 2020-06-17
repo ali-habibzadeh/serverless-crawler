@@ -14,12 +14,10 @@ export class PageRenderService {
   constructor(private url: string) {}
 
   public async getPageRenderMetrics(): Promise<Record<MetricNames, any>> {
-    const response = await this.getResponse();
+    const res = await this.getResponse();
     await customMetricsService.warmUpCache();
     const list = [...coreMetrics, CustomMetrics];
-    const results = await Promise.all(
-      list.map(metric => new metric(this.page, response, this.cdpSession).getMetrics())
-    );
+    const results = await Promise.all(list.map(metric => new metric(this.page, res, this.cdpSession).getMetrics()));
     await this.page.close();
     return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
   }
