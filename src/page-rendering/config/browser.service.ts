@@ -12,7 +12,8 @@ export class BrowserService {
   }
 
   public static async getBrowser(url: string): Promise<Browser> {
-    await this.browser.defaultBrowserContext().overridePermissions(url, []);
+    const origin = new URL(url).origin;
+    await this.browser.defaultBrowserContext().overridePermissions(origin, []);
     return this.browser;
   }
 
