@@ -17,6 +17,10 @@ export class CDPSessionClient {
     this.client = await this.page.target().createCDPSession();
   }
 
+  public async disableServiceWorkers(): Promise<void> {
+    await this.client.send("ServiceWorker.disable");
+  }
+
   public async enablePerformance(): Promise<void> {
     await this.client.send("Performance.enable");
   }

@@ -7,10 +7,8 @@ import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class WebPerformance extends BaseMetricContainer {
-  private cdpSession = new CDPSessionClient(this.page);
-
-  constructor(protected page: Page, response: Response | null) {
-    super(page, response);
+  constructor(protected page: Page, protected response: Response | null, protected cdpSession: CDPSessionClient) {
+    super(page, response, cdpSession);
   }
 
   public columns = [

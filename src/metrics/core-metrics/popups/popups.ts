@@ -5,10 +5,11 @@ import { Schema } from "@aws-cdk/aws-glue";
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 import { hasPopup } from "./popup-detection";
+import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 export class Popups extends BaseMetricContainer {
-  constructor(protected page: Page, response: Response | null) {
-    super(page, response);
+  constructor(protected page: Page, response: Response | null, protected cdpSession: CDPSessionClient) {
+    super(page, response, cdpSession);
   }
 
   public columns = [{ name: MetricNames.HasPopup, type: Schema.BOOLEAN, isGlueColumn: true }];
