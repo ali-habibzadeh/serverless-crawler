@@ -11,9 +11,9 @@ export class BrowserService {
     this.browser = await connect({ browserWSEndpoint: `ws://${dns}:${port}?${getChromiumArgs()}` });
   }
 
-  public static async getBrowser(url: string): Promise<Browser> {
-    const origin = new URL(url).origin;
-    await this.browser.defaultBrowserContext().overridePermissions(origin, []);
+  public static async getBrowser(url?: string): Promise<Browser> {
+    // const origin = new URL(url).origin;
+    // await this.browser.defaultBrowserContext().overridePermissions(origin, []);
     return this.browser;
   }
 

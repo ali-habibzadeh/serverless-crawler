@@ -8,8 +8,8 @@ import { RobotsChecker } from "./robots-checker";
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 export class Robots extends BaseMetricContainer {
-  constructor(protected page: Page, protected response: Response | null, protected cdpSession: CDPSessionClient) {
-    super(page, response, cdpSession);
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
+    super(page, response, cdp);
   }
 
   public columns = [{ name: MetricNames.IsAllowedByRobots, type: Schema.BOOLEAN, isGlueColumn: true }];

@@ -13,6 +13,6 @@ interface IMetricColumn {
 
 export abstract class BaseMetricContainer {
   public abstract columns?: IMetricColumn[];
-  constructor(protected page: Page, protected response: Response | null, protected cdpSession: CDPSessionClient) {}
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {}
   public abstract getMetrics(): Promise<Record<MetricNames, any>[]>;
 }

@@ -8,8 +8,8 @@ import { IRedirectChainItem } from "./redirect-chain.interface";
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 export class RedirectChain extends BaseMetricContainer {
-  constructor(protected page: Page, protected response: Response | null, protected cdpSession: CDPSessionClient) {
-    super(page, response, cdpSession);
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
+    super(page, response, cdp);
   }
 
   public columns = [

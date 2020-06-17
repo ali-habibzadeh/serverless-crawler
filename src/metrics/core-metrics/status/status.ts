@@ -7,8 +7,8 @@ import { MetricNames } from "../../metrics-list";
 import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 export class ResponseStatus extends BaseMetricContainer {
-  constructor(protected page: Page, protected response: Response | null, protected cdpSession: CDPSessionClient) {
-    super(page, response, cdpSession);
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
+    super(page, response, cdp);
   }
 
   public columns = [{ name: MetricNames.Status, type: Schema.INTEGER, isGlueColumn: true }];
