@@ -3,7 +3,6 @@ import { Page, Response } from "puppeteer-core";
 import { Type } from "@aws-cdk/aws-glue";
 
 import { MetricNames } from "../metrics-list";
-import { CDPSessionClient } from "../../page-rendering/cdp/cdp-session-client";
 
 interface IMetricColumn {
   name: MetricNames;
@@ -13,6 +12,6 @@ interface IMetricColumn {
 
 export abstract class BaseMetricContainer {
   public abstract columns?: IMetricColumn[];
-  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {}
+  constructor(protected page: Page, protected response: Response | null) {}
   public abstract getMetrics(): Promise<Record<MetricNames, any>[]>;
 }

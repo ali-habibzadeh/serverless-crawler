@@ -5,11 +5,10 @@ import { Schema } from "@aws-cdk/aws-glue";
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 import { getNormalLinks } from "./link-utils";
-import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 export class InternalLinks extends BaseMetricContainer {
-  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
-    super(page, response, cdp);
+  constructor(protected page: Page, response: Response | null) {
+    super(page, response);
   }
 
   public columns = [{ name: MetricNames.InternalLinks, type: Schema.STRING, isGlueColumn: false }];
