@@ -21,7 +21,7 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    this.page = await BrowserService.getBrowser().newPage();
+    this.page = await (await BrowserService.getBrowser(this.url)).newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);
   }
