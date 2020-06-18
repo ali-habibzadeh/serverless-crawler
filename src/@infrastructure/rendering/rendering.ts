@@ -26,7 +26,9 @@ export class RenderingCluster extends Construct {
       enableLogging: true,
       logDriver: new AwsLogDriver({ streamPrefix: "ChromeImageLogs" }),
       environment: {
-        MAX_CONCURRENT_SESSIONS: "10"
+        MAX_CONCURRENT_SESSIONS: "10",
+        PREBOOT_CHROME: "TRUE",
+        DEFAULT_BLOCK_ADS: "TRUE"
       }
     },
     publicLoadBalancer: true,

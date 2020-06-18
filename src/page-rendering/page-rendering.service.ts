@@ -39,5 +39,6 @@ export class PageRenderService {
   private async setPageHandlers(): Promise<void> {
     await this.page.setRequestInterception(true);
     this.page.on("request", async request => new PageRequestHandler(request).handle());
+    this.page.on("dialog", async dialog => dialog.dismiss());
   }
 }
