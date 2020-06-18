@@ -21,6 +21,10 @@ export class CDPSessionClient {
     await this.client.send("ServiceWorker.disable");
   }
 
+  public async grantPermissions(permissions: CDP.Browser.PermissionType[]): Promise<any> {
+    await this.client.send("Browser.grantPermissions", { permissions });
+  }
+
   public async enablePerformance(): Promise<void> {
     await this.client.send("Performance.enable");
   }

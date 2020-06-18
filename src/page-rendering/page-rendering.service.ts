@@ -24,22 +24,16 @@ export class PageRenderService {
 
   private async getResponse(): Promise<Response | null> {
     this.page = await BrowserService.getBrowser().newPage();
-    await this.removeAllPermissions();
     await this.createCdp();
     await this.setPageHandlers();
     return this.page.goto(this.url);
-  }
-
-  private async removeAllPermissions(): Promise<void> {
-    const context = BrowserService.getBrowser().defaultBrowserContext();
-    const origin = new URL(this.url).origin;
-    await context.overridePermissions(origin, []);
   }
 
   private async createCdp(): Promise<void> {
     this.cdp = new CDPSessionClient(this.page);
     await this.cdp.startSession();
     await this.cdp.disableServiceWorkers();
+    await this.cdp.grantPermissions([]);
   }
 
   private async setPageHandlers(): Promise<void> {
