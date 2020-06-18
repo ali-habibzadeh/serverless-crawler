@@ -21,9 +21,14 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    this.page = await (await BrowserService.getBrowser(this.url)).newPage();
+    this.page = await BrowserService.getBrowser().newPage();
     await this.setPageHandlers();
     return this.page.goto(this.url);
+  }
+
+  private async removePermissions(): Promise<void> {
+    const origin = new URL(this.url).origin;
+    await BrowserService.getBrowser().defaultBrowserContext().overridePermissions(origin, []);
   }
 
   private async setPageHandlers(): Promise<void> {
