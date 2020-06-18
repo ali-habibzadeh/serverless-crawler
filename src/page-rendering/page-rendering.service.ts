@@ -21,7 +21,6 @@ export class PageRenderService {
   }
 
   private async getResponse(): Promise<Response | null> {
-    await BrowserService.createBrowser();
     this.page = await BrowserService.getBrowser().newPage();
     await this.removePermissions();
     await this.setPageHandlers();
