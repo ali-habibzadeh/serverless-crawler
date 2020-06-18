@@ -28,8 +28,8 @@ export class PageRenderService {
   }
 
   private async removePermissions(): Promise<void> {
-    const origin = new URL(this.url).origin;
     const context = BrowserService.getBrowser().defaultBrowserContext();
+    const origin = new URL(this.url).origin;
     await context.overridePermissions(origin, []);
   }
 

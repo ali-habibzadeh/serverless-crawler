@@ -15,7 +15,7 @@ export class StreamProcessorHandler {
     await BrowserService.createBrowser();
     const inserts = this.event.Records.filter(record => record.eventName === "INSERT");
     await Promise.all(inserts.map(async record => this.processUrl(record)));
-    await BrowserService.close();
+    // -/ await BrowserService.close();
     return `done.`;
   }
 
