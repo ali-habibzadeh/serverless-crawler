@@ -7,7 +7,6 @@ import { PageUrl } from "./core-metrics/url/page-url";
 import { PageHtml } from "./core-metrics/html/page-html";
 import { Indexation } from "./core-metrics/indexation/indexation";
 import { Responsive } from "./core-metrics/responsive/responsive";
-import { Robots } from "./core-metrics/robots/robots";
 import { RedirectChain } from "./core-metrics/redirect-chain/redirect-chain";
 import { Popups } from "./core-metrics/popups/popups";
 
@@ -22,7 +21,6 @@ export enum MetricNames {
   PostRenderDom = "post_redner_dom",
   NoIndex = "no_index",
   IsResponsive = "is_responsive",
-  IsAllowedByRobots = "is_allowed_by_robots",
   RedirectChain = "redirect_chain",
   HasPopup = "has_popup"
 }
@@ -35,7 +33,6 @@ export const coreMetrics = [
   PageHtml,
   Indexation,
   Responsive,
-  Robots,
   Popups,
   RedirectChain
 ];
