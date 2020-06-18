@@ -1,13 +1,14 @@
 import { Page, Response } from "puppeteer-core";
 
 import { Schema } from "@aws-cdk/aws-glue";
+import { CDPSessionClient } from "../../../page-rendering/cdp/cdp-session-client";
 
 import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class PageHtml extends BaseMetricContainer {
-  constructor(protected page: Page, response: Response | null) {
-    super(page, response);
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
+    super(page, response, cdp);
   }
 
   public columns = [

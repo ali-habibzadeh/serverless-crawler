@@ -7,10 +7,8 @@ import { BaseMetricContainer } from "../../base-types/base-metric-container";
 import { MetricNames } from "../../metrics-list";
 
 export class WebPerformance extends BaseMetricContainer {
-  private cdpSession = new CDPSessionClient(this.page);
-
-  constructor(protected page: Page, response: Response | null) {
-    super(page, response);
+  constructor(protected page: Page, protected response: Response | null, protected cdp: CDPSessionClient) {
+    super(page, response, cdp);
   }
 
   public columns = [
@@ -28,8 +26,7 @@ export class WebPerformance extends BaseMetricContainer {
   }
 
   private async getResourceTreeCount(): Promise<number> {
-    await this.cdpSession.startSession();
-    const resourceTree = await this.cdpSession.getPageResourceTree();
+    const resourceTree = await this.cdp.getPageResourceTree();
     return resourceTree.frameTree.resources.length;
   }
 
