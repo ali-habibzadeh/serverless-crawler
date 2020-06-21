@@ -1,4 +1,3 @@
-import { Minimatch } from "minimatch";
 import { Request } from "puppeteer-core";
 
 import { blockedResourceTypes } from "./constants/blocked-resource-types";
@@ -22,9 +21,5 @@ export class PageRequestHandler {
 
   private isBlocked(): boolean {
     return blockedResourceTypes.includes(this.request.resourceType());
-  }
-
-  private matches(glob: string): boolean {
-    return new Minimatch(glob).match(this.url);
   }
 }

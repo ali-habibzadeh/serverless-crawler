@@ -71,7 +71,6 @@
     "class-transformer": "^0.2.3",
     "convict": "^6.0.0",
     "flat-cache": "^2.0.1",
-    "minimatch": "^3.0.4",
     "moment": "^2.26.0",
     "puppeteer-core": "^4.0.0",
     "reflect-metadata": "^0.1.13",
