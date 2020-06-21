@@ -19,7 +19,7 @@ export class PageRenderService {
     const list = [...coreMetrics, CustomMetrics];
     const results = await Promise.all(list.map(metric => new metric(this.page, response, this.cdp).getMetrics()));
     await this.page.close();
-    return results.flat(1).reduce((obj, metric) => ({ ...obj, ...metric }));
+    return results.flat().reduce((obj, metric) => ({ ...obj, ...metric }));
   }
 
   private async getResponse(): Promise<Response | null> {
