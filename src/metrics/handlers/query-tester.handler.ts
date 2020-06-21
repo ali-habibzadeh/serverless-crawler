@@ -6,7 +6,7 @@ import { Object as S3Object } from "aws-sdk/clients/s3";
 export class QueryTesterHandler {
   private s3 = new S3();
   private manager!: ApiGatewayManagementApi;
-  private bucket = appConfig.crawlDataBucketName;
+  private bucket = { Bucket: appConfig.crawlDataBucketName };
   constructor(private event: APIGatewayProxyEvent) {
     const {
       requestContext: { domainName, stage }
@@ -26,7 +26,7 @@ export class QueryTesterHandler {
   }
 
   private async getLatestObject(): Promise<S3Object> {
-    const { Contents } = await this.s3.listObjectsV2({ Bucket: this.bucket }).promise();
+    const { Contents } = await this.s3.listObjectsV2({ ...this.bucket }).promise();
     if (Contents) {
       return Contents.sort((a, b) => b.LastModified!.getTime() - a.LastModified!.getTime())[0];
     }
@@ -41,7 +41,7 @@ export class QueryTesterHandler {
   private async queryObject(object: S3Object, query: string): Promise<any> {
     const { Payload: streamEvents } = await this.s3
       .selectObjectContent({
-        Bucket: this.bucket,
+        ...this.bucket,
         ExpressionType: "SQL",
         Expression: query,
         InputSerialization: { Parquet: {} },
@@ -58,6 +58,6 @@ export class QueryTesterHandler {
       const { query } = JSON.parse(body);
       return query;
     }
-    throw new Error(`Invalid body: ${this.event.body}`);
+    throw new Error(`Invalid body: ${body}`);
   }
 }
