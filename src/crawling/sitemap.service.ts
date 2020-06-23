@@ -4,6 +4,7 @@ import { parseStringPromise } from "xml2js";
 import { UrlsQualifierService } from "./url-qualifiers/url-qualifier.service";
 import { plainToClass } from "class-transformer";
 import { crawlUrlStore, CrawlUrl } from "./models/crawl-url.model";
+import { chunk } from "lodash";
 
 export class SitemapService {
   private sitemapStore = sitemapUrlStore;
@@ -13,7 +14,6 @@ export class SitemapService {
   public async crawl(): Promise<void> {
     const parsed = await this.getSitemapData();
     if (!parsed) return;
-
     const { sitemapindex, urlset } = parsed;
 
     if (sitemapindex) {
@@ -22,7 +22,7 @@ export class SitemapService {
     }
     if (urlset) {
       const nodes: any[] = urlset.url;
-      await this.addToCrawl(nodes.map(node => node.loc).flat());
+      await this.addToMainCrawl(nodes.map(node => node.loc).flat());
     }
   }
 
@@ -40,9 +40,10 @@ export class SitemapService {
     await this.sitemapStore.batchWrite().put(urls).exec();
   }
 
-  private async addToCrawl(sitemapUrls: string[]): Promise<void> {
+  private async addToMainCrawl(sitemapUrls: string[]): Promise<void> {
     const qualifieds = await new UrlsQualifierService(sitemapUrls).getQualifiedUrls();
     const urls = qualifieds.map(url => plainToClass(CrawlUrl, { url }));
-    await this.urlStore.batchWrite().put(urls).exec();
+    const chunks = chunk(urls, 25);
+    await Promise.all(chunks.map(async chunk => this.urlStore.batchWrite().put(chunk).exec()));
   }
 }
