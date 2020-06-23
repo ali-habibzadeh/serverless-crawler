@@ -12,7 +12,7 @@ export class SitemapService {
   constructor(private sitemapUrl: SitemaplUrl) {}
 
   public async crawl(): Promise<void> {
-    const parsed = await this.getSitemapData();
+    const { parsed } = await this.getSitemapData();
     if (!parsed) return;
     const { sitemapindex, urlset } = parsed;
 
@@ -26,10 +26,10 @@ export class SitemapService {
     }
   }
 
-  public async getSitemapData(): Promise<any | undefined> {
+  private async getSitemapData(): Promise<any | undefined> {
     try {
       const { data } = await axios.get(this.sitemapUrl.url);
-      return parseStringPromise(data);
+      return { parsed: await parseStringPromise(data) };
     } catch (e) {
       return;
     }
@@ -37,7 +37,8 @@ export class SitemapService {
 
   private async crawlNextBatch(sitemapUrls: string[]): Promise<void> {
     const urls = sitemapUrls.map(url => plainToClass(SitemaplUrl, { url }));
-    await this.sitemapStore.batchWrite().put(urls).exec();
+    const chunks = chunk(urls, 25);
+    await Promise.all(chunks.map(async chunk => this.sitemapStore.batchWrite().put(chunk).exec()));
   }
 
   private async addToMainCrawl(sitemapUrls: string[]): Promise<void> {
