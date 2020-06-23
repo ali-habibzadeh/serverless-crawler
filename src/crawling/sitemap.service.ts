@@ -12,9 +12,9 @@ export class SitemapService {
   constructor(private sitemapUrl: SitemaplUrl) {}
 
   public async crawl(): Promise<void> {
-    const { parsed } = await this.getSitemapData();
-    if (!parsed) return;
-    const { sitemapindex, urlset } = parsed;
+    const sitemap = await this.getSitemapData();
+    if (!sitemap) return;
+    const { sitemapindex, urlset } = sitemap.parsed;
 
     if (sitemapindex) {
       const nodes: any[] = sitemapindex.sitemap;
