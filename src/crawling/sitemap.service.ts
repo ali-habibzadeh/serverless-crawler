@@ -14,7 +14,7 @@ export class SitemapService {
     const parsed = await this.getSitemapData();
     if (!parsed) return;
 
-    const { sitemapindex, urlset } = parsed.sitemapindex;
+    const { sitemapindex, urlset } = parsed;
 
     if (sitemapindex) {
       const nodes: any[] = sitemapindex.sitemap;
