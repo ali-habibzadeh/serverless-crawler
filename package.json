@@ -50,6 +50,7 @@
     "@types/parquetjs": "^0.10.2",
     "@types/puppeteer-core": "^2.0.0",
     "@types/source-map-support": "^0.5.1",
+    "@types/xml2js": "^0.4.5",
     "aws-cdk": "1.46.0",
     "aws-lambda": "^1.0.5",
     "devtools-protocol": "^0.0.780326",
@@ -73,6 +74,7 @@
     "puppeteer-core": "^4.0.0",
     "reflect-metadata": "^0.1.13",
     "source-map-support": "^0.5.19",
-    "tslib": "^2.0.0"
+    "tslib": "^2.0.0",
+    "xml2js": "^0.4.23"
   }
 }

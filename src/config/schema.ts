@@ -20,10 +20,16 @@ export const appConfigSchema = {
     env: "account"
   },
   [envVars.crawlUrlsTableName]: {
-    doc: "Dynamodb table name for sotring crawl URLs",
+    doc: "Dynamodb table name for storing crawl URLs",
     format: isStringAndNotEmpty,
     default: "",
     env: envVars.crawlUrlsTableName
+  },
+  [envVars.sitemapUrlsTableName]: {
+    doc: "Dynamodb table name for sotring sitemap root nodes",
+    format: isStringAndNotEmpty,
+    default: "",
+    env: envVars.sitemapUrlsTableName
   },
   [envVars.isLocal]: {
     doc: "Whether process is on local device",
