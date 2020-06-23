@@ -31,7 +31,7 @@ export class SitemapService {
       const { data } = await axios.get(this.sitemapUrl.url);
       return parseStringPromise(data);
     } catch (e) {
-      undefined;
+      return;
     }
   }
 
