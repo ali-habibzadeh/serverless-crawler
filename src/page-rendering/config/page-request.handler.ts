@@ -4,15 +4,16 @@ import { blockedResourceTypes } from "./constants/blocked-resource-types";
 import Axios from "axios";
 
 export class PageRequestHandler {
-  private url = this.request.url();
   constructor(private request: Request) {}
 
   public async handle(): Promise<void> {
-    if (this.isBlocked()) {
-      return this.request.abort();
-    }
+    if (this.isBlocked()) return this.request.abort();
     try {
-      const { data, headers, status } = await Axios.get(this.url, { timeout: 10000 });
+      const { data, headers, status } = await Axios.request({
+        url: this.request.url(),
+        method: this.request.method(),
+        headers: this.request.headers()
+      });
       return this.request.respond({ headers, status, body: data });
     } catch (e) {
       return this.request.abort();
