@@ -30,6 +30,9 @@ export class PageRenderService {
   }
 
   private async createCdp(): Promise<void> {
+    if (!this.page) {
+      throw new Error("Create page before creating cdp session");
+    }
     this.cdp = new CDPSessionClient(this.page);
     await this.cdp.startSession();
     await this.cdp.disableServiceWorkers();
