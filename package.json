@@ -67,7 +67,7 @@
     "@shiftcoders/dynamo-easy": "^5.6.0",
     "async": "^3.2.0",
     "aws-sdk": "^2.713.0",
-    "axios": "^0.19.2",
+    "axios": "^0.21.1",
     "class-transformer": "^0.3.1",
     "convict": "^6.0.0",
     "lodash": "^4.17.21",
